@@ -7,15 +7,15 @@ class CategoriesController extends VanillaController {
 	}
 
 	function view($categoryId = null) {
-		$this->Category->where('parent_id',$categoryId);
-		$this->Category->showHasOne();
-		$this->Category->showHasMany();
-		$subcategories = $this->Category->search();
+		$this->model->where('parent_id',$categoryId);
+		$this->model->showHasOne();
+		$this->model->showHasMany();
+		$subcategories = $this->model->search();
 		
-		$this->Category->id = $categoryId;
-		$this->Category->showHasOne();
-		$this->Category->showHasMany();
-		$category = $this->Category->search();
+		$this->model->id = $categoryId;
+		$this->model->showHasOne();
+		$this->model->showHasMany();
+		$category = $this->model->search();
 	
 		$this->set('subcategories',$subcategories);
 		$this->set('category',$category);
@@ -24,11 +24,11 @@ class CategoriesController extends VanillaController {
 	
 	
 	function index() {
-		$this->Category->orderBy('name','ASC');
-		$this->Category->showHasOne();
-		$this->Category->showHasMany();
-		$this->Category->where('parent_id','0');
-		$categories = $this->Category->search();
+		$this->model->orderBy('name','ASC');
+		$this->model->showHasOne();
+		$this->model->showHasMany();
+		$this->model->where('parent_id','0');
+		$categories = $this->model->search();
 		$this->set('categories',$categories);
 	
 	}

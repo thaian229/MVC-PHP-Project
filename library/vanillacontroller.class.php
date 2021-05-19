@@ -9,6 +9,8 @@ class VanillaController
 
     public $doNotRenderHeader;
     public $render;
+    public $model;
+
 
     function __construct($controller, $model, $action)
     {
@@ -19,7 +21,7 @@ class VanillaController
 
         $this->doNotRenderHeader = 0;
         $this->render = 1;
-        $this->$model = new $model;
+        $this->model = new $model;
         $this->_template = new Template($controller, $action);
 
     }
