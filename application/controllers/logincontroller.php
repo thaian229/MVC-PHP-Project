@@ -12,6 +12,8 @@ class LoginController extends VanillaController {
 
 
     function index() {
+        echo("alo 1234");
+        //DB
     }
 
     function afterAction() {
