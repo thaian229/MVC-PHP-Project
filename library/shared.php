@@ -22,11 +22,11 @@ function stripSlashesDeep($value) {
 }
 
 function removeMagicQuotes() {
-	if ( false) {
-		$_GET    = stripSlashesDeep($_GET   );
-		$_POST   = stripSlashesDeep($_POST  );
-		$_COOKIE = stripSlashesDeep($_COOKIE);
-	}
+if ( false ) {
+	$_GET    = stripSlashesDeep($_GET   );
+	$_POST   = stripSlashesDeep($_POST  );
+	$_COOKIE = stripSlashesDeep($_COOKIE);
+}
 }
 
 /** Check register globals and remove them **/
@@ -44,37 +44,71 @@ function unregisterGlobals() {
     }
 }
 
+/** Secondary Call Function **/
+
+function performAction($controller,$action,$queryString = null,$render = 0) {
+	
+	$controllerName = ucfirst($controller).'Controller';
+	$dispatch = new $controllerName($controller,$action);
+	$dispatch->render = $render;
+	return call_user_func_array(array($dispatch,$action),$queryString);
+}
+
+/** Routing **/
+
+function routeURL($url) {
+	global $routing;
+
+	foreach ( $routing as $pattern => $result ) {
+            if ( preg_match( $pattern, $url ) ) {
+				return preg_replace( $pattern, $result, $url );
+			}
+	}
+
+	return ($url);
+}
+
 /** Main Call Function **/
 
 function callHook() {
 	global $url;
+	global $default;
 
-	$urlArray = array();
-	$urlArray = explode("/",$url);
-	if ($urlArray[0] != null)
-	{
+	$queryString = array();
+
+	if (!isset($url)) {
+		$controller = $default['controller'];
+		$action = $default['action'];
+	} else {
+		$url = routeURL($url);
+		$urlArray = array();
+		$urlArray = explode("/",$url);
 		$controller = $urlArray[0];
 		array_shift($urlArray);
-		$action = $urlArray[0];
-		array_shift($urlArray);
-		$queryString = $urlArray;
-
-		$controllerName = $controller;
-		$controller = ucwords($controller);
-		$model = rtrim($controller, 's');
-		$controller .= 'Controller';
-		$dispatch = new $controller($model, $controllerName, $action);
-
-		if ((int)method_exists($controller, $action)) {
-			call_user_func_array(array($dispatch,$action),$queryString);
+		if (isset($urlArray[0])) {
+			$action = $urlArray[0];
+			array_shift($urlArray);
 		} else {
-			/* Error Generation Code Here */
+			$action = 'index'; // Default Action
 		}
+		$queryString = $urlArray;
+	}
+	
+	$controllerName = ucfirst($controller).'Controller';
+
+	$dispatch = new $controllerName($controller,$action);
+	
+	if ((int)method_exists($controllerName, $action)) {
+		call_user_func_array(array($dispatch,"beforeAction"),$queryString);
+		call_user_func_array(array($dispatch,$action),$queryString);
+		call_user_func_array(array($dispatch,"afterAction"),$queryString);
+	} else {
+		/* Error Generation Code Here */
 	}
 }
 
+
 /** Autoload any classes that are required **/
-//  spl_autoload_register('myAutoload');
 spl_autoload_register(function($className) {
 	if (file_exists(ROOT . DS . 'library' . DS . strtolower($className) . '.class.php')) {
 		require_once(ROOT . DS . 'library' . DS . strtolower($className) . '.class.php');
@@ -87,7 +121,36 @@ spl_autoload_register(function($className) {
 	}
 });
 
+
+/** GZip Output **/
+
+function gzipOutput() {
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+
+    if (0 !== strpos($ua, 'Mozilla/4.0 (compatible; MSIE ')
+        || false !== strpos($ua, 'Opera')) {
+        return false;
+    }
+
+    $version = (float)substr($ua, 30); 
+    return (
+        $version < 6
+        || ($version == 6  && false === strpos($ua, 'SV1'))
+    );
+}
+
+/** Get Required Files **/
+
+gzipOutput() || ob_start("ob_gzhandler");
+
+
+$cache = new Cache();
+$inflect = new Inflection();
+
 setReporting();
 removeMagicQuotes();
 unregisterGlobals();
 callHook();
+
+
+?>
