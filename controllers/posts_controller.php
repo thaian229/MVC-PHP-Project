@@ -1,6 +1,6 @@
 <?php
 require_once('controllers/base_controller.php');
-require_once('models/post.php');
+require_once('dao/videos.php');
 
 class PostsController extends BaseController
 {
@@ -11,14 +11,14 @@ class PostsController extends BaseController
 
     public function index()
     {
-        $posts = Post::all();
+        $posts = Videos::all();
         $data = array('posts' => $posts);
         $this->render('index', $data);
     }
 
     public function showPost()
     {
-        $post = Post::find($_GET['id']);
+        $post = Videos::find($_GET['id']);
         $data = array('post' => $post);
         $this->render('show', $data);
     }

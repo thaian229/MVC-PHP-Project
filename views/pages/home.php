@@ -1,3 +1,5 @@
 <?php
-echo "Tên tôi là: $name, năm nay tôi $age tuổi";
+echo "HOME PAGE";
 ?>
+<br>
+<a href="<?php echo BASE_PATH."index.php?controller=posts"?>">VIDEOS LIST</a>
