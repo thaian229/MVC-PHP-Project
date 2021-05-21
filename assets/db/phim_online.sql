@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2021 at 12:47 PM
+-- Generation Time: May 21, 2021 at 10:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -35,6 +35,15 @@ CREATE TABLE `accounts` (
   `acc_type` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) VALUES
+(1, 'thaian229', '22114455', NULL, 0),
+(2, 'mhoang99', '123456', NULL, 0),
+(3, 'buituhoang', '123456', NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +54,16 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(4, 'food'),
+(1, 'music'),
+(2, 'sport'),
+(3, 'technology');
 
 -- --------------------------------------------------------
 
@@ -67,10 +86,17 @@ CREATE TABLE `comments` (
 --
 
 CREATE TABLE `favourites` (
-  `id` int(11) NOT NULL,
   `acc_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `favourites`
+--
+
+INSERT INTO `favourites` (`acc_id`, `video_id`) VALUES
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -105,10 +131,17 @@ INSERT INTO `videos` (`id`, `title`, `video_url`, `thumbnail_url`, `created_time
 --
 
 CREATE TABLE `videos_categories` (
-  `id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `videos_categories`
+--
+
+INSERT INTO `videos_categories` (`video_id`, `cat_id`) VALUES
+(2, 3),
+(4, 4);
 
 -- --------------------------------------------------------
 
@@ -117,7 +150,6 @@ CREATE TABLE `videos_categories` (
 --
 
 CREATE TABLE `votes` (
-  `id` int(11) NOT NULL,
   `acc_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
   `vote_type` int(11) NOT NULL
@@ -153,8 +185,7 @@ ALTER TABLE `comments`
 -- Indexes for table `favourites`
 --
 ALTER TABLE `favourites`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk1_fav_acc_id` (`acc_id`),
+  ADD PRIMARY KEY (`acc_id`,`video_id`),
   ADD KEY `fk2_fav_video_id` (`video_id`);
 
 --
@@ -167,16 +198,14 @@ ALTER TABLE `videos`
 -- Indexes for table `videos_categories`
 --
 ALTER TABLE `videos_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk1_vc_video_id` (`video_id`),
+  ADD PRIMARY KEY (`video_id`,`cat_id`),
   ADD KEY `fk2_vc_cat_id` (`cat_id`);
 
 --
 -- Indexes for table `votes`
 --
 ALTER TABLE `votes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk1_vote_acc_id` (`acc_id`),
+  ADD PRIMARY KEY (`acc_id`,`video_id`),
   ADD KEY `fk2_vote_video_id` (`video_id`);
 
 --
@@ -187,13 +216,13 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -202,28 +231,10 @@ ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `favourites`
---
-ALTER TABLE `favourites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `videos_categories`
---
-ALTER TABLE `videos_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `votes`
---
-ALTER TABLE `votes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
