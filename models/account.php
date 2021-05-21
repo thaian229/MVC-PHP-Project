@@ -19,7 +19,7 @@ class Account extends BaseModel
 
     public static function createFromDB($list)
     {
-        $instance = new self($list['id'], $list['user_ame'], $list['password'], $list['ava_url']);
+        $instance = new self($list['id'], $list['username'], $list['password'], $list['ava_url']);
         $instance->avaUrl = $list['ava_url'];
         $instance->type = $list['type'];
         return $instance;

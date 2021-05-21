@@ -14,8 +14,8 @@ class Accounts extends BaseDAO
         self::requireModel($dto);
 
         $db = DB::getInstance();
-        $req = $db->prepare('SELECT * FROM ' . $tableName . ' WHERE user_name = :user_name');
-        $req->execute(array('user_name' => $userName));
+        $req = $db->prepare('SELECT * FROM ' . $tableName . ' WHERE username = :username');
+        $req->execute(array('username' => $userName));
 
         $item = $req->fetch();
         if (isset($item['id'])) {
