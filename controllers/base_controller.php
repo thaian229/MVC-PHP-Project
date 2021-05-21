@@ -1,4 +1,5 @@
 <?php
+
 class BaseController
 {
     protected $folder;
@@ -9,9 +10,10 @@ class BaseController
         if (is_file($view_file)) {
             extract($data);
 
+            require_once('views/layouts/application.php');
+
             require_once($view_file);
 
-            require_once('views/layouts/application.php');
         } else {
             header('Location: index.php?controller=pages&action=error');
         }

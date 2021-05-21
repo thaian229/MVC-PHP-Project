@@ -31,13 +31,17 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) 
-            VALUES (NULL, \'' . $userName . '\', \'' . $pass . '\', \''. $ava_url .'\', \':acc_type\')'
+            'INSERT INTO ' . $tableName . ' (`id`, `username`, `password`, `ava_url`, `acc_type`) 
+            VALUES (NULL, :username, :password, :ava_url, :acc_type)'
         );
-        $req->execute(array('acc_type' => $acc_type));
+        $req->execute(array(
+            'acc_type' => $acc_type,
+            'username' => $userName,
+            'password' => $pass,
+            'ava_url' => $ava_url
+        ));
 
-        if (!$db->lastInsertId())
-        {
+        if (!$db->lastInsertId()) {
             // Notify error
             return null;
         }
@@ -66,8 +70,7 @@ class Accounts extends BaseDAO
             'id' => $id
         ));
 
-        if (!$db->lastInsertId())
-        {
+        if (!$db->lastInsertId()) {
             // Notify error
         }
 
