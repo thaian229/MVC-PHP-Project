@@ -3,6 +3,31 @@ require_once 'dao/base_dao.php';
 
 class Videos extends BaseDAO
 {
+    // Upload new video
+    static function uploadVideo($title, $videoUrl, $thumbnailUrl = '')
+    {
+        self::requireModel('video');
+        
+        $db = DB::getInstance();
+        
+        $req = $db->prepare(
+            'INSERT INTO `videos` (`id`, `title`, `video_url`, `thumbnail_url`, `created_time`, `views`, `upvotes`, `downvotes`) 
+            VALUES (NULL, :title, :video_url, :thumbnail_url, current_timestamp(), \'0\', \'0\', \'0\')'
+        );
+        $req->execute(array(
+            'title' => $title,
+            'video_url' => $videoUrl,
+            'thumbnail_url' => $thumbnailUrl
+        ));
+
+        if (!$db->lastInsertId())
+        {
+            // Notify error
+        }
+
+        return $db->lastInsertId();
+    }
+
     // Browse videos with pagination (page start from 1):
     static function browseVideosWithPagination($page) 
     {
@@ -99,5 +124,64 @@ class Videos extends BaseDAO
             $list[] = Video::createFromDB($item);
         }
         return $list;
+    }
+
+    // Check if a video has already in fav list of a user
+    static function isVideoInFavourite($video_id, $user_id)
+    {
+        $db = DB::getInstance();
+        $req = $db->prepare(
+            'SELECT * FROM favourites as f
+            WHERE f.acc_id = :acc_id AND f.video_id = :video_id'
+        );
+        $req->execute(array(
+            'acc_id' => $user_id,
+            'video_id' => $video_id
+        ));
+
+        $rs = $req->fetch();
+        if ($rs['acc_id'] != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // Add vid to fav list
+    static function addVideosToFavourite($video_id, $user_id)
+    {
+        if (self::isVideoInFavourite($video_id, $user_id))
+        {
+            // Notify error
+            return null;
+        }
+        $db = DB::getInstance();
+        $req = $db->prepare(
+            'INSERT INTO \`favourites\` (\`acc_id\`, \`video_id\`) 
+            VALUES (:acc_id, :video_id)'
+        );
+        $req->execute(array(
+            'acc_id' => $user_id,
+            'video_id' => $video_id
+        ));
+    }
+
+    // Remove vid from fav list
+    static function removeVideosFromFavourite($video_id, $user_id)
+    {
+        if (!self::isVideoInFavourite($video_id, $user_id))
+        {
+            // Notify error
+            return null;
+        }
+        $db = DB::getInstance();
+        $req = $db->prepare(
+            'DELETE FROM favourites 
+            WHERE acc_id = :acc_id AND video_id = :video_id '
+        );
+        $req->execute(array(
+            'acc_id' => $user_id,
+            'video_id' => $video_id
+        ));
     }
 }

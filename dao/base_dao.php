@@ -38,6 +38,23 @@ abstract class BaseDAO
         return null;
     }
 
+    static function removeById($id)
+    {
+        $tableName = get_called_class();
+        $dto = substr($tableName, 0, -1);
+
+        self::requireModel($dto);
+
+        $db = DB::getInstance();
+        $req = $db->prepare(
+            'DELETE FROM ' . $tableName . 
+            ' WHERE id = :id'
+        );
+        $req->execute(array('id' => $id));
+
+        return null;
+    }
+
     static function requireModel($modelName)
     {
         $words = array();
