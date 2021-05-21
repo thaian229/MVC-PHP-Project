@@ -1,5 +1,7 @@
 <?php
 
+require_once 'dao/base_dao.php';
+
 class Comments extends BaseDAO 
 {
     static function addCommentToVideo($acc_id, $video_id, $content)
