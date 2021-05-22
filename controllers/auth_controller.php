@@ -40,7 +40,7 @@ class AuthController extends BaseController
     {
         unset($_SESSION["username"]);
         unset($_SESSION["password"]);
-        header('Refresh: 0');
+        header('Refresh: 1; url=index.php');
     }
 
     public function verifyLogin()
