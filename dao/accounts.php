@@ -12,8 +12,13 @@ class Accounts extends BaseDAO
         self::requireModel($dto);
 
         $db = DB::getInstance();
-        $req = $db->prepare('SELECT * FROM ' . $tableName . ' WHERE username = :username');
-        $req->execute(array('username' => $userName));
+        $req = $db->prepare(
+            'SELECT * FROM ' . $tableName . 
+            ' WHERE username = :username'
+        );
+        $req->execute(array(
+            'username' => $userName
+        ));
 
         $item = $req->fetch();
         if (isset($item['id'])) {
@@ -31,17 +36,18 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO ' . $tableName . ' (`id`, `username`, `password`, `ava_url`, `acc_type`) 
-            VALUES (NULL, :username, :password, :ava_url, :acc_type)'
+            'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) 
+            VALUES (NULL, :username, :pass, :ava_url, :acc_type)'
         );
         $req->execute(array(
-            'acc_type' => $acc_type,
             'username' => $userName,
-            'password' => $pass,
-            'ava_url' => $ava_url
+            'pass' => $pass,
+            'ava_url' => $ava_url,
+            'acc_type' => $acc_type
         ));
 
-        if (!$db->lastInsertId()) {
+        if (!$db->lastInsertId())
+        {
             // Notify error
             return null;
         }
@@ -70,7 +76,8 @@ class Accounts extends BaseDAO
             'id' => $id
         ));
 
-        if (!$db->lastInsertId()) {
+        if (!$db->lastInsertId())
+        {
             // Notify error
         }
 

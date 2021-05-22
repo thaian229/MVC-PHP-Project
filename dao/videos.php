@@ -1,4 +1,5 @@
 <?php
+
 require_once 'dao/base_dao.php';
 
 class Videos extends BaseDAO
@@ -26,6 +27,36 @@ class Videos extends BaseDAO
         }
 
         return $db->lastInsertId();
+    }
+
+    // Update video
+    static function updateVideo($video_id, $title, $videoUrl, $thumbnailUrl)
+    {
+        self::requireModel('video');
+
+        $db = DB::getInstance();
+        
+        $req = $db->prepare(
+            'UPDATE `videos` 
+            SET `title` = :title, `video_url` = :video_url, `thumbnail_url` = :thumbnail_url, `created_time` = current_timestamp() 
+            WHERE `videos`.`id` = :video_id'
+        );
+        $status = $req->execute(array(
+            'title' => $title,
+            'video_url' => $videoUrl,
+            'thumbnail_url' => $thumbnailUrl,
+            'video_id' => $video_id
+        ));
+
+        if (!$status)
+        {
+            // Notify error
+            return null;
+        }
+        else
+        {
+            return self::find($video_id);
+        }
     }
 
     // Browse videos with pagination (page start from 1):
@@ -117,7 +148,9 @@ class Videos extends BaseDAO
             WHERE f.acc_id = :user_id 
             LIMIT ' . $startPagination . ', 8'
         );
-        $req->execute(array('user_id' => $user_id));
+        $req->execute(array(
+            'user_id' => $user_id
+        ));
 
         foreach ($req->fetchAll() as $item)
         {
@@ -157,7 +190,7 @@ class Videos extends BaseDAO
         }
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO \`favourites\` (\`acc_id\`, \`video_id\`) 
+            'INSERT INTO `favourites` (`acc_id`, `video_id`) 
             VALUES (:acc_id, :video_id)'
         );
         $req->execute(array(
@@ -183,5 +216,23 @@ class Videos extends BaseDAO
             'acc_id' => $user_id,
             'video_id' => $video_id
         ));
+    }
+
+    // Increase Views of a video
+    static function increaseView($video_id)
+    {
+        $db = DB::getInstance();
+        $req = $db->prepare(
+            'UPDATE `videos` SET `views` = `views` + 1 
+            WHERE `videos`.`id` = :video_id'
+        );
+        $status = $req->execute(array(
+            'video_id' => $video_id
+        ));
+
+        if (!$status)
+        {
+            // Notify error
+        }
     }
 }

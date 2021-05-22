@@ -28,8 +28,13 @@ abstract class BaseDAO
         self::requireModel($dto);
 
         $db = DB::getInstance();
-        $req = $db->prepare('SELECT * FROM ' . $tableName . ' WHERE id = :id');
-        $req->execute(array('id' => $id));
+        $req = $db->prepare(
+            'SELECT * FROM ' . $tableName . 
+            ' WHERE id = :id'
+        );
+        $req->execute(array(
+            'id' => $id
+        ));
 
         $item = $req->fetch();
         if (isset($item['id'])) {
@@ -50,7 +55,9 @@ abstract class BaseDAO
             'DELETE FROM ' . $tableName . 
             ' WHERE id = :id'
         );
-        $req->execute(array('id' => $id));
+        $req->execute(array(
+            'id' => $id
+        ));
 
         return null;
     }
