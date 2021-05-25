@@ -11,8 +11,6 @@ class PagesController extends BaseController
     public function home()
     {
         $data = array(
-            'name' => 'Sang Beo',
-            'age' => 22
         );
         $this->render('home', $data);
     }
@@ -20,5 +18,10 @@ class PagesController extends BaseController
     public function error()
     {
         $this->render('error');
+    }
+
+    public function unauthorized()
+    {
+        $this->render('unauthorized');
     }
 }
