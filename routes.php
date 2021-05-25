@@ -3,7 +3,8 @@ $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
     'posts' => ['index', 'showPost'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
-    'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile']
+    'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile'],
+    'images' => ['updateAvatar']
 );
 
 if (!array_key_exists($controller, $controllers) || !in_array($action, $controllers[$controller])) {

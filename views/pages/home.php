@@ -1,8 +1,8 @@
 <?php
 echo "HOME PAGE<br>";
 echo '<br>';
-if (isset($_SESSION['username'])) {
-    echo $_SESSION['username'] . "<br>";
+if (isset($_SESSION['session_username'])) {
+    echo $_SESSION['session_username'] . "<br>";
 
     echo '<a href="index.php?controller=users&action=changeProfile">Change Profile</a><br>';
     echo '<a href="index.php?controller=auth&action=logout">LOGOUT</a><br>';

@@ -13,8 +13,8 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'SELECT * FROM ' . $tableName . 
-            ' WHERE username = :username'
+            'SELECT * FROM ' . $tableName .
+                ' WHERE username = :username'
         );
         $req->execute(array(
             'username' => $userName
@@ -46,8 +46,7 @@ class Accounts extends BaseDAO
             'acc_type' => $acc_type
         ));
 
-        if (!$db->lastInsertId())
-        {
+        if (!$db->lastInsertId()) {
             // Notify error
             return null;
         }
@@ -55,7 +54,7 @@ class Accounts extends BaseDAO
         return self::find($db->lastInsertId());
     }
 
-    static function updateAccountInfo($id, $new_name, $new_pass, $new_url = '', $new_type = 0)
+    static function updateAccountInfo($id, $new_name, $new_url = '', $new_type = 0)
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -63,22 +62,23 @@ class Accounts extends BaseDAO
         self::requireModel($dto);
 
         $db = DB::getInstance();
+
         $req = $db->prepare(
             'UPDATE `accounts` 
-            SET `username` = :username, `password` = :pass, `ava_url` = :ava_url, `acc_type` = :acc_type 
-            WHERE `accounts`.`id` = :id'
+                SET `username` = :username, `ava_url` = :ava_url, `acc_type` = :acc_type 
+                WHERE `accounts`.`id` = :id'
         );
+
         $req->execute(array(
             'username' => $new_name,
-            'pass' => $new_pass,
             'ava_url' => $new_url,
             'acc_type' => $new_type,
             'id' => $id
         ));
 
-        if (!$db->lastInsertId())
-        {
+        if (!$db->lastInsertId()) {
             // Notify error
+            return -1;
         }
 
         return $db->lastInsertId();
