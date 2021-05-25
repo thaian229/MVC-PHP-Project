@@ -51,13 +51,18 @@ abstract class BaseDAO
         self::requireModel($dto);
 
         $db = DB::getInstance();
-        $req = $db->prepare(
+        $status = $req = $db->prepare(
             'DELETE FROM ' . $tableName . 
             ' WHERE id = :id'
         );
         $req->execute(array(
             'id' => $id
         ));
+
+        if (!$status)
+        {
+            // Notify error
+        }
 
         return null;
     }

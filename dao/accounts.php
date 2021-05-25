@@ -39,14 +39,14 @@ class Accounts extends BaseDAO
             'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) 
             VALUES (NULL, :username, :pass, :ava_url, :acc_type)'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'username' => $userName,
             'pass' => $pass,
             'ava_url' => $ava_url,
             'acc_type' => $acc_type
         ));
 
-        if (!$db->lastInsertId())
+        if (!$status)
         {
             // Notify error
             return null;
@@ -68,7 +68,7 @@ class Accounts extends BaseDAO
             SET `username` = :username, `password` = :pass, `ava_url` = :ava_url, `acc_type` = :acc_type 
             WHERE `accounts`.`id` = :id'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'username' => $new_name,
             'pass' => $new_pass,
             'ava_url' => $new_url,
@@ -76,11 +76,12 @@ class Accounts extends BaseDAO
             'id' => $id
         ));
 
-        if (!$db->lastInsertId())
+        if (!$status)
         {
             // Notify error
+            return null;
         }
 
-        return $db->lastInsertId();
+        return self::find($id);
     }
 }
