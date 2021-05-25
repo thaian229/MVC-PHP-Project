@@ -15,15 +15,16 @@ class Videos extends BaseDAO
             'INSERT INTO `videos` (`id`, `title`, `video_url`, `thumbnail_url`, `created_time`, `views`, `upvotes`, `downvotes`) 
             VALUES (NULL, :title, :video_url, :thumbnail_url, current_timestamp(), \'0\', \'0\', \'0\')'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'title' => $title,
             'video_url' => $videoUrl,
             'thumbnail_url' => $thumbnailUrl
         ));
 
-        if (!$db->lastInsertId())
+        if (!$status)
         {
             // Notify error
+            return -1;
         }
 
         return $db->lastInsertId();
@@ -51,11 +52,11 @@ class Videos extends BaseDAO
         if (!$status)
         {
             // Notify error
-            return null;
+            return -1;
         }
         else
         {
-            return self::find($video_id);
+            return $video_id;
         }
     }
 
@@ -193,10 +194,18 @@ class Videos extends BaseDAO
             'INSERT INTO `favourites` (`acc_id`, `video_id`) 
             VALUES (:acc_id, :video_id)'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'acc_id' => $user_id,
             'video_id' => $video_id
         ));
+
+        if (!$status)
+        {
+            // Notify error
+            return -1;
+        }
+
+        return $video_id;
     }
 
     // Remove vid from fav list
@@ -212,10 +221,17 @@ class Videos extends BaseDAO
             'DELETE FROM favourites 
             WHERE acc_id = :acc_id AND video_id = :video_id '
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'acc_id' => $user_id,
             'video_id' => $video_id
         ));
+
+        if (!$status)
+        {
+            // Notify error
+            return -1;
+        }
+        return $video_id;
     }
 
     // Increase Views of a video
@@ -233,6 +249,8 @@ class Videos extends BaseDAO
         if (!$status)
         {
             // Notify error
+            return -1;
         }
+        return $video_id;
     }
 }

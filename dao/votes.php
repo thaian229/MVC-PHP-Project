@@ -139,7 +139,7 @@ class Votes extends BaseDAO
     static function syncVote()
     {
         $db = DB::getInstance();
-        $req = $db->query(
+        $status = $db->query(
             'UPDATE videos as vd
             SET vd.upvotes = (
                 SELECT COUNT(*) FROM votes as v1
@@ -150,9 +150,11 @@ class Votes extends BaseDAO
             )'
         );
 
-        if (!$req)
+        if (!$status)
         {
             // Notify error
+            return -1;
         }
+        return 1;
     }
 }

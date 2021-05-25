@@ -46,7 +46,11 @@ class Video extends BaseModel
 
     public static function createFromDB($list)
     {
-        $instance = new self($list['id'], $list['title'], $list['video_url'], $list['thumbnail_url'], $list['views'], $list['upvotes'], $list['downvotes']);
+        $instance = new self(
+            $list['id'], $list['title'], $list['video_url'], $list['thumbnail_url'], 
+            $list['views'], $list['upvotes'], $list['downvotes']
+        );
+        
         return $instance;
     }
 }

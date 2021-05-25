@@ -26,7 +26,7 @@ class Category extends BaseModel
     public static function createFromDB($list)
     {
         $instance = new self($list['id'], $list['name']);
-
+        
         return $instance;
     }
 }

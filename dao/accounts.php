@@ -27,7 +27,9 @@ class Accounts extends BaseDAO
         return null;
     }
 
-    static function addNewAccount($userName, $pass, $ava_url = '', $acc_type = 0)
+    static function addNewAccount(
+        $userName, $pass, $ava_url = '', $acc_type = 0, 
+        $tel_no = '', $email = '')
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -36,14 +38,16 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) 
-            VALUES (NULL, :username, :pass, :ava_url, :acc_type)'
+            'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`, `tel_no`, `email`) 
+            VALUES (NULL, :username, :pass, :ava_url, :acc_type, :tel_no, :email)'
         );
         $status = $req->execute(array(
             'username' => $userName,
             'pass' => $pass,
             'ava_url' => $ava_url,
-            'acc_type' => $acc_type
+            'acc_type' => $acc_type,
+            'tel_no' => $tel_no,
+            'email' => $email
         ));
 
         if (!$status)
@@ -55,7 +59,9 @@ class Accounts extends BaseDAO
         return self::find($db->lastInsertId());
     }
 
-    static function updateAccountInfo($id, $new_name, $new_url = '', $new_type = 0)
+    static function updateAccountInfo(
+        $id, $new_name, $new_url = '', $new_type = 0, 
+        $new_tel_no = '', $new_email ='')
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -66,22 +72,24 @@ class Accounts extends BaseDAO
 
         $req = $db->prepare(
             'UPDATE `accounts` 
-                SET `username` = :username, `ava_url` = :ava_url, `acc_type` = :acc_type 
+                SET `username` = :username, `ava_url` = :ava_url, `acc_type` = :acc_type, `tel_no` = :tel_no, `email` = :email 
                 WHERE `accounts`.`id` = :id'
         );
         $status = $req->execute(array(
             'username' => $new_name,
             'ava_url' => $new_url,
             'acc_type' => $new_type,
+            'tel_no' => $new_tel_no,
+            'email' => $new_email,
             'id' => $id
         ));
 
         if (!$status)
         {
             // Notify error
-            return null;
+            return -1;
         }
 
-        return self::find($id);
+        return $id;
     }
 }

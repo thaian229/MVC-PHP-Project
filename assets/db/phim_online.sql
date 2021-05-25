@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2021 at 02:16 PM
+-- Generation Time: May 25, 2021 at 01:32 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -32,19 +32,22 @@ CREATE TABLE `accounts` (
   `username` varchar(50) NOT NULL,
   `password` varchar(256) NOT NULL,
   `ava_url` varchar(256) DEFAULT NULL,
-  `acc_type` int(11) NOT NULL DEFAULT 0
+  `acc_type` int(11) NOT NULL DEFAULT 0,
+  `tel_no` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) VALUES
-(1, 'thaian229', '22114455', 'https://cdn.iconscout.com/icon/free/png-256/avatar-366-456318.png', 0),
-(2, 'mhoang99', '123456', NULL, 0),
-(3, 'buituhoang', '123456', NULL, 0),
-(4, 'admin1', 'admin1', 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/21760012/original/d4c0c142f91f012c9a8a9c9aeef3bac28036f15b/create-your-cartoon-style-flat-avatar-or-icon.jpg', 1),
-(5, 'admin2', 'admin2', 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png', 1);
+INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`, `tel_no`, `email`) VALUES
+(1, 'thaian', '22114455', 'uploads/avatars/ava_1.jpg', 0, NULL, NULL),
+(2, 'mhoang99', '123456', NULL, 0, NULL, NULL),
+(3, 'buituhoang', '123456', NULL, 0, NULL, NULL),
+(4, 'admin1', 'admin1', 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/21760012/original/d4c0c142f91f012c9a8a9c9aeef3bac28036f15b/create-your-cartoon-style-flat-avatar-or-icon.jpg', 1, NULL, NULL),
+(5, 'admin2', 'admin2', 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png', 1, NULL, NULL),
+(6, 'an002', '22114455', 'uploads/avatars/ava_6.jpg', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -240,7 +243,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
