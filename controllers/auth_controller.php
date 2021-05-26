@@ -44,7 +44,7 @@ class AuthController extends BaseController
        unset($_SESSION['session_user_id']);
        unset($_SESSION['session_user_type']);
 
-        header('Refresh: 1; url=index.php');
+        header('Refresh: 1; url=index.php?controller=posts');
     }
 
     public function verifyLogin()

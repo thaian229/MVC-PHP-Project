@@ -11,8 +11,9 @@ class BaseController
             extract($data);
 
             require_once('views/layouts/application.php');
-
+            require_once('views/layouts/header.php');
             require_once($view_file);
+            require_once('views/layouts/footer.php');
 
         } else {
             header('Location: index.php?controller=pages&action=error');

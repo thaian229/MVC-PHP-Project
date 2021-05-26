@@ -8,5 +8,5 @@ define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
 
 
-define('BASE_PATH', 'http://localhost/PHP/WebProgramming/FinalProject');
+define('BASE_PATH', 'http://localhost/NewPhpProject/MVC-PHP-Project/');
 
