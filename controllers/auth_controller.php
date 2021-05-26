@@ -11,7 +11,7 @@ class AuthController extends BaseController
 
     public function index()
     {
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['session_username'])) {
             header("location: index.php");
         } else {
             $this->login();
@@ -20,7 +20,7 @@ class AuthController extends BaseController
 
     public function login()
     {
-        if (isset($_SESSION['username'])) {
+        if (isset($_SESSION['session_username'])) {
             header("location: index.php");
         } else {
             $this->render('login');
@@ -38,8 +38,12 @@ class AuthController extends BaseController
 
     public function logout()
     {
-        unset($_SESSION["username"]);
-        unset($_SESSION["password"]);
+
+       unset($_SESSION['session_username']);
+       unset($_SESSION['session_ava_url']);
+       unset($_SESSION['session_user_id']);
+       unset($_SESSION['session_user_type']);
+
         header('Refresh: 1; url=index.php');
     }
 
@@ -57,10 +61,12 @@ class AuthController extends BaseController
                 $this->success = true;
                 $this->errorMessage = "";
 
-                $_SESSION['valid'] = true;
-                $_SESSION['timeout'] = time();
-                $_SESSION['username'] = $account->username;
-                $_SESSION['user_id'] = $account->id;
+                $_SESSION['session_valid'] = true;
+                $_SESSION['session_timeout'] = time();
+                $_SESSION['session_username'] = $account->username;
+                $_SESSION['session_user_id'] = $account->id;
+                $_SESSION['session_ava_url'] = $account->avaUrl;
+                $_SESSION['session_user_type'] = $account->type;
 
                 $res["success"] = true;
                 $res["body"] = array(

@@ -14,16 +14,16 @@ class Comments extends BaseDAO
             'INSERT INTO `comments` (`id`, `acc_id`, `video_id`, `contents`, `created_time`) 
             VALUES (NULL, :acc_id, :video_id, :content, current_timestamp())'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'acc_id' => $acc_id,
             'video_id' => $video_id,
             'content' => $content
         ));
 
-        if (!$db->lastInsertId())
+        if (!$status)
         {
             // Notify error
-            return null;
+            return -1;
         }
 
         return $db->lastInsertId();

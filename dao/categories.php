@@ -56,7 +56,7 @@ class Categories extends BaseDAO
         if (!$status)
         {
             // Notify error
-            return null;
+            return -1;
         }
         else
         {

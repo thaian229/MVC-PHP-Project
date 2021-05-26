@@ -33,7 +33,11 @@ class Comment extends BaseModel
 
     public static function createFromDB($list)
     {
-        $instance = new self($list['id'], $list['acc_id'], $list['username'], $list['ava_url'], $list['video_id'], $list['content']);
+        $instance = new self(
+            $list['id'], $list['acc_id'], $list['username'], $list['ava_url'], 
+            $list['video_id'], $list['content']
+        );
+        
         return $instance;
     }
 }

@@ -4,7 +4,8 @@ session_start();
 
 $post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
-    'users' => ['getFavourites', 'updateProfile']
+    'users' => ['getFavourites', 'updateProfile'],
+    'images' => ['updateAvatar']
 );
 
 $auth_access_controllers = array(
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST"
 
 if (array_key_exists($controller, $auth_access_controllers)
     && in_array($action, $auth_access_controllers[$controller])
-    && !isset($_SESSION['username'])
+    && !isset($_SESSION['session_username'])
 ) {
     header("Location: index.php?controller=pages&action=unauthorized");
 
