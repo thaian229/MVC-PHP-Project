@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2021 at 10:19 AM
+-- Generation Time: May 25, 2021 at 01:32 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -32,17 +32,22 @@ CREATE TABLE `accounts` (
   `username` varchar(50) NOT NULL,
   `password` varchar(256) NOT NULL,
   `ava_url` varchar(256) DEFAULT NULL,
-  `acc_type` int(11) NOT NULL DEFAULT 0
+  `acc_type` int(11) NOT NULL DEFAULT 0,
+  `tel_no` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`) VALUES
-(1, 'thaian229', '22114455', NULL, 0),
-(2, 'mhoang99', '123456', NULL, 0),
-(3, 'buituhoang', '123456', NULL, 0);
+INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`, `tel_no`, `email`) VALUES
+(1, 'thaian', '22114455', 'uploads/avatars/ava_1.jpg', 0, NULL, NULL),
+(2, 'mhoang99', '123456', NULL, 0, NULL, NULL),
+(3, 'buituhoang', '123456', NULL, 0, NULL, NULL),
+(4, 'admin1', 'admin1', 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/21760012/original/d4c0c142f91f012c9a8a9c9aeef3bac28036f15b/create-your-cartoon-style-flat-avatar-or-icon.jpg', 1, NULL, NULL),
+(5, 'admin2', 'admin2', 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png', 1, NULL, NULL),
+(6, 'an002', '22114455', 'uploads/avatars/ava_6.jpg', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -61,6 +66,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `name`) VALUES
 (4, 'food'),
+(5, 'movie'),
 (1, 'music'),
 (2, 'sport'),
 (3, 'technology');
@@ -78,6 +84,14 @@ CREATE TABLE `comments` (
   `contents` varchar(256) NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `acc_id`, `video_id`, `contents`, `created_time`) VALUES
+(1, 1, 2, 'Test comment 1', '2021-05-21 10:09:47'),
+(2, 2, 2, 'Test comment 2', '2021-05-21 10:09:47');
 
 -- --------------------------------------------------------
 
@@ -120,9 +134,11 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`id`, `title`, `video_url`, `thumbnail_url`, `created_time`, `views`, `upvotes`, `downvotes`) VALUES
-(2, 'M1 iMac Review - Better and Worse', 'https://www.youtube.com/watch?v=E59xZyDFiJ8', 'https://www.wyzowl.com/wp-content/uploads/2019/09/YouTube-thumbnail-size-guide-best-practices-top-examples.png', '2021-05-19 10:45:20', 0, 0, 0),
+(2, 'M1 iMac Review - Better and Worse', 'https://www.youtube.com/watch?v=E59xZyDFiJ8', 'https://www.wyzowl.com/wp-content/uploads/2019/09/YouTube-thumbnail-size-guide-best-practices-top-examples.png', '2021-05-19 10:45:20', 0, 1, 0),
 (3, 'Don\'t wait for the Switch Pro, Buy This Today!', 'https://www.youtube.com/watch?v=52vo1g4VBbc&ab_channel=LinusTechTipsLinusTechTipsVerified', 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/youtube-thumbnail-retrowave-design-template-facd275829297c4a471f2f1af6436508_screen.jpg?ts=1561496227', '2021-05-19 10:45:58', 0, 0, 0),
-(4, 'Uncle Roger Review NICK DIGIOVANNI Ramen (Masterchef Finalist)', 'https://www.youtube.com/watch?v=myciX5_b1QY&ab_channel=mrnigelngmrnigelngVerified', 'https://s29843.pcdn.co/blog/wp-content/uploads/sites/2/2021/02/video-thumbnails-social.png', '2021-05-19 10:46:48', 0, 0, 0);
+(4, 'Uncle Roger Review NICK DIGIOVANNI Ramen (Masterchef Finalist)', 'https://www.youtube.com/watch?v=myciX5_b1QY&ab_channel=mrnigelngmrnigelngVerified', 'https://s29843.pcdn.co/blog/wp-content/uploads/sites/2/2021/02/video-thumbnails-social.png', '2021-05-19 10:46:48', 0, 0, 2),
+(5, 'Resident Evil: Infinite Darkness | Official Trailer | Netflix', 'https://www.youtube.com/watch?v=P-js-Eww1OI', 'http://i3.ytimg.com/vi/P-js-Eww1OI/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0),
+(6, 'The Big Problem with Manchester United\'s Stadium', 'https://www.youtube.com/watch?v=B87aESnOWKg&ab_channel=TifoFootballTifoFootballVerified', 'http://i3.ytimg.com/vi/B87aESnOWKg/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -141,6 +157,7 @@ CREATE TABLE `videos_categories` (
 
 INSERT INTO `videos_categories` (`video_id`, `cat_id`) VALUES
 (2, 3),
+(3, 3),
 (4, 4);
 
 -- --------------------------------------------------------
@@ -154,6 +171,15 @@ CREATE TABLE `votes` (
   `video_id` int(11) NOT NULL,
   `vote_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `votes`
+--
+
+INSERT INTO `votes` (`acc_id`, `video_id`, `vote_type`) VALUES
+(1, 2, 1),
+(2, 4, 0),
+(3, 4, 0);
 
 --
 -- Indexes for dumped tables
@@ -171,7 +197,8 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `cat_name_index` (`name`);
+  ADD UNIQUE KEY `cat_name_index` (`name`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `comments`
@@ -216,25 +243,25 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

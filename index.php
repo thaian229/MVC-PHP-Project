@@ -15,5 +15,6 @@ if (isset($_GET['controller'])) {
     $action = 'home';
 }
 
+require_once('filter.php');
 
 require_once('routes.php');
