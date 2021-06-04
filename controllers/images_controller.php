@@ -1,8 +1,4 @@
 <?php
-
-?>
-
-<?php
 require_once('controllers/base_controller.php');
 
 class ImagesController extends BaseController

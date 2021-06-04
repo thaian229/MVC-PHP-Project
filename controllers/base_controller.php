@@ -9,12 +9,7 @@ class BaseController
         $view_file = 'views/' . $this->folder . '/' . $file . '.php';
         if (is_file($view_file)) {
             extract($data);
-
             require_once('views/layouts/application.php');
-            require_once('views/layouts/header.php');
-            require_once($view_file);
-            require_once('views/layouts/footer.php');
-
         } else {
             header('Location: index.php?controller=pages&action=error');
         }

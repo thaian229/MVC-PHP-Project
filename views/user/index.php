@@ -1,7 +1,6 @@
 <?php
 
 ?>
-
 <div class="container">
     <h2> INFO </h2>
     <br>
