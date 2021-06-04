@@ -78,5 +78,10 @@
             }
             ?>
     </table>
-    <br/><br/>
+    <br/><br/><br/><br/>
+    <div>
+        <button class="button button1">Next Page</button>
+        <button class="button button2">Previous Page</button>
+    </div>
+    <br/><br/><br/><br/>
 </div>
