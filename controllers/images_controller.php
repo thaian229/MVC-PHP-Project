@@ -1,8 +1,4 @@
 <?php
-
-?>
-
-<?php
 require_once('controllers/base_controller.php');
 
 class ImagesController extends BaseController
@@ -12,7 +8,7 @@ class ImagesController extends BaseController
         $this->folder = '';
     }
 
-    public function updateAvatar()
+    public function uploadAvatar()
     {
         if (isset($_FILES["image"]) && isset($_SESSION['session_user_id'])) {
             $target_file = AVA_DIR . basename($_FILES["image"]["name"]);
@@ -30,6 +26,46 @@ class ImagesController extends BaseController
                     "success" => true,
                     "body" => array(
                         "ava_url" => $target
+                    )
+                );
+            } else {
+                $res = array(
+                    "success" => false,
+                    "body" => array(
+                        "errMessage" => $imageFileType . " files not allowed!"
+                    )
+                );
+            }
+        } else {
+            $res = array(
+                "success" => false,
+                "body" => array(
+                    "errMessage" => "INVALID REQUEST"
+                )
+            );
+        }
+
+        echo json_encode($res);
+    }
+
+    public function uploadThumbnail()
+    {
+        if (isset($_FILES["image"])) {
+            $target_file = THUMBNAIL_DIR . basename($_FILES["image"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            $check = getimagesize($_FILES["image"]["tmp_name"]);
+            if ($check !== false) {
+                $fileName = basename($_FILES["image"]["name"]);
+                
+                $target = THUMBNAIL_DIR . $fileName;
+
+                move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+                $res = array(
+                    "success" => true,
+                    "body" => array(
+                        "thumbnail_url" => $target
                     )
                 );
             } else {

@@ -1,42 +1,46 @@
 <h2>PROFILE FORM</h2>
 <p><input type="file" accept="image/*" name="image" id="ava_file" onchange="loadFile(event)" style="display: none;"></p>
 <p><label for="ava_file" style="cursor: pointer;">Upload Image</label></p>
-<p><img id="preview_img" alt="Image not found" src="<?php echo $_SESSION['session_ava_url'] ?>" width="200" /></p>
+<p><img id="preview_img" alt="Image not found" src="<?php echo $_SESSION['session_user_ava_url'] ?>" width="200"/></p>
 <?php
 // require_once('');
 ?>
+<div>
+    <form class="form-login" id="login-form" role="form" method="post">
+        <!-- <input type="text" class="form-control" id="username" name="username" placeholder="username" required autofocus>
+        </br> -->
+        <span>Username: <?php echo $_SESSION['session_username'] ?></span>
+        </br>
+        <a href="index.php?controller=users&action=changePassword">Change password</a>
+        </br>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Email" required autofocus
+               value="<?php echo $_SESSION['session_user_email'] ?>">
+        </br>
+        <input type="text" class="form-control" id="tel_no" name="tel_no" placeholder="Phone Number" required autofocus
+               value="<?php echo $_SESSION['session_user_tel_no'] ?>">
+        </br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Confirm
+        </button>
+    </form>
+    <h4 class="form-warning" id="form-warning">
+        <?php
+        if (isset($errorMessage))
+            echo $errorMessage;
 
-<form class="form-login" id="login-form" role="form" method="post">
-    <!-- <input type="text" class="form-control" id="username" name="username" placeholder="username" required autofocus>
-    </br> -->
-    <span>Username: <?php echo $_SESSION['session_username'] ?></span>
-    </br>
-    <input type="text" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
-    </br>
-    <input type="text" class="form-control" id="tel_no" name="tel_no" placeholder="Phone Number" required autofocus>
-    </br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Confirm
-    </button>
-</form>
-<h4 class="form-warning" id="form-warning">
-    <!--    --><?php
-                //    if (isset($errorMessage))
-                //        echo $errorMessage;
-                //    
-                ?>
-</h4>
+        ?>
+    </h4>
+</div>
 
-<!-- Trigger the Modal -->
 
 
 <script>
     updateAvatar = (newAvatar) => {
         let imgFormData = new FormData();
         imgFormData.append('image', newAvatar);
-        fetch('index.php?controller=images&action=updateAvatar', {
-                body: imgFormData,
-                method: "post"
-            })
+        fetch('index.php?controller=images&action=uploadAvatar', {
+            body: imgFormData,
+            method: "post"
+        })
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -60,9 +64,9 @@
         }
 
         fetch('index.php?controller=users&action=updateProfile', {
-                body: formData,
-                method: "post"
-            })
+            body: formData,
+            method: "post"
+        })
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -77,7 +81,6 @@
             });
 
     }
-
 
 
     onFormSubmit = (event) => {
