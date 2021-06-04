@@ -31,14 +31,28 @@ class UsersController extends BaseController
             if (isset($_POST['ava_url'])) {
                 $ava_url = $_POST['ava_url'];
             } else {
-                $ava_url = $_SESSION['session_ava_url'];
+                $ava_url = $_SESSION['session_user_ava_url'];
+            }
+
+            if (isset($_POST['email']) || strcmp($_POST['email'], "") != 0) {
+                $email = $_POST['email'];
+            } else {
+                $email = $_SESSION['session_user_email'];
+            }
+
+            if (isset($_POST['tel_no']) || strcmp($_POST['tel_no'], "") != 0) {
+                $tel_no = $_POST['tel_no'];
+            } else {
+                $tel_no = $_SESSION['session_user_tel_no'];
             }
 
             $id = Accounts::updateAccountInfo(
                 $_SESSION['session_user_id'],
-                $_POST['username'],
+                $_SESSION['session_username'],
                 $ava_url,
-                $_SESSION['session_user_type']
+                $_SESSION['session_user_type'],
+                $tel_no,
+                $email,
             );
 
             if ($id < 0) {
@@ -49,7 +63,9 @@ class UsersController extends BaseController
                     )
                 );
             } else {
-                $_SESSION['session_ava_url'] =  $ava_url;
+                $_SESSION['session_user_ava_url'] =  $ava_url;
+                $_SESSION['session_user_email'] =  $email;
+                $_SESSION['session_user_tel_no'] =  $tel_no;
                 $res = array(
                     "success" => true,
                     "body" => array(

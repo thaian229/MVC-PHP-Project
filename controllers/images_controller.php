@@ -12,7 +12,7 @@ class ImagesController extends BaseController
         $this->folder = '';
     }
 
-    public function updateAvatar()
+    public function uploadAvatar()
     {
         if (isset($_FILES["image"]) && isset($_SESSION['session_user_id'])) {
             $target_file = AVA_DIR . basename($_FILES["image"]["name"]);

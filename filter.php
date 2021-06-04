@@ -5,7 +5,7 @@ session_start();
 $post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
     'users' => ['getFavourites', 'updateProfile'],
-    'images' => ['updateAvatar']
+    'images' => ['uploadAvatar']
 );
 
 $auth_access_controllers = array(
@@ -24,5 +24,4 @@ if (array_key_exists($controller, $auth_access_controllers)
     && !isset($_SESSION['session_username'])
 ) {
     header("Location: index.php?controller=pages&action=unauthorized");
-
 }
