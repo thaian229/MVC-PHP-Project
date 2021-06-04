@@ -4,7 +4,7 @@ $controllers = array(
     'posts' => ['index', 'showPost', 'getPage'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile'],
-    'images' => ['updateAvatar']
+    'images' => ['updateAvatar', 'getAvatar', 'getAvatarError']
 );
 
 if (!array_key_exists($controller, $controllers) || !in_array($action, $controllers[$controller])) {

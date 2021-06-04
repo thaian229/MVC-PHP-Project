@@ -15,14 +15,15 @@ class ImagesController extends BaseController
     public function updateAvatar()
     {
         if (isset($_FILES["image"]) && isset($_SESSION['session_user_id'])) {
-            $target_dir = "uploads/avatars/";
-            $target_file = $target_dir . basename($_FILES["image"]["name"]);
+            $target_file = AVA_DIR . basename($_FILES["image"]["name"]);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
             $check = getimagesize($_FILES["image"]["tmp_name"]);
             if ($check !== false) {
-                $target = $target_dir . 'ava_' . $_SESSION['session_user_id'] . '.' . $imageFileType;
+                $fileName = 'ava' . $_SESSION['session_user_id'] . '.' . $imageFileType;
                 
+                $target = AVA_DIR . $fileName;
+
                 move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
                 $res = array(

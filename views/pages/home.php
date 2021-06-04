@@ -15,4 +15,4 @@ if (isset($_SESSION['session_username'])) {
 
 
 <br>
-<a href="<?php echo BASE_PATH . "index.php?controller=posts" ?>">VIDEOS LIST</a>
+<a href="index.php?controller=posts">VIDEOS LIST</a>

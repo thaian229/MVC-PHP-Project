@@ -1,10 +1,19 @@
 <h2>PROFILE FORM</h2>
 <p><input type="file" accept="image/*" name="image" id="ava_file" onchange="loadFile(event)" style="display: none;"></p>
 <p><label for="ava_file" style="cursor: pointer;">Upload Image</label></p>
-<p><img id="preview_img" alt="Image not found" src="<?php echo $ava_url ?>" width="200" /></p>
+<p><img id="preview_img" alt="Image not found" src="<?php echo $_SESSION['session_ava_url'] ?>" width="200" /></p>
+<?php
+// require_once('');
+?>
 
 <form class="form-login" id="login-form" role="form" method="post">
-    <input type="text" class="form-control" id="username" name="username" placeholder="username" required autofocus>
+    <!-- <input type="text" class="form-control" id="username" name="username" placeholder="username" required autofocus>
+    </br> -->
+    <span>Username: <?php echo $_SESSION['session_username'] ?></span>
+    </br>
+    <input type="text" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
+    </br>
+    <input type="text" class="form-control" id="tel_no" name="tel_no" placeholder="Phone Number" required autofocus>
     </br>
     <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Confirm
     </button>
@@ -44,7 +53,8 @@
 
     updateUserDetails = (ava_url) => {
         let formData = new FormData();
-        formData.append('username', document.getElementById("username").value);
+        formData.append('email', document.getElementById("email").value);
+        formData.append('tel_no', document.getElementById("tel_no").value);
         if (ava_url !== null) {
             formData.append('ava_url', ava_url);
         }
