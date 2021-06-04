@@ -29,14 +29,10 @@ class AdminController extends BaseController
 
     public function delete()
     {
-        if(isset($_GET['id']))
+        if(isset($_GET['id']) && $_SESSION['session_user_type'] == 1)
         {
             $vid = $_GET['id'];
-            $videos = Videos::find($vid);
-            $data = array('videos' => $videos);
-            $this->render('index', $data);
-        } else 
-        {
+            Videos::removeById($vid);
             $videos = Videos::all();
             $data = array('videos' => $videos);
             $this->render('index', $data);

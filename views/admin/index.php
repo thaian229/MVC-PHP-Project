@@ -26,29 +26,56 @@
     <div class="video-list" id="admin-video-list">
         <table>
             <?php
-                foreach ($videos as $v)
+                if(is_countable($videos))
+                {
+                    foreach ($videos as $v)
+                    {
+                        echo '<tr>';
+                        echo '
+                            <td>
+                                <img src="' . $v->thumbnailUrl . '" width="100" height="80">
+                            </td>
+                            <td>
+                                <p> ' . $v->title . ' </p>
+                            </td>
+                            <td>
+                                <form class="update-video" method="get" action="index.php?controller=admin&action=update&id=' . $v->id .'">
+                                    <input type="submit" value="change">
+                                </form>
+                            </td>
+                            <td>
+                                <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $v->id .'">
+                                    <input type="submit" value="delete">
+                                </form>
+                            </td>
+                        ';
+                        echo '</tr>';
+                    }
+                } 
+                else 
                 {
                     echo '<tr>';
                     echo '
                         <td>
-                            <img src="' . $v->thumbnailUrl . '" width="100" height="80">
+                            <img src="' . $videos->thumbnailUrl . '" width="100" height="80">
                         </td>
                         <td>
-                            <p> ' . $v->title . ' </p>
+                            <p> ' . $videos->title . ' </p>
                         </td>
                         <td>
-                            <form class="update-video" method="get" action="index.php?controller=admin&action=update&id=' . $v->id .'">
+                            <form class="update-video" method="get" action="index.php?controller=admin&action=update&id=' . $videos->id .'">
                                 <input type="submit" value="change">
                             </form>
                         </td>
                         <td>
-                            <form class="delete-video" method="get" action="index.php?controller=admin&action=delete&id=' . $v->id .'">
+                            <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $videos->id .'">
                                 <input type="submit" value="delete">
                             </form>
                         </td>
                     ';
                     echo '</tr>';
                 }
+                
             ?>
         </table>
     </div>
