@@ -49,6 +49,7 @@ class UsersController extends BaseController
                     )
                 );
             } else {
+                $_SESSION['session_ava_url'] =  $ava_url;
                 $res = array(
                     "success" => true,
                     "body" => array(

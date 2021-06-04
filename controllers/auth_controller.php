@@ -73,7 +73,7 @@ class AuthController extends BaseController
                     "user_id" => $account->id,
                     "username" => $account->username
                 );
-//                header("location: " . BASE_PATH . "index.php");
+
             } else {
                 $res["success"] = false;
                 $res["body"] = array(
@@ -93,7 +93,7 @@ class AuthController extends BaseController
     public function verifyRegister()
     {
         $res = array();
-
+        
         $username = $_POST["username"];
         $password = $_POST["password"];
 
