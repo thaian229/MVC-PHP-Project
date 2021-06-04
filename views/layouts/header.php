@@ -5,7 +5,7 @@
         if(isset($_SESSION['session_user_id'])) {
             echo '
                 <a class="logout" href="index.php?controller=auth&action=logout">Logout</a>
-                <a class="profile" href="index.php">Profile</a>
+                <a class="profile" href="index.php?controller=users">Profile</a>
             ';
         }
         else {
