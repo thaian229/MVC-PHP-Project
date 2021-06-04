@@ -22,6 +22,11 @@ class AdminController extends BaseController
         $this->render('index');
     }
 
+    public function index()
+    {
+        $this->show();
+    }
+
     public function delete()
     {
         if(isset($_GET['id']))
