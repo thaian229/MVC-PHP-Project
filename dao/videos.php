@@ -7,7 +7,7 @@ class Videos extends BaseDAO
     // Upload new video
     static function uploadVideo($title, $videoUrl, $thumbnailUrl = '')
     {
-        self::requireModel('video');
+        self::requireModel('Video');
         
         $db = DB::getInstance();
         
@@ -33,7 +33,7 @@ class Videos extends BaseDAO
     // Update video
     static function updateVideo($video_id, $title, $videoUrl, $thumbnailUrl)
     {
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         
@@ -67,7 +67,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = null;
@@ -90,7 +90,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->query(
@@ -112,7 +112,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->query(
@@ -138,7 +138,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->prepare(

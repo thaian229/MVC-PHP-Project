@@ -8,7 +8,7 @@ class Categories extends BaseDAO
     {
         $list = [];
 
-        self::requireModel('category');
+        self::requireModel('Category');
 
         $db = DB::getInstance();
         $req = $db->query(
@@ -24,7 +24,7 @@ class Categories extends BaseDAO
 
     static function find($id)
     {
-        self::requireModel('category');
+        self::requireModel('Category');
 
         $db = DB::getInstance();
         $req = $db->prepare(
