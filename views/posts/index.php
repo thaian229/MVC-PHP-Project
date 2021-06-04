@@ -1,3 +1,8 @@
+<script>
+    function previousPage() {
+        window.location.href = window.location.href + "&action=getPage&page=2"
+    };
+</script>
 <div align="center">
     <br/><br/>
     <table>
@@ -78,5 +83,12 @@
                 }
             ?>
     </table>
-    <br/><br/>
+    <br/><br/><br/><br/>
+    <div>
+        <?php
+        if ($i == 8)
+            echo '<button class="button button2" onclick="previousPage();">Previous Page</button>';
+        ?>
+    </div>
+    <br/><br/><br/><br/>
 </div>
