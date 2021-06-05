@@ -1,3 +1,15 @@
+<script>
+    var currentUrl = window.location.href
+    var currentPageId = currentUrl.split("&page=")[1]
+    function nextPage() {
+        var nextPageId = parseInt(currentPageId) - 1
+        window.location.href = currentUrl.split("&page=")[0] + "&page=" + nextPageId.toString()
+    };
+    function previousPage() {
+        var previousPageId = parseInt(currentPageId) + 1
+        window.location.href = currentUrl.split("&page=")[0] + "&page=" + previousPageId.toString()
+    };
+</script>
 <div align="center">
     <br/><br/>
     <table>
@@ -80,8 +92,15 @@
     </table>
     <br/><br/><br/><br/>
     <div>
-        <button class="button button1">Next Page</button>
-        <button class="button button2">Previous Page</button>
+        <?php
+            $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $pageId = explode("&page=",$url)[1];
+            if ($pageId != 1)
+                echo '<button class="button button1" onclick="nextPage();">Next Page</button>';
+            echo 'Page ' . $pageId;
+            if (count($posts) == 8)
+                echo '<button class="button button2" onclick="previousPage();">Previous Page</button>';
+        ?>
     </div>
     <br/><br/><br/><br/>
 </div>
