@@ -20,20 +20,82 @@ class UsersController extends BaseController
         $res = array();
         $pageSize = 8;
 
-        if (isset($_GET["page"])) {
+        if (isset($_GET["page"]) && isset($_SESSION['session_user_id'])) {
             $page = $_GET["page"];
 
 //            $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
 //            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
 
-            $videosCount  = Videos::countVideos();
+            $videosCount = Videos::countVideos();
             $resultList = Videos::browseVideosWithPagination($page);
 
             $res["success"] = true;
             $res["body"] = array(
                 "videos" => $resultList,
-                "totalPage" => ceil($videosCount/$pageSize)
+                "totalPage" => ceil($videosCount / $pageSize)
             );
+
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
+    }
+
+    public function addFavouriteVideo()
+    {
+        $res = array();
+
+        if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
+
+            $videoId = $_GET["page"];
+
+            $addedId = Videos::addVideosToFavourite($videoId, $_SESSION['session_user_id']);
+
+            if ($addedId >= 0) {
+                $res["success"] = true;
+                $res["body"] = array(
+                    "videoId" => $addedId,
+                );
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Add failed"
+                );
+            }
+
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
+    }
+
+    public function removeFavouriteVideo()
+    {
+        $res = array();
+
+        if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
+
+            $videoId = $_GET["page"];
+
+            $addedId = Videos::removeVideosFromFavourite($videoId, $_SESSION['session_user_id']);
+
+            if ($addedId >= 0) {
+                $res["success"] = true;
+                $res["body"] = array(
+                    "videoId" => $addedId,
+                );
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Remove failed"
+                );
+            }
 
         } else {
             $res["success"] = false;
@@ -89,9 +151,9 @@ class UsersController extends BaseController
                     )
                 );
             } else {
-                $_SESSION['session_user_ava_url'] =  $ava_url;
-                $_SESSION['session_user_email'] =  $email;
-                $_SESSION['session_user_tel_no'] =  $tel_no;
+                $_SESSION['session_user_ava_url'] = $ava_url;
+                $_SESSION['session_user_email'] = $email;
+                $_SESSION['session_user_tel_no'] = $tel_no;
                 $res = array(
                     "success" => true,
                     "body" => array(

@@ -2,9 +2,9 @@
 ob_start();
 session_start();
 
-$post_controllers_actions = array(
+$json_post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
-    'users' => ['updateProfile'],
+    'users' => ['updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
     'admin' => ['upload', 'update'],
     'posts' => ['quickSearch']
@@ -19,10 +19,10 @@ $admin_access_controllers = array(
 );
 
 if ($_SERVER["REQUEST_METHOD"] != "POST"
-    && array_key_exists($controller, $post_controllers_actions)
-    && in_array($action, $post_controllers_actions[$controller])
+    && array_key_exists($controller, $json_post_controllers_actions)
+    && in_array($action, $json_post_controllers_actions[$controller])
 ) {
-    header("Location: index.php?controller=pages&action=error");
+    header("Location: index.php?controller=base&action=invalidRequest");
 }
 
 if (array_key_exists($controller, $auth_access_controllers)

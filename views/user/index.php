@@ -13,9 +13,9 @@
     <span></span>
     <br>
     <span></span>
-
     <br>
     <a href="index.php?controller=users&action=changeProfile">Change profile</a>
+    <br>
     <br>
     <h2>
         Favourite videos
@@ -64,16 +64,37 @@
         fetchFavList(1);
     }
 
+    removeVideoFromFavouriteHandler = (event) => {
+        let videoId =  event.target.id.split('-')[2]
+        let formData = new FormData()
+        formData.append('video_id', videoId);
+
+        fetch('index.php?controller=users&action=removeFavouriteVideo', {
+            body: formData,
+            method: "post"
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success === true) {
+                    fetchFavList(currentPage);
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            });
+
+    }
 
     fetchFavList = (page) => {
-
-        let totalPage = 0
 
         fetch('index.php?controller=users&action=getFavourites&page=' + page)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 if (data.success === true) {
+
+                    let totalPage = 0
                     let htmlString = `
                         <tr>
                             <th width="200px"></th>
@@ -87,9 +108,9 @@
                     data.body.videos.forEach((video) => {
                         htmlString += `
                             <tr>
-                                <td width="250px"><img width="200px" src=` + video.thumbnailUrl + `/></td>
-                                <td><a style={{color: "black"}} href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
-                                <td>Favourite</td>
+                                <td width="250px"><img alt="NOT FOUND" width="200px" src=` + video.thumbnailUrl + `/></td>
+                                <td><a href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
+                                <td><button onclick="removeVideoFromFavouriteHandler()" id="remove-fav-`+ video.id +`">Remove</button></td>
                             </tr>
                         `
                     })
@@ -128,11 +149,15 @@
                         document.getElementById("go-to-next").removeAttribute("disabled")
                     }
 
-                } else
+                } else {
                     document.getElementById("fav-videos").innerHTML = htmlarray
-
+                }
+            })
+            .catch(e => {
+                console.log(e)
             });
     }
 
     fetchFavList(1)
+
 </script>

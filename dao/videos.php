@@ -287,7 +287,7 @@ class Videos extends BaseDAO
         if (self::isVideoInFavourite($video_id, $user_id))
         {
             // Notify error
-            return null;
+            return -1;
         }
         $db = DB::getInstance();
         $req = $db->prepare(
@@ -314,7 +314,7 @@ class Videos extends BaseDAO
         if (!self::isVideoInFavourite($video_id, $user_id))
         {
             // Notify error
-            return null;
+            return -1;
         }
         $db = DB::getInstance();
         $req = $db->prepare(
