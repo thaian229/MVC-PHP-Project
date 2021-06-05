@@ -1,6 +1,7 @@
 <?php
 require_once('controllers/base_controller.php');
 require_once('dao/accounts.php');
+require_once('dao/videos.php');
 
 class UsersController extends BaseController
 {
@@ -16,6 +17,25 @@ class UsersController extends BaseController
 
     public function getFavourites()
     {
+        $res = array();
+
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+
+            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+
+            $res["success"] = true;
+            $res["body"] = array(
+                "videos" => $resultList
+            );
+
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
     }
 
     public function changeProfile()

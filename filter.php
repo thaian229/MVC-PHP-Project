@@ -4,9 +4,10 @@ session_start();
 
 $post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
-    'users' => ['getFavourites', 'updateProfile'],
+    'users' => ['updateProfile'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
-    'admin' => ['upload', 'update']
+    'admin' => ['upload', 'update'],
+    'posts' => ['quickSearch']
 );
 
 $auth_access_controllers = array(

@@ -1,7 +1,7 @@
 <?php
 $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
-    'posts' => ['index', 'showPost', 'getPage'],
+    'posts' => ['index', 'showPost', 'getPage', 'quickSearch'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
