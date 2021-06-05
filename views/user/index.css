@@ -10,9 +10,9 @@
     padding: 8px;
 }
 
-.container tr:nth-child(even) {
-    background-color: #dddddd;
-}
+/*.container tr:nth-child(even) {*/
+/*    background-color: #dddddd;*/
+/*}*/
 
 .pagination-container {
     display: flex;

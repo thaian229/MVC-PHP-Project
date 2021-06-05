@@ -20,60 +20,116 @@
     <h2>
         Favourite videos
     </h2>
-    <table id="fav-video">
+    <div id="has-fav">
+        <table id="fav-videos">
 
-    </table>
+        </table>
 
-    <div class="pagination-container">
-        <div id="back-to-first"><<</div>
-        <div id="back-to-previous"><</div>
-        <div id="current-page"></div>
-        <div id="go-to-next">></div>
-        <div id="go-to-last">>></div>
+        <div class="pagination-container">
+            <button onclick="firstPageHandler()" id="back-to-first"><<</button>
+            <button onclick="prevPageHandler()" id="back-to-previous"><</button>
+            <div id="current-page"></div>
+            <button onclick="nextPageHandler()" id="go-to-next">></button>
+            <button onclick="lastPageHandler()" id="go-to-last">>></button>
+        </div>
     </div>
+
+    <div id="no-fav">
+        <div>
+            <h2>You haven't like any video</h2>
+            <a href="index.php?controller=posts"> Start exoloring now</a>
+        </div>
+    </div>
+
 
 </div>
 
 <script>
+
+    var currentPage = 0
+    var lastPage = 0
+
+    nextPageHandler = (event) => {
+        fetchFavList(currentPage + 1);
+    }
+
+    prevPageHandler = (event) => {
+        fetchFavList(currentPage - 1);
+    }
+
+    lastPageHandler = (event) => {
+        fetchFavList(lastPage);
+    }
+    firstPageHandler = (event) => {
+        fetchFavList(1);
+    }
+
+
     fetchFavList = (page) => {
+
+        let totalPage = 0
+
         fetch('index.php?controller=users&action=getFavourites&page=' + page)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 if (data.success === true) {
-                    let htmlarray = `
-                    <tr>
-                        <th width="200px"></th>
-                        <th>Title</th>
-                        <th>Favourite</th>
-                    </tr>
+                    let htmlString = `
+                        <tr>
+                            <th width="200px"></th>
+                            <th>Title</th>
+                            <th>Favourite</th>
+                        </tr>
                     `
+
+                    totalPage = data.body.totalPage
+
                     data.body.videos.forEach((video) => {
-                        htmlarray += `
+                        htmlString += `
                             <tr>
-                                <td width="200px"><img src=` + video.thumbnail + `/></td>
+                                <td width="250px"><img width="200px" src=` + video.thumbnailUrl + `/></td>
                                 <td><a style={{color: "black"}} href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
                                 <td>Favourite</td>
                             </tr>
                         `
                     })
 
-                    pagination = `
-                        <div>pagination</div>
-                    `
+                    document.getElementById("fav-videos").innerHTML = htmlString
 
-                    if (data.body.videos.length == 0) {
-                        htmlarray = `
-                            <div>
-                                <h2>You haven't like any video</h2>
-                                <a href="index.php?controller=posts"> Start exoloring now</a>
-                            </div>`
+                    console.log(page)
+                    console.log(totalPage)
+
+                    currentPage = page
+                    lastPage = totalPage
+
+                    if (totalPage === 0) {
+                        document.getElementById("has-fav").style.display = "none"
+                        document.getElementById("no-fav").style.display = "flex"
+                    } else {
+                        document.getElementById("has-fav").style.display = "block"
+                        document.getElementById("no-fav").style.display = "none"
                     }
 
-                    document.getElementById("fav-video").innerHTML = htmlarray
                     document.getElementById("current-page").innerHTML = page
+
+                    if (page >= totalPage) {
+                        document.getElementById("go-to-last").setAttribute("disabled", "disabled");
+                        document.getElementById("go-to-next").setAttribute("disabled", "disabled");
+                    } else {
+                        document.getElementById("go-to-last").removeAttribute("disabled")
+                        document.getElementById("go-to-next").removeAttribute("disabled")
+                    }
+
+                    if (page <= 1) {
+                        document.getElementById("back-to-first").setAttribute("disabled", "disabled");
+                        document.getElementById("back-to-previous").setAttribute("disabled", "disabled");
+                    } else {
+                        document.getElementById("go-to-last").removeAttribute("disabled")
+                        document.getElementById("go-to-next").removeAttribute("disabled")
+                    }
+
                 } else
-                    document.getElementById("fav-video").innerHTML = htmlarray
+                    document.getElementById("fav-videos").innerHTML = htmlarray
 
             });
     }

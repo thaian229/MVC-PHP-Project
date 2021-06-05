@@ -18,15 +18,21 @@ class UsersController extends BaseController
     public function getFavourites()
     {
         $res = array();
+        $pageSize = 8;
 
         if (isset($_GET["page"])) {
             $page = $_GET["page"];
 
-            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+//            $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
+//            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+
+            $videosCount  = Videos::countVideos();
+            $resultList = Videos::browseVideosWithPagination($page);
 
             $res["success"] = true;
             $res["body"] = array(
-                "videos" => $resultList
+                "videos" => $resultList,
+                "totalPage" => ceil($videosCount/$pageSize)
             );
 
         } else {
