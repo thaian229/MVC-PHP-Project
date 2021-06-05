@@ -60,6 +60,85 @@ class Videos extends BaseDAO
         }
     }
 
+    // Count total number of videos (for pagination)
+    static function countVideos()
+    {
+        $db = DB::getInstance();
+
+        $req = $db->query('
+            SELECT COUNT(*) as `videos_count` FROM videos
+        ');
+
+        if (!$req)
+        {
+            // Notify error
+            return -1;
+        }
+        else
+        {
+            $count = $req->fetch()[0];
+            return $count;
+        }
+    }
+
+    static function countVideosByCategory($category)
+    {
+        $db = DB::getInstance();
+
+        $category = '\%' + $category + '\%';
+
+        $req = $db->prepare('
+            SELECT COUNT(*) as `videos_count`
+            FROM videos as v 
+            INNER JOIN videos_categories as vc 
+            ON v.id = vc.video_id 
+            INNER JOIN categories as c 
+            ON vc.cat_id = c.id 
+            WHERE c.name LIKE :category
+        ');
+
+        $req->execute(array(
+            'category' => $category,
+            'page' => $category,
+        ));
+
+        if (!$req)
+        {
+            // Notify ercountror
+            return 0;
+        }
+        else
+        {
+            $count = $req->fetch()[0];
+            return $count;
+        }
+    }
+
+    static function countVideosByFavourite($userId)
+    {
+        $db = DB::getInstance();
+
+        $req = $db->prepare(
+            'SELECT COUNT(*) as `videos_count `FROM favourites as f
+            WHERE f.acc_id = :acc_id'
+        );
+
+        $req->execute(array(
+            'acc_id' => $userId,
+        ));
+
+        if (!$req)
+        {
+            // Notify ercountror
+            return 0;
+        }
+        else
+        {
+            $count = $req->fetch()[0];
+            return $count;
+        }
+    }
+
     // Browse videos with pagination (page start from 1):
     static function browseVideosWithPagination($page) 
     {
@@ -97,6 +176,27 @@ class Videos extends BaseDAO
             'SELECT * FROM ' . $tableName .
             ' WHERE title LIKE \'%' . $key . '%\'' .
             ' LIMIT ' . $startPagination . ', 8'
+        );
+        
+        foreach ($req->fetchAll() as $item)
+        {
+            $list[] = Video::createFromDB($item);
+        }
+        return $list;
+    }
+
+    // Search for videos by title without pagination:
+    static function searchVideosByTitleNoPagination($key)
+    {
+        $tableName = 'videos';
+        $list = [];
+        
+        self::requireModel('Video');
+
+        $db = DB::getInstance();
+        $req = $db->query(
+            'SELECT * FROM ' . $tableName .
+            ' WHERE title LIKE \'%' . $key . '%\''
         );
         
         foreach ($req->fetchAll() as $item)
@@ -187,7 +287,7 @@ class Videos extends BaseDAO
         if (self::isVideoInFavourite($video_id, $user_id))
         {
             // Notify error
-            return null;
+            return -1;
         }
         $db = DB::getInstance();
         $req = $db->prepare(
@@ -214,7 +314,7 @@ class Videos extends BaseDAO
         if (!self::isVideoInFavourite($video_id, $user_id))
         {
             // Notify error
-            return null;
+            return -1;
         }
         $db = DB::getInstance();
         $req = $db->prepare(

@@ -1,5 +1,5 @@
 <?php
-echo "Login";
+echo "Register";
 ?>
 
 <form class="form-register" role="form"
