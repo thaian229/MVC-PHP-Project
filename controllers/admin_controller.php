@@ -51,9 +51,47 @@ class AdminController extends BaseController
 
     public function update()
     {
-        $videos = Videos::all();
-        $data = array('videos' => $videos);
-        $this->render('index', $data);
+        $res = array();
+
+        if (isset($_SESSION['session_user_id'])) {
+            if (isset($_POST['thumbnail_url'])) {
+                $thumbnail_url = $_POST['thumbnail_url'];
+            } else {
+                $thumbnail_url = null;
+            }
+
+            $id = Videos::updateVideo(
+                $_POST['video_id'],
+                $_POST['video_title'],
+                $_POST['video_url'],
+                $thumbnail_url
+            );
+
+            if ($id < 0) {
+                $res = array(
+                    "success" => false,
+                    "body" => array(
+                        "errMessage" => "Error in updating video info!"
+                    )
+                );
+            } else {
+                $res = array(
+                    "success" => true,
+                    "body" => array(
+                        "updated_id" => $id
+                    )
+                );
+            }
+        } else {
+            $res = array(
+                "success" => false,
+                "body" => array(
+                    "errMessage" => "No logged in admin!"
+                )
+            );
+        }
+
+        echo json_encode($res);
     }
 
     public function upload()
@@ -77,7 +115,7 @@ class AdminController extends BaseController
                 $res = array(
                     "success" => false,
                     "body" => array(
-                        "errMessage" => "Error in updating user profile!"
+                        "errMessage" => "Error in uploading video!"
                     )
                 );
             } else {
@@ -92,7 +130,44 @@ class AdminController extends BaseController
             $res = array(
                 "success" => false,
                 "body" => array(
-                    "errMessage" => "No logged in user!"
+                    "errMessage" => "No logged in admin!"
+                )
+            );
+        }
+
+        echo json_encode($res);
+    }
+
+    public function getVideoInfo()
+    {
+        $res = array();
+
+        if (isset($_POST['video_id']))
+        {
+            $video_id = $_POST['video_id'];
+            $v = Videos::find($video_id);
+            if (!$v) {
+                $res = array(
+                    "success" => false,
+                    "body" => array(
+                        "errMessage" => "Failed to retrieve video info!"
+                    )
+                );
+            } else {
+                $res = array(
+                    "success" => true,
+                    "body" => array(
+                        "video_title" => $v->title,
+                        "video_thumbnailUrl" => $v->thumbnailUrl,
+                        "video_url" => $v->videoUrl
+                    )
+                );
+            }
+        } else {
+            $res = array(
+                "success" => false,
+                "body" => array(
+                    "errMessage" => "Unknown Error"
                 )
             );
         }

@@ -6,7 +6,7 @@ $post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
     'users' => ['getFavourites', 'updateProfile'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
-    'admin' => ['upload', 'update']
+    'admin' => ['upload', 'update', 'getVideoInfo']
 );
 
 $auth_access_controllers = array(

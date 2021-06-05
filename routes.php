@@ -5,7 +5,7 @@ $controllers = array(
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
-    'admin' => ['index','show', 'upload', 'update', 'delete', 'search']
+    'admin' => ['index','show', 'upload', 'update', 'delete', 'search', 'getVideoInfo']
 );
 
 if (!array_key_exists($controller, $controllers) || !in_array($action, $controllers[$controller])) {

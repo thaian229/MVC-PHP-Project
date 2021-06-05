@@ -39,9 +39,7 @@
                                 <p> ' . $v->title . ' </p>
                             </td>
                             <td>
-                                <form class="update-video" method="get" action="index.php?controller=admin&action=update&id=' . $v->id .'">
-                                    <input type="submit" value="change">
-                                </form>
+                                <button class="update-video-button" id="'.$v->id.'" onClick="onClickChange(this.id)">change</button>
                             </td>
                             <td>
                                 <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $v->id .'">
@@ -50,6 +48,7 @@
                             </td>
                         ';
                         echo '</tr>';
+                        echo '<tr id="c'.$v->id.'"> </tr>';
                     }
                 } 
                 else 
@@ -63,9 +62,7 @@
                             <p> ' . $videos->title . ' </p>
                         </td>
                         <td>
-                            <form class="update-video" method="get" action="index.php?controller=admin&action=update&id=' . $videos->id .'">
-                                <input type="submit" value="change">
-                            </form>
+                        <button class="update-video-button" id="'.$videos->id.'" onClick="onClickChange(this.id)">change</button>
                         </td>
                         <td>
                             <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $videos->id .'">
@@ -74,6 +71,7 @@
                         </td>
                     ';
                     echo '</tr>';
+                    echo '<tr id="c'.$videos->id.'"> </tr>';
                 }
                 
             ?>
@@ -120,6 +118,7 @@
             .then(data => {
                 console.log(data)
                 if (data.success === true) {
+                    alert(`Uploaded Successfully!`)
                     window.location.href = "index.php?controller=admin&action=show"
                 } else {
                     document.getElementById("form-warning").innerText = data.body.errMessage;
@@ -150,6 +149,118 @@
         var image = document.getElementById('preview_img');
         image.src = URL.createObjectURL(event.target.files[0]);
     };
+
+    
+
+    loadImage = (event, video_id) => {
+        var image = document.getElementById(``+video_id+`_preview_img`);
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    updateThumbnail = (newThumbnail, video_id) => {
+        let imgFormData = new FormData();
+        imgFormData.append('image', newThumbnail);
+        fetch('index.php?controller=images&action=uploadThumbnail', {
+                body: imgFormData,
+                method: "post"
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success === true) {
+                    updateVideo(data.body.thumbnail_url, video_id);
+                } else {
+                    alert(data.body.errMessage);
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+    updateVideo = (thumbnail_url, video_id) => {
+        let formData = new FormData();
+        formData.append('video_id', video_id);
+        formData.append('video_url', document.getElementById(``+video_id+`_url`).value);
+        formData.append('video_title', document.getElementById(``+video_id+`_title`).value);
+        formData.append('video_category', document.getElementById(``+video_id+`_category`).value);
+        if (thumbnail_url !== null) {
+            formData.append('thumbnail_url', thumbnail_url);
+        }
+
+        fetch('index.php?controller=admin&action=update', {
+                body: formData,
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success === true) {
+                    alert(`Updated Successfully!`)
+                    window.location.href = "index.php?controller=admin&action=show"
+                } else {
+                    alert(data.body.errMessage);
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+    onUpdateFormSubmit = (video_id) => {
+        event.preventDefault()
+
+        let newThumbnail = document.getElementById(``+video_id+`_thumbnail`).files[0];
+
+        console.log(newThumbnail)
+
+        if (newThumbnail === undefined) {
+            console.log("NO THUMBNAIL")
+            updateVideo(null, video_id);
+        } else {
+            console.log("HAS THUMBNAIL")
+            updateThumbnail(newThumbnail, video_id);
+        }
+    }
+
+    onClickChange = (video_id) => {
+        var target_html = document.getElementById('c' + video_id);
+
+        let formData = new FormData();
+        formData.append('video_id', video_id);
+
+        fetch('index.php?controller=admin&action=getVideoInfo', {
+                body: formData,
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success === true) {
+                    target_html.innerHTML = `
+                        <form method="POST" class="update-video-form" onsubmit="onUpdateFormSubmit(`+video_id+`)">
+                            <input type="text" name="id" value="`+video_id+`" style="display: none;"> 
+                            <label for="`+video_id+`_url">URL</label>
+                            <input type="text" id="`+video_id+`_url" name="url" value="`+data.body.video_url+`"><br>
+                            <label for="`+video_id+`_title">Title</label>
+                            <input type="text" id="`+video_id+`_title" name="title" value="`+data.body.video_title+`"><br>
+                            <label for="`+video_id+`_category">Category</label>
+                            <input type="text" id="`+video_id+`_category" name="category"><br>
+                            <label for="`+video_id+`_thumbnail" style="cursor: pointer;">Thumbnail</label>
+                            <input type="file" accept="image/*" name="thumbnail" id="`+video_id+`_thumbnail" onchange="loadImage(event, `+video_id+`)"
+                                style="display: none;">
+                            <img id="`+video_id+`_preview_img" alt="No thumbnail" src="`+data.body.video_thumbnailUrl+`" width="200" height="100" /><br>
+                            <input type="submit" value="Update" onClick="onUpdateFormSubmit(`+video_id+`)">
+                        </form>
+                    `;
+                } else {
+                    alert(data.body.errMessage)
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
 
     const form = document.getElementById('upload-video-form');
     form.addEventListener('submit', onFormSubmit);
