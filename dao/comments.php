@@ -6,7 +6,7 @@ class Comments extends BaseDAO
 {
     static function addCommentToVideo($acc_id, $video_id, $content)
     {
-        self::requireModel('comment');
+        self::requireModel('Comment');
         
         $db = DB::getInstance();
         
@@ -33,7 +33,7 @@ class Comments extends BaseDAO
     {
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = null;

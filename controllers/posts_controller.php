@@ -16,6 +16,13 @@ class PostsController extends BaseController
         $this->render('index', $data);
     }
 
+    public function getPage()
+    {
+        $posts = Videos::browseVideosWithPagination($_GET['page']);
+        $data = array('posts' => $posts);
+        $this->render('page', $data);
+    }
+
     public function showPost()
     {
         $post = Videos::find($_GET['id']);

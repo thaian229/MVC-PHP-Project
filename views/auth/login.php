@@ -4,7 +4,6 @@ echo "Login";
 <form class="form-login" id="login-form" role="form" method="post">
 <!--      action="--><?php //echo BASE_PATH . 'index.php?controller=auth&action=login'?><!--"-->
 
-
 <input type="text" class="form-control"
        id="username"
        name="username" placeholder="username"

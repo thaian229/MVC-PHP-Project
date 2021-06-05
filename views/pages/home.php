@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="views/pages/home.css">
+
 <?php
 echo "HOME PAGE<br>";
 echo '<br>';

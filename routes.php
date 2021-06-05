@@ -1,10 +1,11 @@
 <?php
 $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
-    'posts' => ['index', 'showPost'],
+    'posts' => ['index', 'showPost', 'getPage'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile'],
-    'images' => ['updateAvatar', 'getAvatar', 'getAvatarError']
+    'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
+    'admin' => ['index','show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo']
 );
 
 if (!array_key_exists($controller, $controllers) || !in_array($action, $controllers[$controller])) {

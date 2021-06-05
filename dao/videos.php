@@ -7,7 +7,7 @@ class Videos extends BaseDAO
     // Upload new video
     static function uploadVideo($title, $videoUrl, $thumbnailUrl = '')
     {
-        self::requireModel('video');
+        self::requireModel('Video');
         
         $db = DB::getInstance();
         
@@ -33,7 +33,7 @@ class Videos extends BaseDAO
     // Update video
     static function updateVideo($video_id, $title, $videoUrl, $thumbnailUrl)
     {
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         
@@ -60,6 +60,27 @@ class Videos extends BaseDAO
         }
     }
 
+    // Count total number of videos (for pagination)
+    static function countVideos()
+    {
+        $db = DB::getInstance();
+
+        $req = $db->query('
+            SELECT COUNT(*) as `videos_count` FROM videos
+        ');
+
+        if (!$req)
+        {
+            // Notify error
+            return -1;
+        }
+        else
+        {
+            $count = $req->fetch()[0];
+            return $count;
+        }
+    }
+
     // Browse videos with pagination (page start from 1):
     static function browseVideosWithPagination($page) 
     {
@@ -67,7 +88,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = null;
@@ -90,7 +111,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->query(
@@ -106,13 +127,34 @@ class Videos extends BaseDAO
         return $list;
     }
 
+    // Search for videos by title without pagination:
+    static function searchVideosByTitleNoPagination($key)
+    {
+        $tableName = 'videos';
+        $list = [];
+        
+        self::requireModel('Video');
+
+        $db = DB::getInstance();
+        $req = $db->query(
+            'SELECT * FROM ' . $tableName .
+            ' WHERE title LIKE \'%' . $key . '%\''
+        );
+        
+        foreach ($req->fetchAll() as $item)
+        {
+            $list[] = Video::createFromDB($item);
+        }
+        return $list;
+    }
+
     // Get videos by category:
     static function browseVideosByCategory($category, $page)
     {
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->query(
@@ -138,7 +180,7 @@ class Videos extends BaseDAO
         $startPagination = ($page - 1)  * 8;
         $list = [];
         
-        self::requireModel('video');
+        self::requireModel('Video');
 
         $db = DB::getInstance();
         $req = $db->prepare(

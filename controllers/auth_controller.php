@@ -38,11 +38,13 @@ class AuthController extends BaseController
 
     public function logout()
     {
-
-       unset($_SESSION['session_username']);
-       unset($_SESSION['session_ava_url']);
-       unset($_SESSION['session_user_id']);
-       unset($_SESSION['session_user_type']);
+        $_SESSION['session_valid'] = false;
+        unset($_SESSION['session_username']);
+        unset($_SESSION['session_user_ava_url']);
+        unset($_SESSION['session_user_id']);
+        unset($_SESSION['session_user_email']);
+        unset($_SESSION['session_user_tel_no']);
+        unset($_SESSION['session_user_type']);
 
         header('Refresh: 1; url=index.php?controller=posts');
     }
@@ -65,7 +67,9 @@ class AuthController extends BaseController
                 $_SESSION['session_timeout'] = time();
                 $_SESSION['session_username'] = $account->username;
                 $_SESSION['session_user_id'] = $account->id;
-                $_SESSION['session_ava_url'] = $account->avaUrl;
+                $_SESSION['session_user_ava_url'] = $account->avaUrl;
+                $_SESSION['session_user_email'] = $account->email;
+                $_SESSION['session_user_tel_no'] = $account->tel_no;
                 $_SESSION['session_user_type'] = $account->type;
 
                 $res["success"] = true;
@@ -93,7 +97,7 @@ class AuthController extends BaseController
     public function verifyRegister()
     {
         $res = array();
-        
+
         $username = $_POST["username"];
         $password = $_POST["password"];
 
