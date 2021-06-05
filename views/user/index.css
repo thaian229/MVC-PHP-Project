@@ -1,0 +1,26 @@
+.container table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.container td, .container th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/*.container tr:nth-child(even) {*/
+/*    background-color: #dddddd;*/
+/*}*/
+
+.pagination-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: auto 0;
+    max-width: 160px;
+}
+
+

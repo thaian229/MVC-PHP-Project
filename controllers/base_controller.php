@@ -14,4 +14,15 @@ class BaseController
             header('Location: index.php?controller=pages&action=error');
         }
     }
+
+    function invalidRequest()  {
+        $res = array(
+            "success"=> false,
+            "body" => array(
+                "errMessage" => "Request not found."
+            )
+        );
+
+        echo json_encode($res);
+    }
 }
