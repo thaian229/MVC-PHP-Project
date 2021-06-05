@@ -2,6 +2,7 @@
 require_once('controllers/base_controller.php');
 require_once('dao/accounts.php');
 require_once('dao/videos.php');
+require_once('dao/categories.php');
 
 class AdminController extends BaseController
 {
@@ -13,7 +14,11 @@ class AdminController extends BaseController
     public function show()
     {
         $videos = Videos::all();
-        $data = array('videos' => $videos);
+        $categories = Categories::all();
+        $data = array(
+            'videos' => $videos,
+            'categories' => $categories
+        );
         $this->render('index', $data);
     }
 
@@ -23,7 +28,11 @@ class AdminController extends BaseController
         {
             $key = $_POST['search'];
             $videos = Videos::searchVideosByTitleNoPagination($key);
-            $data = array('videos' => $videos);
+            $categories = Categories::all();
+            $data = array(
+                'videos' => $videos,
+                'categories' => $categories
+            );
             $this->render('index', $data);
         }
         else
@@ -43,9 +52,7 @@ class AdminController extends BaseController
         {
             $vid = $_GET['id'];
             Videos::removeById($vid);
-            $videos = Videos::all();
-            $data = array('videos' => $videos);
-            $this->render('index', $data);
+            $this->show();
         }
     }
 
@@ -161,6 +168,38 @@ class AdminController extends BaseController
                         "video_thumbnailUrl" => $v->thumbnailUrl,
                         "video_url" => $v->videoUrl
                     )
+                );
+            }
+        } else {
+            $res = array(
+                "success" => false,
+                "body" => array(
+                    "errMessage" => "Unknown Error"
+                )
+            );
+        }
+
+        echo json_encode($res);
+    }
+
+    public function getCategoryInfo()
+    {
+        $res = array();
+
+        if (isset($_SESSION['session_user_id']))
+        {
+            $c = Categories::all();
+            if (!$c) {
+                $res = array(
+                    "success" => false,
+                    "body" => array(
+                        "errMessage" => "Failed to retrieve video info!"
+                    )
+                );
+            } else {
+                $res = array(
+                    "success" => true,
+                    "body" => $c
                 );
             }
         } else {
