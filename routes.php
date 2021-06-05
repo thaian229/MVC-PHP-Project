@@ -1,11 +1,11 @@
 <?php
 $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
-    'posts' => ['index', 'showPost', 'getPage', 'sendComment', 'quickSearch'],
+    'posts' => ['index', 'showPost', 'getPage', 'quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
-    'admin' => ['index','show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo'],
+    'admin' => ['index', 'show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo'],
     'base' => ['invalidRequest']
 );
 
