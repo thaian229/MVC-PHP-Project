@@ -10,7 +10,7 @@
         window.location.href = currentUrl.split("&page=")[0] + "&page=" + previousPageId.toString()
     };
 </script>
-<div align="center">
+<div align="center" class="container">
     <br/><br/>
     <table>
         <tr>

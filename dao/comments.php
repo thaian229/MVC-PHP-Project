@@ -33,7 +33,7 @@ class Comments extends BaseDAO
     {
         $list = [];
         
-        self::requireModel('Video');
+        self::requireModel('Comment');
 
         $db = DB::getInstance();
         $req = null;
