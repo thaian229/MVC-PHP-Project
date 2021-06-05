@@ -111,8 +111,10 @@
         let formData = new FormData();
         formData.append('video_url', document.getElementById("v_url").value);
         formData.append('video_title', document.getElementById("v_title").value);
-        formData.append('video_category', document.getElementById("v_category").value);
-        if (thumbnail_url !== null) {
+        var select = document.getElementById(`v_category`);
+        var selected = [...select.selectedOptions].map(option => option.value);
+        formData.append('video_category', selected);
+        if (thumbnail_url !== null) {   
             formData.append('thumbnail_url', thumbnail_url);
         }
 
@@ -189,7 +191,10 @@
         formData.append('video_id', video_id);
         formData.append('video_url', document.getElementById(`` + video_id + `_url`).value);
         formData.append('video_title', document.getElementById(`` + video_id + `_title`).value);
-        formData.append('video_category', document.getElementById(`` + video_id + `_category`).value);
+        var select = document.getElementById(`` + video_id + `_category`);
+        var selected = [...select.selectedOptions].map(option => option.value);
+        formData.append('video_category', selected);
+        
         if (thumbnail_url !== null) {
             formData.append('thumbnail_url', thumbnail_url);
         }
@@ -284,7 +289,7 @@
                                 </form>
                                 `;
                                 target_html.innerHTML = str_html;
-                                
+
                             } else {
                                 alert(data.body.errMessage)
                             }

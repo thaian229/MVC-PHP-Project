@@ -74,6 +74,26 @@ class AdminController extends BaseController
                 $thumbnail_url
             );
 
+            if (isset($_POST['video_category']))
+            {
+                $cat_list_string = $_POST['video_category'];
+                $tokens = explode(",", $cat_list_string);
+                $cat_list = [];
+                foreach ($tokens as $t)
+                {
+                    $cat_list[] = (int) $t;
+                }
+                
+                if (is_countable($cat_list))
+                {
+                    Categories::removeAllCategoriesOfVideo($id);
+                    foreach ($cat_list as $c)
+                    {
+                        Categories::addCategoryToVideo($id, $c);
+                    }
+                }
+            }
+
             if ($id < 0) {
                 $res = array(
                     "success" => false,
@@ -117,6 +137,26 @@ class AdminController extends BaseController
                 $_POST['video_url'],
                 $thumbnail_url
             );
+
+            if (isset($_POST['video_category']))
+            {
+                $cat_list_string = $_POST['video_category'];
+                $tokens = explode(",", $cat_list_string);
+                $cat_list = [];
+                foreach ($tokens as $t)
+                {
+                    $cat_list[] = (int) $t;
+                }
+                
+                if (is_countable($cat_list))
+                {
+                    Categories::removeAllCategoriesOfVideo($id);
+                    foreach ($cat_list as $c)
+                    {
+                        Categories::addCategoryToVideo($id, $c);
+                    }
+                }
+            }
 
             if ($id < 0) {
                 $res = array(
