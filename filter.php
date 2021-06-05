@@ -6,8 +6,8 @@ $json_post_controllers_actions = array(
     'auth' => ['verifyRegister', 'verifyLogin'],
     'users' => ['updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
-    'admin' => ['upload', 'update'],
-    'posts' => ['quickSearch']
+    'posts' => ['quickSearch'],
+    'admin' => ['upload', 'update', 'getVideoInfo', 'getCategoryInfo']
 );
 
 $auth_access_controllers = array(
