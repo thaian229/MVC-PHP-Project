@@ -60,6 +60,27 @@ class Videos extends BaseDAO
         }
     }
 
+    // Count total number of videos (for pagination)
+    static function countVideos()
+    {
+        $db = DB::getInstance();
+
+        $req = $db->query('
+            SELECT COUNT(*) as `videos_count` FROM videos
+        ');
+
+        if (!$req)
+        {
+            // Notify error
+            return -1;
+        }
+        else
+        {
+            $count = $req->fetch()[0];
+            return $count;
+        }
+    }
+
     // Browse videos with pagination (page start from 1):
     static function browseVideosWithPagination($page) 
     {
@@ -97,6 +118,27 @@ class Videos extends BaseDAO
             'SELECT * FROM ' . $tableName .
             ' WHERE title LIKE \'%' . $key . '%\'' .
             ' LIMIT ' . $startPagination . ', 8'
+        );
+        
+        foreach ($req->fetchAll() as $item)
+        {
+            $list[] = Video::createFromDB($item);
+        }
+        return $list;
+    }
+
+    // Search for videos by title without pagination:
+    static function searchVideosByTitleNoPagination($key)
+    {
+        $tableName = 'videos';
+        $list = [];
+        
+        self::requireModel('Video');
+
+        $db = DB::getInstance();
+        $req = $db->query(
+            'SELECT * FROM ' . $tableName .
+            ' WHERE title LIKE \'%' . $key . '%\''
         );
         
         foreach ($req->fetchAll() as $item)

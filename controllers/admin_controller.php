@@ -19,7 +19,17 @@ class AdminController extends BaseController
 
     public function search()
     {
-        $this->render('index');
+        if(isset($_POST['search']))
+        {
+            $key = $_POST['search'];
+            $videos = Videos::searchVideosByTitleNoPagination($key);
+            $data = array('videos' => $videos);
+            $this->render('index', $data);
+        }
+        else
+        {
+            $this->show();
+        }
     }
 
     public function index()
