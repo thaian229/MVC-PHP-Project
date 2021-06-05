@@ -41,7 +41,7 @@ echo "Login";
 
         fetch('index.php?controller=auth&action=verifyRegister', {
             body: formData,
-            method: "post"
+            method: "post"A
         })
             .then(response => response.json())
             .then(data => {

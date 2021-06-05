@@ -35,7 +35,7 @@ class Comment extends BaseModel
     {
         $instance = new self(
             $list['id'], $list['acc_id'], $list['username'], $list['ava_url'], 
-            $list['video_id'], $list['content']
+            $list['video_id'], $list['contents']
         );
         
         return $instance;
