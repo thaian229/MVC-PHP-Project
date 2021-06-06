@@ -3,11 +3,11 @@ footer {
     background-color: #333;
 }
 
-.footer_row:after {
+/* .footer_row:after {
     content: "";
     display: table;
     clear: both;
-}
+} */
 
 .footer-icon {
     position: relative;
