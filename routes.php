@@ -5,7 +5,7 @@ $controllers = array(
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
-    'admin' => ['index', 'show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo'],
+    'admin' => ['index', 'show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo', 'test'],
     'base' => ['invalidRequest']
 );
 
