@@ -28,8 +28,8 @@ class Accounts extends BaseDAO
     }
 
     static function addNewAccount(
-        $userName, $pass, $ava_url = '', $acc_type = 0, 
-        $tel_no = '', $email = '')
+        $userName, $pass, $fullname = null, $ava_url = null, $acc_type = null, 
+        $tel_no = null, $email = null)
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -38,12 +38,13 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`, `tel_no`, `email`) 
-            VALUES (NULL, :username, :pass, :ava_url, :acc_type, :tel_no, :email)'
+            'INSERT INTO `accounts` (`id`, `username`, `password`, `fullname`, `ava_url`, `acc_type`, `tel_no`, `email`) 
+            VALUES (NULL, :username, :pass, :fullname, :ava_url, :acc_type, :tel_no, :email)'
         );
         $status = $req->execute(array(
             'username' => $userName,
             'pass' => $pass,
+            'fullname', $fullname,
             'ava_url' => $ava_url,
             'acc_type' => $acc_type,
             'tel_no' => $tel_no,
@@ -60,8 +61,8 @@ class Accounts extends BaseDAO
     }
 
     static function updateAccountInfo(
-        $id, $new_name, $new_url = '', $new_type = 0, 
-        $new_tel_no = '', $new_email ='')
+        $id, $username, $password, $fullname, $ava_url, $acc_type, 
+        $tel_no, $email)
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -70,17 +71,51 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
 
+        $acc = Accounts::find($id);
+
+        // Check new update:
+        if (is_null($username))
+        {
+            $username = $acc->username;
+        }
+        if (is_null($password))
+        {
+            $password = $acc->password;
+        }
+        if (is_null($fullname))
+        {
+            $fullname = $acc->fullname;
+        }
+        if (is_null($ava_url))
+        {
+            $ava_url = $acc->avaUrl;
+        }
+        if (is_null($acc_type))
+        {
+            $acc_type = $acc->type;
+        }
+        if (is_null($tel_no))
+        {
+            $tel_no = $acc->tel_no;
+        }
+        if (is_null($email))
+        {
+            $email = $acc->email;
+        }
+
         $req = $db->prepare(
             'UPDATE `accounts` 
-                SET `username` = :username, `ava_url` = :ava_url, `acc_type` = :acc_type, `tel_no` = :tel_no, `email` = :email 
+                SET `username` = :username, `fullname` = :fullname, `password` = :new_password, `ava_url` = :ava_url, `acc_type` = :acc_type, `tel_no` = :tel_no, `email` = :email 
                 WHERE `accounts`.`id` = :id'
         );
         $status = $req->execute(array(
-            'username' => $new_name,
-            'ava_url' => $new_url,
-            'acc_type' => $new_type,
-            'tel_no' => $new_tel_no,
-            'email' => $new_email,
+            'username' => $username,
+            'ava_url' => $ava_url,
+            'acc_type' => $acc_type,
+            'tel_no' => $tel_no,
+            'email' => $email,
+            'fullname' => $fullname,
+            'new_password' => $password,
             'id' => $id
         ));
 

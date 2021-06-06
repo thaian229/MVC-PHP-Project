@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2021 at 01:32 PM
+-- Generation Time: Jun 06, 2021 at 01:13 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -31,6 +31,7 @@ CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(256) NOT NULL,
+  `fullname` varchar(100) DEFAULT NULL,
   `ava_url` varchar(256) DEFAULT NULL,
   `acc_type` int(11) NOT NULL DEFAULT 0,
   `tel_no` varchar(20) DEFAULT NULL,
@@ -41,13 +42,13 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `ava_url`, `acc_type`, `tel_no`, `email`) VALUES
-(1, 'thaian', '22114455', 'uploads/avatars/ava_1.jpg', 0, NULL, NULL),
-(2, 'mhoang99', '123456', NULL, 0, NULL, NULL),
-(3, 'buituhoang', '123456', NULL, 0, NULL, NULL),
-(4, 'admin1', 'admin1', 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/21760012/original/d4c0c142f91f012c9a8a9c9aeef3bac28036f15b/create-your-cartoon-style-flat-avatar-or-icon.jpg', 1, NULL, NULL),
-(5, 'admin2', 'admin2', 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png', 1, NULL, NULL),
-(6, 'an002', '22114455', 'uploads/avatars/ava_6.jpg', 0, '', '');
+INSERT INTO `accounts` (`id`, `username`, `password`, `fullname`, `ava_url`, `acc_type`, `tel_no`, `email`) VALUES
+(1, 'thaian229', '22114455', 'Nguyen Thai An', 'uploads/avatars/ava_1.jpg', 0, '0966711928', 'thaian229@gmail.com'),
+(2, 'mhoang99', '123456', NULL, NULL, 0, NULL, NULL),
+(3, 'buituhoang', '123456', NULL, NULL, 0, NULL, NULL),
+(4, 'admin1', 'admin1', NULL, 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/21760012/original/d4c0c142f91f012c9a8a9c9aeef3bac28036f15b/create-your-cartoon-style-flat-avatar-or-icon.jpg', 1, NULL, NULL),
+(5, 'admin2', 'admin2', NULL, 'https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-512.png', 1, NULL, NULL),
+(6, 'an002', '22114455', NULL, 'uploads/avatars/ava_6.jpg', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
+(8, 'automobile'),
+(7, 'culture'),
+(6, 'education'),
 (4, 'food'),
+(9, 'game'),
 (5, 'movie'),
 (1, 'music'),
 (2, 'sport'),
@@ -134,11 +139,20 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`id`, `title`, `video_url`, `thumbnail_url`, `created_time`, `views`, `upvotes`, `downvotes`) VALUES
-(2, 'M1 iMac Review - Better and Worse', 'https://www.youtube.com/watch?v=E59xZyDFiJ8', 'https://www.wyzowl.com/wp-content/uploads/2019/09/YouTube-thumbnail-size-guide-best-practices-top-examples.png', '2021-05-19 10:45:20', 0, 1, 0),
-(3, 'Don\'t wait for the Switch Pro, Buy This Today!', 'https://www.youtube.com/watch?v=52vo1g4VBbc&ab_channel=LinusTechTipsLinusTechTipsVerified', 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/youtube-thumbnail-retrowave-design-template-facd275829297c4a471f2f1af6436508_screen.jpg?ts=1561496227', '2021-05-19 10:45:58', 0, 0, 0),
-(4, 'Uncle Roger Review NICK DIGIOVANNI Ramen (Masterchef Finalist)', 'https://www.youtube.com/watch?v=myciX5_b1QY&ab_channel=mrnigelngmrnigelngVerified', 'https://s29843.pcdn.co/blog/wp-content/uploads/sites/2/2021/02/video-thumbnails-social.png', '2021-05-19 10:46:48', 0, 0, 2),
-(5, 'Resident Evil: Infinite Darkness | Official Trailer | Netflix', 'https://www.youtube.com/watch?v=P-js-Eww1OI', 'http://i3.ytimg.com/vi/P-js-Eww1OI/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0),
-(6, 'The Big Problem with Manchester United\'s Stadium', 'https://www.youtube.com/watch?v=B87aESnOWKg&ab_channel=TifoFootballTifoFootballVerified', 'http://i3.ytimg.com/vi/B87aESnOWKg/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0);
+(2, 'M1 iMac Review - Better and Worse', 'https://www.youtube.com/embed/E59xZyDFiJ8', 'http://i3.ytimg.com/vi/E59xZyDFiJ8/maxresdefault.jpg', '2021-05-19 10:45:20', 1, 1, 0),
+(3, 'Don\'t wait for the Switch Pro, Buy This Today!', 'https://www.youtube.com/embed/52vo1g4VBbc', 'http://i3.ytimg.com/vi/52vo1g4VBbc/maxresdefault.jpg', '2021-05-19 10:45:58', 0, 0, 0),
+(4, 'Uncle Roger Review NICK DIGIOVANNI Ramen (Masterchef Finalist)', 'https://www.youtube.com/embed/myciX5_b1QY', 'http://i3.ytimg.com/vi/myciX5_b1QY/maxresdefault.jpg', '2021-05-19 10:46:48', 0, 0, 2),
+(5, 'Resident Evil: Infinite Darkness | Official Trailer | Netflix', 'https://www.youtube.com/embed/P-js-Eww1OI', 'http://i3.ytimg.com/vi/P-js-Eww1OI/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0),
+(6, 'The Big Problem with Manchester United\'s Stadium', 'https://www.youtube.com/embed/B87aESnOWKg', 'http://i3.ytimg.com/vi/B87aESnOWKg/hqdefault.jpg', '2021-05-21 12:16:14', 0, 0, 0),
+(7, 'SOVIET REACTS TO SAMSUNG VIRTUAL ASSISTANT', 'https://www.youtube.com/watch?v=mC2lg-gCtUQ', 'uploads/thumbnails/TSVA1.jpg', '2021-06-05 11:14:11', 1, 0, 0),
+(9, 'Samsung virtual assistant sam VS lady dimitrescu', 'https://www.youtube.com/embed/RVfCMVd9GYY', 'http://i3.ytimg.com/vi/RVfCMVd9GYY/maxresdefault.jpg', '2021-06-05 11:15:57', 7, 0, 0),
+(10, 'Neural Networks from Scratch - P.5 Hidden Layer Activation Functions', 'https://www.youtube.com/embed/gmjzbpSVY1A', 'http://i3.ytimg.com/vi/gmjzbpSVY1A/maxresdefault.jpg', '2021-06-05 15:18:06', 0, 0, 0),
+(11, 'Running a YouTube Business is EASY, Right?... WRONG!', 'https://www.youtube.com/embed/gC6dQrScmHE', 'http://i3.ytimg.com/vi/gC6dQrScmHE/maxresdefault.jpg', '2021-06-06 07:45:46', 0, 0, 0),
+(13, 'Unreal Engine 5 Valley Of The Ancient Demo 4K | RTX 3090 | Ryzen 9 5950X', 'https://www.youtube.com/embed/UwHjuad47TE', 'http://i3.ytimg.com/vi/UwHjuad47TE/maxresdefault.jpg', '2021-06-06 11:08:05', 0, 0, 0),
+(14, 'Onmyoji: The World - Official Cinematic Announcement Trailer', 'https://www.youtube.com/embed/P01gmaAm5cU', 'http://i3.ytimg.com/vi/P01gmaAm5cU/maxresdefault.jpg', '2021-06-06 11:08:56', 0, 0, 0),
+(15, 'Gordon Ramsay Makes Steak and Eggs in Texas | Scrambled', 'https://www.youtube.com/embed/W1hd6y2JwUw', 'http://i3.ytimg.com/vi/W1hd6y2JwUw/maxresdefault.jpg', '2021-06-06 11:09:36', 0, 0, 0),
+(16, 'The Unspoken Reality Behind the Harvard Gates | Alex Chang | TEDxSHSID', 'https://www.youtube.com/embed/kJGupYFaCGs', 'http://i3.ytimg.com/vi/kJGupYFaCGs/maxresdefault.jpg', '2021-06-06 11:10:14', 0, 0, 0),
+(17, 'POV: You main Tiandi', 'https://www.youtube.com/embed/j4p7P5WTnoY', 'http://i3.ytimg.com/vi/j4p7P5WTnoY/maxresdefault.jpg', '2021-06-06 11:10:50', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -158,7 +172,17 @@ CREATE TABLE `videos_categories` (
 INSERT INTO `videos_categories` (`video_id`, `cat_id`) VALUES
 (2, 3),
 (3, 3),
-(4, 4);
+(4, 4),
+(7, 1),
+(7, 2),
+(7, 5),
+(9, 1),
+(9, 3),
+(9, 5),
+(10, 3),
+(10, 5),
+(11, 1),
+(11, 5);
 
 -- --------------------------------------------------------
 
@@ -249,7 +273,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -261,7 +285,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
