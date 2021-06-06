@@ -25,7 +25,7 @@
 
                 <div class="input-box">
                     <i class="fas fa-unlock-alt prefix"></i>
-                    <input type="password" name="cpassword" placeholder="confirm new password" required>
+                    <input type="password" id="cpassword" name="cpassword" placeholder="confirm new password" required>
                 </div>
 
 
@@ -173,6 +173,9 @@
             .then(data => {
                 console.log(data)
                 if (data.success === true) {
+                    document.getElementById("old-password").value = ""
+                    document.getElementById("new-password").value = ""
+                    document.getElementById("cpassword").value = ""
                     alert("password changed");
                 } else {
                     document.getElementById("form-warning").innerText = data.body.errMessage;
