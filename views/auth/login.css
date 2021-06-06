@@ -1,0 +1,119 @@
+@keyframes slideOutFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+
+.login-container {
+    /* transition: transform 0.3s ease-out; */
+    display: flex;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    max-width: 1000px;
+}
+
+.back-container {
+    background-color: black;
+}
+
+.form-login {
+    animation: 1s ease-out 0s 1 slideOutFromRight;
+    transition: transform 0.3s ease-out;
+    /* border: 1px black solid; */
+    background-color: white;
+    /* max-width: 200px; */
+    display: flex;
+    flex-basis: 50%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+
+.form-login a {
+    text-decoration: none;
+}
+
+.form-login h4 {
+    flex-basis: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-warning {
+    height: 30px;
+}
+
+.form-login button {
+    flex-basis: 80%;
+    margin: 20 auto;
+    height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff8303;
+    border:  none;
+    border-radius: 3px;
+}
+
+.form-login #login-title {
+    position: absolute;
+    top: 200px;
+    left: 20%;
+    flex-basis: 100%;
+    color: white;
+}
+
+.login-preview {
+    transition: transform 0.3s ease-out;
+    flex-basis: 50%;
+    padding: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.login-preview img {
+    overflow: hidden;
+    height: 700px;
+    width: 100%;
+    border-radius: 0 10px 10px 0;
+}
+
+.form-login .input-box:focus-within {
+    border: 2px dashed #ff8303;
+}
+.form-login .input-box {
+    display: flex;
+    align-items: center;
+    flex-basis: 80%;
+    margin: 10px 0;
+    background: rgb(245, 245, 245);
+    border: 1px dashed #a0a0a0;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.form-login .input-box .prefix {
+    font-size: 14px;
+    color: #AAAAAA;
+    width: 30px;
+    text-align: center;
+}
+
+.form-login .input-box input {
+    flex-grow: 1;
+    font-size: 16px;
+    background: rgb(245, 245, 245);
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+}

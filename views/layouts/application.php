@@ -10,8 +10,8 @@
 </head>
 <body>
 <?php
-require_once('views/layouts/header.php');
+// require_once('views/layouts/header.php');
 require_once($view_file);
-require_once('views/layouts/footer.php');
+// require_once('views/layouts/footer.php');
 ?>
 </body>

@@ -1,6 +1,8 @@
+<link rel="stylesheet" href="views/layouts/footer.css">
+
 <footer>
-    <div class="row_footer">
-        <div class="column">
+    <div class="footer_row">
+        <div class="footer_column">
             <h2>About Us</h2>
             <p>Three guys from HUST</p>
             <p>Nothing special</p>
@@ -8,7 +10,7 @@
             <p>All clips are collected from outside sources.</p>
             <p>No videos are hosted on this server.</p>
         </div>
-        <div class="column">
+        <div class="footer_column">
             <h2>Contact</h2>
             <table style="color: white">
                 <tr>

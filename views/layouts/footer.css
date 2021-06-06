@@ -1,0 +1,34 @@
+footer {
+    color: white;
+    background-color: #333;
+}
+
+/* .footer_row:after {
+    content: "";
+    display: table;
+    clear: both;
+} */
+
+.footer-icon {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.footer_column {
+    float: left;
+    padding-top: 20px;
+    padding-left: 80px;
+    height: 30vh;
+    margin-right: 20vw;
+}
+
+
+.crl-icon {
+    background-color: #262626;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin: 5px;
+}
