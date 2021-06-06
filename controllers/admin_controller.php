@@ -261,25 +261,49 @@ class AdminController extends BaseController
 
         $vote_type = Votes::getVotedTypeVideo(4, 9);
         $video = Videos::find(9);
-        echo ('current vote types: ' . $vote_type . '<br>');
-        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+        echo ('current vote types: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
         Votes::voteVideo(4, 9, 1);
         $vote_type = Votes::getVotedTypeVideo(4, 9);
         $video = Videos::find(9);
-        echo ('Hit upvote: ' . $vote_type . '<br>');
-        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+        echo ('Hit upvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
         Votes::voteVideo(4, 9, 0);
         $vote_type = Votes::getVotedTypeVideo(4, 9);
         $video = Videos::find(9);
-        echo ('Hit downvote: ' . $vote_type . '<br>');
-        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+        echo ('Hit downvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote again to unvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote again to unvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
         Votes::removeVoteVideo(4, 9);
         $vote_type = Votes::getVotedTypeVideo(4, 9);
         $video = Videos::find(9);
-        echo ('Remove vote: ' . $vote_type . '<br>');
-        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+        echo ('Remove vote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
     }
 }

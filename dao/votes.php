@@ -33,12 +33,21 @@ class Votes extends BaseDAO
         {
             return false;
         }
+        
+        $current_vote_type = self::getVotedTypeVideo($acc_id, $video_id);
 
-        if (self::getVotedTypeVideo($acc_id, $video_id) != -1)
+        if ($current_vote_type != -1)
         {
             self::removeVoteVideo($acc_id, $video_id);
+            // case unvote:
+            if ($current_vote_type == $vote_type)
+            {
+                return true;
+            }
         }
-
+        
+        // case switch vote:
+        
         $db = DB::getInstance();
         $req = $db->prepare(
             'INSERT INTO `votes` (`acc_id`, `video_id`, `vote_type`) 
