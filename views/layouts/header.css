@@ -45,6 +45,10 @@
     float: right;
 }
 
+.topnav a.admin{
+    float: right;
+}
+
 .topnav a.profile{
     float: right;
 }
