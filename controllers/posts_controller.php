@@ -143,13 +143,11 @@ class PostsController extends BaseController
             $category = $_POST["category"];
             $page = $_POST["page"];
             $videos = Videos::browseVideosByCategory($category, $page);
-            $count = Videos::countVideosByCategory($category);
             if ($videos != null) {
                 $res["success"] = true;
                 $res["body"] = array(
                     "videos" => $videos,
                     "category" => $category,
-                    "count" => $count,
                 );
             } else {
                 $res["success"] = false;
@@ -164,5 +162,14 @@ class PostsController extends BaseController
             );
         }
         echo json_encode($res);
+    }
+
+    public function getCategory()
+    {
+        $category = $_GET["category"];
+        $posts = Videos::browseVideosByCategory($category, $_GET['page']);
+        $videosCount = Videos::countVideosByCategory($category);
+        $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
+        $this->render('page', $data);
     }
 }

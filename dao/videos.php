@@ -85,7 +85,7 @@ class Videos extends BaseDAO
     {
         $db = DB::getInstance();
 
-        $category = '\%' + $category + '\%';
+        $category = '\%' . $category . '\%';
 
         $req = $db->prepare('
             SELECT COUNT(*) as `videos_count`
@@ -99,7 +99,6 @@ class Videos extends BaseDAO
 
         $req->execute(array(
             'category' => $category,
-            'page' => $category,
         ));
 
         if (!$req)

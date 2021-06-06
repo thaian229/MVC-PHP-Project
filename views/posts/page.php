@@ -2,6 +2,14 @@
     <div id="count" style="display: none;"><?php echo $videosCount; ?></div>
     <br/><br/>
     <div>
+        <h2>
+            <?php
+            if(!empty($category))
+                echo $category;
+            ?>
+        </h2>
+    </div>
+    <div>
         <?php
         for($i = 0; $i <= count($posts); $i++) {
             if(!empty($posts[$i])) {
