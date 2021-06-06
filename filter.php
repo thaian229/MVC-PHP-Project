@@ -3,7 +3,7 @@ ob_start();
 session_start();
 
 $json_post_controllers_actions = array(
-    'auth' => ['verifyRegister', 'verifyLogin'],
+    'auth' => ['verifyRegister', 'verifyLogin', 'changePassword'],
     'users' => ['updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo', 'isFavouriteVideo'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
     'posts' => ['quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo'],

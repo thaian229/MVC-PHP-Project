@@ -45,49 +45,60 @@ class AuthController extends BaseController
         unset($_SESSION['session_user_email']);
         unset($_SESSION['session_user_tel_no']);
         unset($_SESSION['session_user_type']);
+        unset($_SESSION['session_user_fullname']);
 
         header('Refresh: 1; url=index.php?controller=posts');
     }
 
     public function verifyLogin()
     {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-
         $res = array();
 
-        $account = Accounts::findAccountByUserName($username);
+        if (
+            isset($_POST["username"])
+            && isset($_POST["password"])
+        ) {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
 
-        if ($account != null) {
-            if (strcmp($password, $account->password) == 0) {
-                $this->success = true;
-                $this->errorMessage = "";
+            $account = Accounts::findAccountByUserName($username);
 
-                $_SESSION['session_valid'] = true;
-                $_SESSION['session_timeout'] = time();
-                $_SESSION['session_username'] = $account->username;
-                $_SESSION['session_user_id'] = $account->id;
-                $_SESSION['session_user_ava_url'] = $account->avaUrl;
-                $_SESSION['session_user_email'] = $account->email;
-                $_SESSION['session_user_tel_no'] = $account->tel_no;
-                $_SESSION['session_user_type'] = $account->type;
+            if ($account != null) {
+                if (password_verify($password, $account->password)) {
+                    $this->success = true;
+                    $this->errorMessage = "";
 
-                $res["success"] = true;
-                $res["body"] = array(
-                    "user_id" => $account->id,
-                    "username" => $account->username
-                );
+                    $_SESSION['session_valid'] = true;
+                    $_SESSION['session_timeout'] = time();
+                    $_SESSION['session_username'] = $account->username;
+                    $_SESSION['session_user_id'] = $account->id;
+                    $_SESSION['session_user_ava_url'] = $account->avaUrl;
+                    $_SESSION['session_user_email'] = $account->email;
+                    $_SESSION['session_user_tel_no'] = $account->tel_no;
+                    $_SESSION['session_user_type'] = $account->type;
+                    $_SESSION['session_user_fullname'] = $account->fullname;
 
+                    $res["success"] = true;
+                    $res["body"] = array(
+                        "user_id" => $account->id,
+                        "username" => $account->username
+                    );
+                } else {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Wrong password"
+                    );
+                }
             } else {
                 $res["success"] = false;
                 $res["body"] = array(
-                    "errMessage" => "Wrong password"
+                    "errMessage" => "Account not exists"
                 );
             }
         } else {
             $res["success"] = false;
             $res["body"] = array(
-                "errMessage" => "Account not exists"
+                "errMessage" => "Invalid request"
             );
         }
 
@@ -98,23 +109,58 @@ class AuthController extends BaseController
     {
         $res = array();
 
-        $username = $_POST["username"];
-        $password = $_POST["password"];
+        if (
+            isset($_POST["username"])
+            && isset($_POST["password"])
+            && isset($_POST["email"])
+            && isset($_POST["phone_number"])
+            && isset($_POST["full_name"])
+        ) {
 
+            $username = $_POST["username"];
+            $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            $email = $_POST["email"];
+            $phoneNumber = $_POST["phone_number"];
+            $fullname = $_POST["full_name"];
 
-        $account = Accounts::addNewAccount($username, $password);
+            $account = Accounts::addNewAccount($username, $password, $fullname, email: $email, tel_no: $phoneNumber);
 
-        if ($account != null && $password != null) {
-            $res["success"] = true;
-            $res["body"] = array(
-                "user_id" => $account->id,
-                "username" => $account->username
-            );
-
+            if ($account != null && $password != null) {
+                $res["success"] = true;
+                $res["body"] = array(
+                    "user_id" => $account->id,
+                    "username" => $account->username,
+                );
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Account existed"
+                );
+            }
         } else {
             $res["success"] = false;
             $res["body"] = array(
-                "errMessage" => "Account existed"
+                "errMessage" => "Invalid request"
+            );
+        }
+
+        echo json_encode($res);
+    }
+
+
+    public function changePassword()
+    {
+        $res = array();
+
+        if (
+            isset($_POST["old_password"])
+            && isset($_POST["new_password"])
+        ) {
+            //TODO
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
             );
         }
 

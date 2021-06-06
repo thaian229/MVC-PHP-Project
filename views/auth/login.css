@@ -1,12 +1,11 @@
 @keyframes slideOutFromRight {
     0% {
-      transform: translateX(100%);
+        transform: translateX(100%);
     }
     100% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
-  }
-  
+}
 
 .login-container {
     /* transition: transform 0.3s ease-out; */
@@ -38,7 +37,6 @@
     padding-bottom: 50px;
 }
 
-
 .form-login a {
     text-decoration: none;
 }
@@ -60,9 +58,14 @@
     font-weight: bold;
     color: white;
     background-color: #ff8303;
-    border:  none;
+    border: none;
     border-radius: 3px;
 }
+
+.form-login button:hover {
+    cursor: hand;
+}
+
 
 .form-login #login-title {
     position: absolute;
@@ -104,7 +107,7 @@
 
 .form-login .input-box .prefix {
     font-size: 14px;
-    color: #AAAAAA;
+    color: #aaaaaa;
     width: 30px;
     text-align: center;
 }

@@ -2,7 +2,7 @@
 $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
     'posts' => ['index', 'showPost', 'getPage', 'quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo'],
-    'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
+    'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin', 'changePassword'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo', 'isFavouriteVideo'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
     'admin' => ['index', 'show', 'upload', 'update', 'delete', 'search', 'getVideoInfo', 'getCategoryInfo', 'test'],

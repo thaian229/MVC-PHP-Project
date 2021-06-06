@@ -28,9 +28,14 @@ class Accounts extends BaseDAO
     }
 
     static function addNewAccount(
-        $userName, $pass, $fullname = null, $ava_url = null, $acc_type = null, 
-        $tel_no = null, $email = null)
-    {
+        $userName,
+        $pass,
+        $fullname = null,
+        $ava_url = DEFAULT_AVA_URL,
+        $acc_type = 0,
+        $tel_no = null,
+        $email = null
+    ) {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
 
@@ -38,21 +43,20 @@ class Accounts extends BaseDAO
 
         $db = DB::getInstance();
         $req = $db->prepare(
-            'INSERT INTO `accounts` (`id`, `username`, `password`, `fullname`, `ava_url`, `acc_type`, `tel_no`, `email`) 
-            VALUES (NULL, :username, :pass, :fullname, :ava_url, :acc_type, :tel_no, :email)'
+            'INSERT INTO `accounts` (`username`, `password`, `fullname`, `ava_url`, `acc_type`, `tel_no`, `email`) 
+            VALUES (:username, :pass, :fullname, :ava_url, :acc_type, :tel_no, :email)'
         );
         $status = $req->execute(array(
             'username' => $userName,
             'pass' => $pass,
-            'fullname', $fullname,
+            'fullname' => $fullname,
             'ava_url' => $ava_url,
             'acc_type' => $acc_type,
             'tel_no' => $tel_no,
             'email' => $email
         ));
 
-        if (!$status)
-        {
+        if (!$status) {
             // Notify error
             return null;
         }
@@ -60,9 +64,7 @@ class Accounts extends BaseDAO
         return self::find($db->lastInsertId());
     }
 
-    static function updateAccountInfo(
-        $id, $username, $password, $fullname, $ava_url, $acc_type, 
-        $tel_no, $email)
+    static function updateAccountInfo($id, $username, $fullname, $ava_url, $acc_type, $tel_no, $email)
     {
         $tableName = get_called_class();
         $dto = substr($tableName, 0, -1);
@@ -74,38 +76,28 @@ class Accounts extends BaseDAO
         $acc = Accounts::find($id);
 
         // Check new update:
-        if (is_null($username))
-        {
+        if (is_null($username)) {
             $username = $acc->username;
         }
-        if (is_null($password))
-        {
-            $password = $acc->password;
-        }
-        if (is_null($fullname))
-        {
+        if (is_null($fullname)) {
             $fullname = $acc->fullname;
         }
-        if (is_null($ava_url))
-        {
+        if (is_null($ava_url)) {
             $ava_url = $acc->avaUrl;
         }
-        if (is_null($acc_type))
-        {
+        if (is_null($acc_type)) {
             $acc_type = $acc->type;
         }
-        if (is_null($tel_no))
-        {
+        if (is_null($tel_no)) {
             $tel_no = $acc->tel_no;
         }
-        if (is_null($email))
-        {
+        if (is_null($email)) {
             $email = $acc->email;
         }
 
         $req = $db->prepare(
             'UPDATE `accounts` 
-                SET `username` = :username, `fullname` = :fullname, `password` = :new_password, `ava_url` = :ava_url, `acc_type` = :acc_type, `tel_no` = :tel_no, `email` = :email 
+                SET `username` = :username, `fullname` = :fullname, `ava_url` = :ava_url, `acc_type` = :acc_type, `tel_no` = :tel_no, `email` = :email 
                 WHERE `accounts`.`id` = :id'
         );
         $status = $req->execute(array(
@@ -115,12 +107,43 @@ class Accounts extends BaseDAO
             'tel_no' => $tel_no,
             'email' => $email,
             'fullname' => $fullname,
+            'id' => $id
+        ));
+
+        if (!$status) {
+            // Notify error
+            return -1;
+        }
+
+        return $id;
+    }
+
+    static function updateAccountPassword($id, $password)
+    {
+        $tableName = get_called_class();
+        $dto = substr($tableName, 0, -1);
+
+        self::requireModel($dto);
+
+        $db = DB::getInstance();
+        // Check new update:
+
+        if (is_null($password) || is_null($id)) {
+            return -1;
+        }
+
+        $req = $db->prepare(
+            'UPDATE `accounts` 
+                SET `password` = :new_password
+                WHERE `accounts`.`id` = :id'
+        );
+
+        $status = $req->execute(array(
             'new_password' => $password,
             'id' => $id
         ));
 
-        if (!$status)
-        {
+        if (!$status) {
             // Notify error
             return -1;
         }
