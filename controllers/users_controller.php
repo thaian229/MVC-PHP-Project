@@ -160,6 +160,8 @@ class UsersController extends BaseController
                 $tel_no = $_SESSION['session_user_tel_no'];
             }
 
+            // TODO: thieu password va fullname
+
             $id = Accounts::updateAccountInfo(
                 $_SESSION['session_user_id'],
                 $_SESSION['session_username'],
