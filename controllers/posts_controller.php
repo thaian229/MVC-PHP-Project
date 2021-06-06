@@ -19,7 +19,8 @@ class PostsController extends BaseController
     public function getPage()
     {
         $posts = Videos::browseVideosWithPagination($_GET['page']);
-        $data = array('posts' => $posts);
+        $videosCount = Videos::countVideos();
+        $data = array('posts' => $posts, 'videosCount' => $videosCount);
         $this->render('page', $data);
     }
 
