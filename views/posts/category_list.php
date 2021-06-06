@@ -2,7 +2,7 @@
     <?php
     for ($i = 0; $i < count($categories); $i++) {
         echo '<div>';
-        echo '<div class="category-name">' . ucfirst($categories[$i]->catName) . '</div>';
+        echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
         echo '<div id="' . $categories[$i]->catName . '-videos"></div>';
         echo '</div>';
     }

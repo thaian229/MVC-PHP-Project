@@ -143,11 +143,13 @@ class PostsController extends BaseController
             $category = $_POST["category"];
             $page = $_POST["page"];
             $videos = Videos::browseVideosByCategory($category, $page);
+            $count = Videos::countVideosByCategory($category);
             if ($videos != null) {
                 $res["success"] = true;
                 $res["body"] = array(
                     "videos" => $videos,
                     "category" => $category,
+                    "count" => $count,
                 );
             } else {
                 $res["success"] = false;
