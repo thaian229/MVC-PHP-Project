@@ -274,7 +274,7 @@ class Videos extends BaseDAO
         ));
 
         $rs = $req->fetch();
-        if ($rs['acc_id'] != null)
+        if ($rs != null)
         {
             return true;
         }

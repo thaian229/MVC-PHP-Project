@@ -65,7 +65,8 @@
     }
 
     removeVideoFromFavouriteHandler = (event) => {
-        let videoId =  event.target.id.split('-')[2]
+        console.log(event)
+        let videoId =  event.id.split('-')[2]
         let formData = new FormData()
         formData.append('video_id', videoId);
 
@@ -106,11 +107,12 @@
                     totalPage = data.body.totalPage
 
                     data.body.videos.forEach((video) => {
+                        console.log(video)
                         htmlString += `
                             <tr>
-                                <td width="250px"><img alt="NOT FOUND" width="200px" src=` + video.thumbnailUrl + `/></td>
+                                <td width="250px"><img alt="NOT FOUND" width="200px" src="` + video.thumbnailUrl + `"/></td>
                                 <td><a href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
-                                <td><button onclick="removeVideoFromFavouriteHandler()" id="remove-fav-`+ video.id +`">Remove</button></td>
+                                <td><button onclick="removeVideoFromFavouriteHandler(this)" id="remove-fav-`+ video.id +`">Remove</button></td>
                             </tr>
                         `
                     })
@@ -145,8 +147,8 @@
                         document.getElementById("back-to-first").setAttribute("disabled", "disabled");
                         document.getElementById("back-to-previous").setAttribute("disabled", "disabled");
                     } else {
-                        document.getElementById("go-to-last").removeAttribute("disabled")
-                        document.getElementById("go-to-next").removeAttribute("disabled")
+                        document.getElementById("back-to-first").removeAttribute("disabled")
+                        document.getElementById("back-to-previous").removeAttribute("disabled")
                     }
 
                 } else {

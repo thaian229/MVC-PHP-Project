@@ -3,6 +3,7 @@ require_once('controllers/base_controller.php');
 require_once('dao/accounts.php');
 require_once('dao/videos.php');
 require_once('dao/categories.php');
+require_once('dao/votes.php');
 
 class AdminController extends BaseController
 {
@@ -252,5 +253,57 @@ class AdminController extends BaseController
         }
 
         echo json_encode($res);
+    }
+
+    public function test()
+    {
+        Votes::syncVote();
+
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('current vote types: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote again to unvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote again to unvote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        Votes::removeVoteVideo(4, 9);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Remove vote: ' . '<br>');
+        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
     }
 }
