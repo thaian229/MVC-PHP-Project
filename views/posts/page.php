@@ -35,7 +35,6 @@
         }
         ?>
     </div>
-    <br/><br/><br/><br/>
     <div class="pagination-container">
         <button onclick="firstPageHandler()" id="back-to-first"><<</button>
         <button onclick="prevPageHandler()" id="back-to-previous"><</button>
@@ -43,7 +42,6 @@
         <button onclick="nextPageHandler()" id="go-to-next">></button>
         <button onclick="lastPageHandler()" id="go-to-last">>></button>
     </div>
-    <br/><br/><br/><br/>
 </div>
 
 <script>

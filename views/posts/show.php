@@ -264,7 +264,6 @@
         commentContainer.innerHTML += '<p>' + content + '</p>'
     };
 
-    createFavIcon()
     getIsFavVideo()
     createVoteIcon()
     getVotedTypeVideo()
