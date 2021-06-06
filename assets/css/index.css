@@ -84,6 +84,10 @@ body {
     float: right;
 }
 
+.topnav a.admin{
+    float: right;
+}
+
 .topnav button{
     padding: 8px;
     background: #2196F3;

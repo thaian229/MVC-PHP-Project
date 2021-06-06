@@ -3,10 +3,19 @@
         <a class="home" href="index.php?controller=posts">Home</a>
         <?php
         if (isset($_SESSION['session_user_id'])) {
-            echo '
+            if($_SESSION['session_user_type'] == 1) {
+                echo '
+                <a class="logout" href="index.php?controller=auth&action=logout">Logout</a>
+                <a class="profile" href="index.php?controller=users">Profile</a>
+                <a class="admin" href="index.php?controller=admin">Admin</a>
+            ';
+            }
+            else {
+                echo '
                 <a class="logout" href="index.php?controller=auth&action=logout">Logout</a>
                 <a class="profile" href="index.php?controller=users">Profile</a>
             ';
+            }
         } else {
             echo '
                 <a class="login" href="index.php?controller=auth&action=login">Login</a>
