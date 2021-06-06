@@ -17,7 +17,7 @@ class Votes extends BaseDAO
         ));
 
         $rs = $req->fetch();
-        if ($rs['vote_type'] != null)
+        if ($rs != null)
         {
             return $rs['vote_type'];
         }
