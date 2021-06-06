@@ -1,5 +1,6 @@
 <?php
 
+require_once 'dao/base_dao.php';
 require_once 'dao/videos.php';
 
 class Votes extends BaseDAO 
@@ -43,11 +44,16 @@ class Votes extends BaseDAO
             'INSERT INTO `votes` (`acc_id`, `video_id`, `vote_type`) 
             VALUES (:acc_id, :video_id, :vote_type)'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'acc_id' => $acc_id,
             'video_id' => $video_id,
             'vote_type' => $vote_type
         ));
+
+        if (!$status)
+        {
+            return false;
+        }
 
         if ($vote_type == 1)
         {
@@ -74,10 +80,15 @@ class Votes extends BaseDAO
             'DELETE FROM `votes` 
             WHERE `votes`.`acc_id` = :acc_id AND `votes`.`video_id` = :video_id'
         );
-        $req->execute(array(
+        $status = $req->execute(array(
             'acc_id' => $acc_id,
             'video_id' => $video_id
         ));
+
+        if (!$status)
+        {
+            return null;
+        }
 
         if ($vote_type == 1)
         {
@@ -108,7 +119,7 @@ class Votes extends BaseDAO
         );
         $req->execute(array(
             'video_id' => $video_id,
-            'inc_num' => $inc
+            'inc' => $inc
         )); 
     }
 
@@ -131,8 +142,8 @@ class Votes extends BaseDAO
         );
         $req->execute(array(
             'video_id' => $video_id,
-            'inc_num' => $inc
-        )); 
+            'inc' => $inc
+        ));
     }
 
     // Recalculate downvotes and upvotes of all videos

@@ -3,6 +3,7 @@ require_once('controllers/base_controller.php');
 require_once('dao/accounts.php');
 require_once('dao/videos.php');
 require_once('dao/categories.php');
+require_once('dao/votes.php');
 
 class AdminController extends BaseController
 {
@@ -252,5 +253,33 @@ class AdminController extends BaseController
         }
 
         echo json_encode($res);
+    }
+
+    public function test()
+    {
+        Votes::syncVote();
+
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('current vote types: ' . $vote_type . '<br>');
+        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+
+        Votes::voteVideo(4, 9, 1);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit upvote: ' . $vote_type . '<br>');
+        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+
+        Votes::voteVideo(4, 9, 0);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Hit downvote: ' . $vote_type . '<br>');
+        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
+
+        Votes::removeVoteVideo(4, 9);
+        $vote_type = Votes::getVotedTypeVideo(4, 9);
+        $video = Videos::find(9);
+        echo ('Remove vote: ' . $vote_type . '<br>');
+        echo ('up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br>');
     }
 }
