@@ -40,6 +40,10 @@
     padding-bottom: 50px;
 }
 
+.form-register button:hover {
+    cursor: hand;
+}
+
 .form-register h4 {
     flex-basis: 80%;
     margin: 0 auto;
@@ -63,7 +67,7 @@
 
 .form-register #register-title {
     position: absolute;
-    top: 150px;
+    top: 100px;
     left: 10%;
     flex-basis: 100%;
     /* color: white; */

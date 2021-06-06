@@ -13,6 +13,11 @@
             </div>
 
             <div class="input-box">
+                <i class="prefix"></i>
+                <input type="text" id="fullname" name="fullname" placeholder="full name" required>
+            </div>
+
+            <div class="input-box">
                 <i class="fas fa-unlock-alt prefix"></i>
                 <input type="password" id="password" name="password" placeholder="password" required>
             </div>
@@ -32,10 +37,10 @@
                 <input type="number" id="phone-number" name="phone-number" placeholder="phone number" min=0 max=999999999999 oninput="validity.valid||(value='');" required>
             </div>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="register">REGISTER</button>
+            <button type="submit" name="register">REGISTER</button>
             <h4 class="form-warning" id="form-warning"></h4>
 
-            <span>Already had a account? <a href="index.php?controller=auth&action=login">Click here to log in</a></span>
+            <span>Already had an account? <a href="index.php?controller=auth&action=login">Click here to log in</a></span>
         </form>
 
     </div>
@@ -50,6 +55,9 @@
         let formData = new FormData();
         formData.append('username', document.getElementById("username").value);
         formData.append('password', document.getElementById("password").value);
+        formData.append('full_name', document.getElementById("fullname").value);
+        formData.append('email', document.getElementById("email").value);
+        formData.append('phone_number', document.getElementById("phone-number").value);
 
         fetch('index.php?controller=auth&action=verifyRegister', {
                 body: formData,
@@ -63,6 +71,9 @@
                 } else {
                     document.getElementById("form-warning").innerText = data.body.errMessage;
                 }
+            })
+            .catch(e => {
+                alert(e.message)
             });
     }
 

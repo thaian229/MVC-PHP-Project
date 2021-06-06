@@ -23,8 +23,8 @@ class UsersController extends BaseController
         if (isset($_GET["page"]) && isset($_SESSION['session_user_id'])) {
             $page = $_GET["page"];
 
-           $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
-           $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+            $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
+            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'], $page);
 
             // $videosCount = Videos::countVideos();
             // $resultList = Videos::browseVideosWithPagination($page);
@@ -34,7 +34,6 @@ class UsersController extends BaseController
                 "videos" => $resultList,
                 "totalPage" => ceil($videosCount / $pageSize)
             );
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -91,7 +90,6 @@ class UsersController extends BaseController
                     "errMessage" => "Add failed"
                 );
             }
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -122,7 +120,6 @@ class UsersController extends BaseController
                     "errMessage" => "Remove failed"
                 );
             }
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -160,11 +157,18 @@ class UsersController extends BaseController
                 $tel_no = $_SESSION['session_user_tel_no'];
             }
 
+            if (isset($_POST['fullname']) || strcmp($_POST['fullname'], "") != 0) {
+                $fullname = $_POST['fullname'];
+            } else {
+                $fullname = $_SESSION['session_user_fullname'];
+            }
+
             // TODO: thieu password va fullname
 
             $id = Accounts::updateAccountInfo(
                 $_SESSION['session_user_id'],
                 $_SESSION['session_username'],
+                $fullname,
                 $ava_url,
                 $_SESSION['session_user_type'],
                 $tel_no,
@@ -182,6 +186,7 @@ class UsersController extends BaseController
                 $_SESSION['session_user_ava_url'] = $ava_url;
                 $_SESSION['session_user_email'] = $email;
                 $_SESSION['session_user_tel_no'] = $tel_no;
+                $_SESSION['session_user_fullname'] = $fullname;
                 $res = array(
                     "success" => true,
                     "body" => array(
