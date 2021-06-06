@@ -44,13 +44,39 @@ class UsersController extends BaseController
         echo json_encode($res);
     }
 
+    public function isFavouriteVideo()
+    {
+        $res = array();
+        if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
+            $videoId = $_POST["video_id"];
+            $isFav = Videos::isVideoInFavourite($videoId, $_SESSION['session_user_id']);
+            if ($isFav >= 0) {
+                $res["success"] = true;
+                $res["body"] = array(
+                    "isFav" => $isFav,
+                );
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Get favourite failed"
+                );
+            }
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
+    }
+
     public function addFavouriteVideo()
     {
         $res = array();
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_GET["page"];
+            $videoId = $_POST["video_id"];
 
             $addedId = Videos::addVideosToFavourite($videoId, $_SESSION['session_user_id']);
 
@@ -81,7 +107,7 @@ class UsersController extends BaseController
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_GET["page"];
+            $videoId = $_POST["video_id"];
 
             $addedId = Videos::removeVideosFromFavourite($videoId, $_SESSION['session_user_id']);
 
