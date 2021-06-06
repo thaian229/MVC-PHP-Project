@@ -155,8 +155,30 @@ class AuthController extends BaseController
         if (
             isset($_POST["old_password"])
             && isset($_POST["new_password"])
+            && isset($_SESSION['session_user_id'])
         ) {
-            //TODO
+            // compare old_password
+            $id = $_SESSION['session_user_id'];
+            $acc = Accounts::find($id);
+            if (password_verify($_POST["old_password"], $acc->password)) {
+                // correct old password
+                $password = password_hash($_POST["new_password"], PASSWORD_DEFAULT);
+                if (Accounts::updateAccountPassword($id, $password) > 0) {
+                    // Success
+                    $res["success"] = true;
+                } else {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Failed to update in DB"
+                    );
+                }
+            }
+            else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Incorrect old password"
+                );
+            }
         } else {
             $res["success"] = false;
             $res["body"] = array(

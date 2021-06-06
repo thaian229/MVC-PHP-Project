@@ -181,8 +181,6 @@
             .catch(e => {
                 console.log(e)
             });
-
-
     }
 
 
@@ -195,6 +193,6 @@
     const formProfile = document.getElementById('profile-form');
     formProfile.addEventListener('submit', onProfileFormSubmit);
 
-    const formPassword = document.getElementById('profile-form');
+    const formPassword = document.getElementById('password-form');
     formPassword.addEventListener('submit', onPasswordFormSubmit);
 </script>
