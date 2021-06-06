@@ -66,16 +66,23 @@ class PostsController extends BaseController
     public function voteVideo()
     {
         $res = array();
-        $acc_id = $_SESSION['session_user_id'];
-        $video_id = $_POST["video_id"];
-        $vote_type = $_POST["vote_type"];
-        $vote = Votes::voteVideo($acc_id, $video_id, $vote_type);
-
-        if ($vote != null) {
-            $res["success"] = true;
-        }
-        else {
+        if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
+            $videoId = $_POST["video_id"];
+            $vote_type = $_POST["vote_type"];
+            $vote = Votes::voteVideo($_SESSION['session_user_id'], $videoId, $vote_type);
+            if ($vote != null) {
+                $res["success"] = true;
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Get vote failed"
+                );
+            }
+        } else {
             $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
         }
         echo json_encode($res);
     }
