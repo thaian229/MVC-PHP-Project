@@ -3,6 +3,7 @@ require_once('controllers/base_controller.php');
 require_once('dao/videos.php');
 require_once('dao/comments.php');
 require_once('dao/votes.php');
+require_once('dao/categories.php');
 
 class PostsController extends BaseController
 {
@@ -119,6 +120,41 @@ class PostsController extends BaseController
                 "videos" => $resultList
             );
 
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
+    }
+
+    public function categoryList()
+    {
+        $categories = Categories::all();
+        $data = array('categories' => $categories);
+        $this->render('category_list', $data);
+    }
+
+    public function videosByCategory()
+    {
+        $res = array();
+        if (isset($_POST["page"]) && isset($_POST["category"])) {
+            $category = $_POST["category"];
+            $page = $_POST["page"];
+            $videos = Videos::browseVideosByCategory($category, $page);
+            if ($videos != null) {
+                $res["success"] = true;
+                $res["body"] = array(
+                    "videos" => $videos,
+                    "category" => $category,
+                );
+            } else {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Get videos failed"
+                );
+            }
         } else {
             $res["success"] = false;
             $res["body"] = array(

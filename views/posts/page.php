@@ -22,9 +22,11 @@
                 echo '<div>
                       <div><i class="fas fa-eye"></i></div>';
                 echo '<div><strong>' . $posts[$i]->views . '</strong></div>';
+                echo '</div>';
                 echo '<div>
                       <div><i class="fas fa-thumbs-up"></i></div>';
                 echo '<div><strong>' . $posts[$i]->upvotes . '</strong></div>';
+                echo '</div>';
                 echo '<div>
                       <div><i class="fas fa-thumbs-down"></i></div>';
                 echo '<div><strong>' . $posts[$i]->downvotes . '</strong></div>';

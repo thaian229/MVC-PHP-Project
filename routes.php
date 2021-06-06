@@ -1,7 +1,8 @@
 <?php
 $controllers = array(
     'pages' => ['home', 'error', 'unauthorized'],
-    'posts' => ['index', 'showPost', 'getPage', 'quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo'],
+    'posts' => ['index', 'showPost', 'getPage', 'quickSearch', 'sendComment', 'increaseView', 'voteVideo',
+                'getVotedTypeVideo', 'categoryList', 'videosByCategory'],
     'auth' => ['index', 'login', 'register', 'logout', 'verifyRegister', 'verifyLogin'],
     'users' => ['index', 'changeProfile', 'getFavourites', 'updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo', 'isFavouriteVideo'],
     'images' => ['uploadAvatar', 'getAvatar', 'getAvatarError', 'uploadThumbnail'],
