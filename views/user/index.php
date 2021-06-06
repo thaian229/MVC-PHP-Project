@@ -106,6 +106,7 @@
                     totalPage = data.body.totalPage
 
                     data.body.videos.forEach((video) => {
+                        console.log(video)
                         htmlString += `
                             <tr>
                                 <td width="250px"><img alt="NOT FOUND" width="200px" src="` + video.thumbnailUrl + `"/></td>
