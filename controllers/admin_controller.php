@@ -13,7 +13,7 @@ class AdminController extends BaseController
     }
 
     public function show()
-    {
+    {   
         $videos = Videos::all();
         $categories = Categories::all();
         $data = array(
@@ -61,13 +61,18 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        if (isset($_SESSION['session_user_id'])) {
+        if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
-                $thumbnail_url = null;
+                $v = Videos::find($_POST['video_id']);
+                if ($v) {
+                    $thumbnail_url = $v->thumbnailUrl;
+                } else {
+                    $thumbnail_url = null;
+                }
             }
-
+            
             $id = Videos::updateVideo(
                 $_POST['video_id'],
                 $_POST['video_title'],
@@ -126,7 +131,7 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        if (isset($_SESSION['session_user_id'])) {
+        if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {

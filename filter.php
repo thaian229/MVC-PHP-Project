@@ -15,7 +15,7 @@ $auth_access_controllers = array(
 );
 
 $admin_access_controllers = array(
-    'admin' => ['show', 'upload', 'delete', 'update', 'search']
+    'admin' => ['index', 'show', 'upload', 'delete', 'update', 'search']
 );
 
 if ($_SERVER["REQUEST_METHOD"] != "POST"
