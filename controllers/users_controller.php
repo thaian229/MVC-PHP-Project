@@ -23,11 +23,11 @@ class UsersController extends BaseController
         if (isset($_GET["page"]) && isset($_SESSION['session_user_id'])) {
             $page = $_GET["page"];
 
-//            $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
-//            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+           $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
+           $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
 
-            $videosCount = Videos::countVideos();
-            $resultList = Videos::browseVideosWithPagination($page);
+            // $videosCount = Videos::countVideos();
+            // $resultList = Videos::browseVideosWithPagination($page);
 
             $res["success"] = true;
             $res["body"] = array(

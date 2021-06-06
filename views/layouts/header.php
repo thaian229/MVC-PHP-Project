@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="views/layouts/header.css">
+
 <header>
     <div class="topnav">
         <a class="home" href="index.php?controller=posts">Home</a>
