@@ -1,10 +1,10 @@
-.container table {
+.container #fav-videos {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-.container td, .container th {
+#fav-videos td,  #fav-videos th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
