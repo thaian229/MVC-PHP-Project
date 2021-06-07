@@ -32,7 +32,7 @@ class PostsController extends BaseController
         $post = Videos::find($_GET['id']);
         $comments = Comments::getCommentsInVideo($_GET['id']);
         $category = Categories::getCategoriesOfVideo($_GET['id']);
-        $same_posts = Videos::browseVideosByCategory($category, 1);
+        $same_posts = Videos::browseVideosByCategory($category[0]->catName, 1);
         $posts = Videos::browseVideosWithPagination(1);
         $data = array('post' => $post, 'comments' => $comments, 'same_posts' => $same_posts, 'posts' => $posts);
         Videos::increaseView($post->id);
