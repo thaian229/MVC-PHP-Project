@@ -22,7 +22,7 @@
     <br/><br/>
     <div>
         <?php
-        for($i = 0; $i <= count($posts); $i++) {
+        for($i = 0; $i < count($posts); $i++) {
             if(!empty($posts[$i])) {
                 echo '<div>';
                 echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">

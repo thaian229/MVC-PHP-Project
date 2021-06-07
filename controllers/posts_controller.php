@@ -97,6 +97,8 @@ class PostsController extends BaseController
     public function sendComment()
     {
         $res = array();
+        $acc_name = $_SESSION['session_username'];
+        $avatar_url = $_SESSION['session_user_ava_url'];
         $acc_id = $_SESSION['session_user_id'];
         $video_id = $_POST["video_id"];
         $content = $_POST["content"];
@@ -104,6 +106,10 @@ class PostsController extends BaseController
 
         if ($comments != null) {
             $res["success"] = true;
+            $res["body"] = array(
+                "acc_name" => $acc_name,
+                "avatar_url" => $avatar_url
+            );
         }
         else {
             $res["success"] = false;
