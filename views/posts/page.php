@@ -6,9 +6,20 @@
             <?php
             if(!empty($category))
                 echo $category;
+            if(!empty($key)) {
+                echo "Search = ";
+                echo $key;
+            }
+            if($videosCount == 0) {
+                echo '<div>';
+                echo "Sorry, no video found ";
+                echo '<span></span><i class="far fa-sad-tear"></i></span>';
+                echo '</div>';
+            }
             ?>
         </h2>
     </div>
+    <br/><br/>
     <div>
         <?php
         for($i = 0; $i <= count($posts); $i++) {
@@ -43,7 +54,7 @@
         }
         ?>
     </div>
-    <div class="pagination-container">
+    <div class="pagination-container" style="display: none;">
         <button onclick="firstPageHandler()" id="back-to-first"><<</button>
         <button onclick="prevPageHandler()" id="back-to-previous"><</button>
         <div id="current-page"></div>
@@ -57,6 +68,9 @@
     pageId = window.location.href.split("&page=")[1]
     const totalVideos = document.getElementById("count").innerText
     const totalPages = Math.ceil(totalVideos/8)
+    if (totalVideos > 0) {
+        document.getElementsByTagName("pagination-container")[0].removeAttribute("style");
+    }
     document.getElementById("current-page").innerText = pageId
     firstPageHandler = () => {
         window.location.href = getPageUrl + '1'
@@ -75,7 +89,7 @@
         document.getElementById("back-to-first").setAttribute("disabled", "disabled");
         document.getElementById("back-to-previous").setAttribute("disabled", "disabled");
     }
-    else if(pageId == totalPages) {
+    if(pageId == totalPages) {
         document.getElementById("go-to-last").setAttribute("disabled", "disabled");
         document.getElementById("go-to-next").setAttribute("disabled", "disabled");
     }

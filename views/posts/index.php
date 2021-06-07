@@ -1,157 +1,71 @@
-<script>
-    function previousPage() {
-        window.location.href = window.location.href + "&action=getPage&page=2"
-    };
-</script>
-<div align="center">
-    <div>
-        <?php
-        for($i = 0; $i <= 8; $i++) {
-            if(!empty($posts[$i])) {
-                echo '<div>';
-                echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                            <div class="thumbnail">
-                                <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
-                            </div>
-                        </a>';
-                echo '</div>';
-            }
-        }
-        ?>
-    </div>
-    <div>
-        <?php
-        if ($i == 8)
-            echo '<button class="button button2" onclick="previousPage();">Previous Page</button>';
-        ?>
-    </div>
-    <br/><br/><br/><br/>
+<div class="container">
+    <?php
+    for ($i = 0; $i < count($categories); $i++) {
+        echo '<div>';
+        echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
+        echo '<div>
+                    <a href="index.php?controller=posts&action=getCategory&category=' . $categories[$i]->catName . '&page=1"
+                    style="text-decoration: none;">
+                        View more...
+                    </a>
+              </div>';
+        echo '<div id="' . $categories[$i]->catName . '-videos"></div>';
+        echo '</div>';
+    }
+    ?>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
-    var currentUrl = window.location.href
-    var currentPageId = currentUrl.split("&page=")[1]
-    function nextPage() {
-        var nextPageId = parseInt(currentPageId) - 1
-        window.location.href = currentUrl.split("&page=")[0] + "&page=" + nextPageId.toString()
-    };
-    function previousPage() {
-        var previousPageId = parseInt(currentPageId) + 1
-        window.location.href = currentUrl.split("&page=")[0] + "&page=" + previousPageId.toString()
-    };
-</script>
-<div align="center" class="container">
-    <br/><br/>
-    <table>
-        <tr>
-            <?php
-            for($i = 0; $i < 4; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                    <td class="thumbnail_item" style="
-                            border: 1px solid black;
-                        " 
-                        align="center">
-                        <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                            <div class="thumbnail">
-                                <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
-                            </div>
-                        </a>
-                    </td>';
-                }
-            }
-            ?>
-        </tr>
-        <tr>
-            <?php
-            for($i = 0; $i < 4; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                    <td class="title_item" style="
-                        width: 15vw;
-                        border: 1px solid black">
-                        <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                            <div class="title">
-                                <p align="left"><strong style="color: #222222">' . $posts[$i]->title . '</strong></p>
-                            </div>
-                        </a>
-                    </td>';
-                }
-            }
-            ?>
-    </table>
-    <br/><br/>
-    <table align="center">
-        <tr>
-            <?php
-            for($i = 4; $i < 8; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                        <td class="thumbnail_item" style="
-                                border: 1px solid black;
-                            " 
-                            align="center">
-                            <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
+    var categories = document.getElementsByClassName('category-name')
+    for (i = 0; i < categories.length; i++) {
+        var categoryName = categories[i].innerText.toLowerCase()
+        let formData = new FormData();
+        formData.append('category', categoryName);
+        formData.append('page', 1);
+        fetch('index.php?controller=posts&action=videosByCategory', {
+            method: "post",
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success == true) {
+                    console.log(data.body.category)
+                    var videosByCategory = document.getElementById(data.body.category + '-videos')
+                    data.body.videos.forEach((video) => {
+                        videosByCategory.innerHTML += `
+                        <div>
+                            <a href="index.php?controller=posts&action=showPost&id=` + video.id + `" style="text-decoration: none;">
                                 <div class="thumbnail">
-                                    <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
+                                    <img src="` + video.thumbnailUrl + `" width="240" height="180">
                                 </div>
                             </a>
-                        </td>';
-                }
-                else continue;
-            }
-            ?>
-        </tr>
-        <tr>
-            <?php
-            for($i = 4; $i < 8; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                        <td class="title_item" style="
-                            width: 15vw;
-                            border: 1px solid black">
-                            <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
+                        </div>
+                        <div>
+                            <a href="index.php?controller=posts&action=showPost&id=` + video.id + `" style="text-decoration: none;">
                                 <div class="title">
-                                    <p align="left"><strong style="color: #222222">' . $posts[$i]->title . '</strong></p>
+                                    <p ><strong>` + video.title + `</strong></p>
                                 </div>
                             </a>
-                        </td>';
+                        </div>
+                        <div>
+                            <div><i class="fas fa-eye"></i></div>
+                            <div><strong>` + video.views + `</strong></div>
+                        </div>
+                        <div>
+                            <div><i class="fas fa-thumbs-up"></i></div>
+                            <div><strong>` + video.upvotes + `</strong></div>
+                        </div>
+                        <div>
+                            <div><i class="fas fa-thumbs-down"></i></div>
+                            <div><strong>` + video.downvotes + `</strong></div>
+                        </div>
+                        `
+                    })
                 }
-            }
-            ?>
-    </table>
-    <br/><br/><br/><br/>
-    <div>
-        <?php
-        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $pageId = explode("&page=",$url)[1];
-        if ($pageId != 1)
-            echo '<button class="button button1" onclick="nextPage();">Next Page</button>';
-        echo 'Page ' . $pageId;
-        if (count($posts) == 8)
-            echo '<button class="button button2" onclick="previousPage();">Previous Page</button>';
-        ?>
-    </div>
-    <br/><br/><br/><br/>
-</div>
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
 
+</script>

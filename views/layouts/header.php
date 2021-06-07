@@ -6,14 +6,14 @@
             <div class="left-nav-container">
                 <a class="home" href="index.php?controller=posts"><span class="web-name">FILM</span><span class="web-name" style="color: #ff8303;">SFERE</span></a>
                 <div class="search-container">
-                    <form action="/action_page.php">
+                    <div>
                         <div class="dropdown">
-                            <input type="text" id="search-box" autocomplete="off" placeholder="Search..." name="search">
+                            <input type="text" id="search-box" autocomplete="off" placeholder="Search...">
                             <div class="dropdown-content" id="search-result">
                             </div>
                         </div>
-                        <button class="fa fa-search" type="submit"></i></button>
-                    </form>
+                        <button class="fa fa-search" onclick="getSearch();"></button>
+                    </div>
                 </div>
             </div>
             <div class="right-nav-container">
@@ -45,7 +45,7 @@
 
 <script>
     onSearchBoxKeyPress = (kbevent) => {
-        console.log(kbevent.target.value)
+        // console.log(kbevent.target.value)
 
         let formData = new FormData();
         formData.append('keyword', kbevent.target.value);
@@ -56,7 +56,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if (data.success === true) {
                     let htmlarray = ""
                     data.body.videos.forEach((video) => {
@@ -79,10 +79,16 @@
                     // window.location.href = "index.php"
                 } else {
                     document.getElementById("search-result").style.display = "none"
-                    console.log(data.body.errMessage)
+                    // console.log(data.body.errMessage)
                 }
             });
     }
 
     document.getElementById("search-box").addEventListener("keydown", onSearchBoxKeyPress)
+
+    getSearch = () => {
+        var key = document.getElementById('search-box').value
+        console.log(key)
+        window.location.href = 'index.php?controller=posts&action=searchVideos&key=' + key + '&page=1'
+    }
 </script>

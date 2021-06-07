@@ -14,7 +14,9 @@ class PostsController extends BaseController
 
     public function index()
     {
-        header("Location: index.php?controller=posts&action=getPage&page=1");
+        $categories = Categories::all();
+        $data = array('categories' => $categories);
+        $this->render('index', $data);
     }
 
     public function getPage()
@@ -29,7 +31,10 @@ class PostsController extends BaseController
     {
         $post = Videos::find($_GET['id']);
         $comments = Comments::getCommentsInVideo($_GET['id']);
-        $data = array('post' => $post, 'comments' => $comments);
+        $category = Categories::getCategoriesOfVideo($_GET['id']);
+        $same_posts = Videos::browseVideosByCategory($category, 1);
+        $posts = Videos::browseVideosWithPagination(1);
+        $data = array('post' => $post, 'comments' => $comments, 'same_posts' => $same_posts, 'posts' => $posts);
         Videos::increaseView($post->id);
         $this->render('show', $data);
     }
@@ -129,13 +134,6 @@ class PostsController extends BaseController
         echo json_encode($res);
     }
 
-    public function categoryList()
-    {
-        $categories = Categories::all();
-        $data = array('categories' => $categories);
-        $this->render('category_list', $data);
-    }
-
     public function videosByCategory()
     {
         $res = array();
@@ -170,6 +168,15 @@ class PostsController extends BaseController
         $posts = Videos::browseVideosByCategory($category, $_GET['page']);
         $videosCount = Videos::countVideosByCategory($category);
         $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
+        $this->render('page', $data);
+    }
+
+    public function searchVideos()
+    {
+        $key = $_GET["key"];
+        $posts = Videos::searchVideosByTitle($key, $_GET['page']);
+        $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
+        $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
         $this->render('page', $data);
     }
 }

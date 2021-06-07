@@ -46,20 +46,48 @@
         <div class="show_column comments_part">
             <div id="comments">
                 <?php
-                for ($i = 0; $i < count($comments); $i++) {
-                    if (!empty($comments[$i]))
-                        echo '<p>' . $comments[$i]->content . '</p>';
+                if(!empty($comments)) {
+                    for ($i = 0; $i < count($comments); $i++) {
+                        if (!empty($comments[$i])) {
+                            echo '<div>';
+                            echo '<span><img height="32" width="32" src="' . $comments[$i]->ava_url . '"/></span>';
+                            echo '<span>' . $comments[$i]->username . '</span>';
+                            echo '<span>' . $comments[$i]->content . '</span>';
+                            echo '</div>';
+                        }
+                    }
                 }
                 ?>
             </div>
             <?php
                 if(!empty($_SESSION['session_user_id'])) {
+                    echo '<div>';
                     echo '<form>';
+                    echo '<span><img height="32" width="32" src="' . $_SESSION['session_user_ava_url'] . '"/></span>';
                     echo '<input type="text" id="comment-input" placeholder="Write a comment"/>';
                     echo '<input type="button" id="comment-submit" value="Send Comment" onclick="sendComment()"/>';
                     echo '</form>';
+                    echo '</div>';
                 }
             ?>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div>
+                <span>You may like!</span>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div>
+            <div>
+                <span>Explore more...</span>
+            </div>
+            <div>
+
+            </div>
         </div>
     </div>
 </div>
