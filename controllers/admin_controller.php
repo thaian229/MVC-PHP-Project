@@ -135,7 +135,7 @@ class AdminController extends BaseController
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
-                $thumbnail_url = null;
+                $thumbnail_url = 'assets/images/video-default.jpeg';
             }
 
             $id = Videos::uploadVideo(
