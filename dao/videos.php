@@ -85,9 +85,9 @@ class Videos extends BaseDAO
     {
         $db = DB::getInstance();
 
-        $category = '\%' + $category + '\%';
+        $category = '%' . $category . '%';
 
-        $req = $db->prepare('
+        $req = $db->prepare("
             SELECT COUNT(*) as `videos_count`
             FROM videos as v 
             INNER JOIN videos_categories as vc 
@@ -95,14 +95,13 @@ class Videos extends BaseDAO
             INNER JOIN categories as c 
             ON vc.cat_id = c.id 
             WHERE c.name LIKE :category
-        ');
+        ");
 
-        $req->execute(array(
-            'category' => $category,
-            'page' => $category,
+        $status = $req->execute(array(
+            'category' => $category
         ));
 
-        if (!$req)
+        if (!$status)
         {
             // Notify ercountror
             return 0;
