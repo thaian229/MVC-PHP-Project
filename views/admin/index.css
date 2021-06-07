@@ -1,0 +1,222 @@
+.admin-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.back-container {
+    background-color: black;
+}
+
+.upload-video {
+    flex-basis: 40%;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    min-height: 750px;
+    /* max-width: 200px; */
+    /* top: 30px;
+    left: 5%; */
+}
+
+.upload-video #preview-img {
+    /* position: absolute; */
+    width: 200px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    object-fit: cover;
+    border: 2px dashed darkorange;
+    /* border-radius: 50%; */
+    flex-basis: 80%;
+    max-width: 400px;
+    top: 30px;
+    left: 5%;
+}
+
+#preview-img:hover {
+    opacity: 0.3;
+}
+
+.upload-form {
+    transition: transform 0.3s ease-out;
+    background-color: white;
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    position: relative;
+    min-height: 360px;
+    padding: 30px 40px;
+    border: 1px solid black;
+}
+
+.upload-form a {
+    text-decoration: none;
+}
+
+.upload-form h4 {
+    flex-basis: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-warning {
+    height: 30px;
+}
+
+.upload-form button {
+    flex-basis: 100%;
+    margin: 20 auto;
+    height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff8303;
+    border: none;
+    border-radius: 3px;
+}
+
+.upload-form button:hover {
+    cursor: hand;
+}
+
+.upload-form #profile-title {
+    position: absolute;
+    top: 200px;
+    left: 20%;
+    flex-basis: 100%;
+    color: white;
+}
+
+.form-title {
+    position: absolute;
+    top: 35px;
+    left: 10%;
+    flex-basis: 100%;
+    /* color: white; */
+}
+
+.input-box:focus-within {
+    border: 2px dashed #ff8303;
+}
+.input-box {
+    display: flex;
+    align-items: center;
+    flex-basis: 100%;
+    margin: 10px 0;
+    background: rgb(245, 245, 245);
+    border: 1px dashed #a0a0a0;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.input-box input {
+    font-size: 16px;
+    background: rgb(245, 245, 245);
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.input-box select {
+    flex-grow: 1;
+    font-size: 16px;
+    background: rgb(245, 245, 245);
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+}
+
+
+.input-box label {
+    /* flex-grow: 1; */
+    font-size: 16px;
+    background: rgb(245, 245, 245);
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    color: #757575;
+}
+
+
+.browse-video {
+    flex-basis: 55%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.video-list {
+    overflow-y: scroll;
+    height: 600px;
+    color: whitesmoke;
+}
+
+.update-form {
+    flex-basis: 80%;
+}
+
+.update-form img {
+      /* position: absolute; */
+      width: 200px;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      object-fit: cover;
+      border: 2px dashed darkorange;
+      /* border-radius: 50%; */
+      flex-basis: 80%;
+      max-width: 400px;
+      top: 30px;
+      left: 5%;
+}
+
+.update-form-container {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+}
+
+.update-form {
+    transition: transform 0.3s ease-out;
+    background-color: white;
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    position: relative;
+    min-height: 360px;
+    padding: 30px 40px;
+    border: 1px solid black;
+}
+
+.update-form h4 {
+    flex-basis: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.update-form button {
+    flex-basis: 45%;
+    margin: 20 auto;
+    height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff8303;
+    border: none;
+    border-radius: 3px;
+}
+
+.update-form button:hover {
+    cursor: hand;
+}

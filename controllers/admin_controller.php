@@ -135,7 +135,7 @@ class AdminController extends BaseController
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
-                $thumbnail_url = null;
+                $thumbnail_url = 'assets/images/video-default.jpeg';
             }
 
             $id = Videos::uploadVideo(
@@ -262,53 +262,65 @@ class AdminController extends BaseController
 
     public function test()
     {
-        Votes::syncVote();
+        // Votes::syncVote();
 
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('current vote types: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('current vote types: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote again to unvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote again to unvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote again to unvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote again to unvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::removeVoteVideo(4, 9);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Remove vote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::removeVoteVideo(4, 9);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Remove vote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        $count = Videos::countVideosByCategory('food');
+        echo ('food: ' . $count . '<br><br>');
+
+        $count = Videos::countVideosByCategory('tech');
+        echo ('tech: ' . $count . '<br><br>');
+
+        $count = Videos::countVideosByCategory('sport');
+        echo ('sport: ' . $count . '<br><br>');
+
+        $cnt = Videos::countVideosByFavourite(8);
+        echo ('8 fav: ' . $cnt . '<br><br>');
     }
 }

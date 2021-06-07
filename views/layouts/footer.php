@@ -3,7 +3,7 @@
 <footer>
     <div class="footer-container container">
         <div class="footer-column">
-            <h2>About Us</h2>
+            <h2 style="color: #ff8303">About Us</h2>
             <br>
             <p>Three guys from HUST</p>
             <p>Nothing special</p>
@@ -12,7 +12,7 @@
             <p>No videos are hosted on this server.</p>
         </div>
         <div class="footer-column">
-            <h2>Contact</h2>
+            <h2 style="color: #ff8303">Contact</h2>
             <table style="color: white">
                 <tr>
                     <td>
