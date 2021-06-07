@@ -151,13 +151,29 @@
     flex-basis: 55%;
     display: flex;
     flex-wrap: wrap;
+    align-content: space-between;
 }
 
 .video-list {
     overflow-y: scroll;
     height: 600px;
     color: whitesmoke;
+    padding: 20px;
+    margin-top: 20px;
+    border: 3px solid darkorange;
+    background-color: #222;
+    border-radius: 5px;
 }
+
+.video-list table {
+    background-color: #222;
+}
+
+.video-list table tr{
+    padding: 30px;
+    border-bottom: 2px solid #777;
+}
+
 
 .update-form {
     flex-basis: 80%;
@@ -177,10 +193,17 @@
       left: 5%;
 }
 
+.update-form img:hover {
+    opacity: 0.3;
+}
+
 .update-form-container {
     display: flex;
     width: 100%;
     padding: 20px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .update-form {
@@ -199,6 +222,7 @@
     padding: 30px 40px;
     border: 1px solid black;
 }
+
 
 .update-form h4 {
     flex-basis: 80%;
@@ -219,4 +243,20 @@
 
 .update-form button:hover {
     cursor: hand;
+}
+
+.col1 {
+    padding: 5px;
+}
+.col1 img {
+    width: 90px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+      object-fit: cover;
+}
+
+.col2 div{
+    color: whitesmoke;
+    padding: 5px;
+    text-overflow: ellipsis;
 }
