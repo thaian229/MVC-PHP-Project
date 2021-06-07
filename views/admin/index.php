@@ -51,11 +51,11 @@
                         foreach ($videos as $v) {
                             echo '<tr>';
                             echo '
-                            <td>
-                                <img src="' . $v->thumbnailUrl . '" width="100" height="80">
+                            <td class="col1">
+                                <img src="' . $v->thumbnailUrl . '">
                             </td>
-                            <td>
-                                <p> ' . $v->title . ' </p>
+                            <td class="col2">
+                                <div> ' . $v->title . ' </div>
                             </td>
                             <td>
                                 <button class="update-video-button" id="' . $v->id . '" onClick="onClickChange(this.id)">change</button>
