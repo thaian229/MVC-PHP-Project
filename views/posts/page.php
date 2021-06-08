@@ -106,12 +106,12 @@
 </div>
 
 <script>
-    var getPageUrl = window.location.href.slice(0, -1)
 
-    var pageId = window.location.href.split("&page=")[1]
+    var urlParams = new URLSearchParams(window.location.search)
+    var pageId= urlParams.get('page')
+    var getPageUrl = window.location.href.slice(0, -(pageId.length))
 
     const totalVideos = document.getElementById("count").innerText
-    console.log(totalVideos)
     const totalPages = Math.ceil(totalVideos / 8)
 
     if (totalVideos > 0) {
