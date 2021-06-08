@@ -109,6 +109,11 @@ class AuthController extends BaseController
     {
         $res = array();
 
+        $regex_password = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,50}$/";
+        $regex_name = "/^[a-zA-Z ]+$/";
+        $regex_email = "/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
+        $regex_phone = "/(84|0[3|5|7|8|9])+([0-9]{8})\b/";
+
         if (
             isset($_POST["username"])
             && isset($_POST["password"])
@@ -116,6 +121,38 @@ class AuthController extends BaseController
             && isset($_POST["phone_number"])
             && isset($_POST["full_name"])
         ) {
+            if (!preg_match($regex_password, $_POST["password"])) {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Invalid password"
+                );
+                echo json_encode($res);
+                return;
+            }
+            if (!preg_match($regex_name, $_POST["full_name"])) {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Invalid name"
+                );
+                echo json_encode($res);
+                return;
+            }
+            if (!preg_match($regex_email, $_POST["email"])) {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Invalid email"
+                );
+                echo json_encode($res);
+                return;
+            }
+            if (!preg_match($regex_phone, $_POST["phone_number"])) {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Invalid phone number"
+                );
+                echo json_encode($res);
+                return;
+            }
 
             $username = $_POST["username"];
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
@@ -152,11 +189,21 @@ class AuthController extends BaseController
     {
         $res = array();
 
+        $regex_password = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,50}$/";
+
         if (
             isset($_POST["old_password"])
             && isset($_POST["new_password"])
             && isset($_SESSION['session_user_id'])
         ) {
+            if (!preg_match($regex_password, $_POST["new_password"])) {
+                $res["success"] = false;
+                $res["body"] = array(
+                    "errMessage" => "Invalid new password"
+                );
+                echo json_encode($res);
+                return;
+            }
             // compare old_password
             $id = $_SESSION['session_user_id'];
             $acc = Accounts::find($id);

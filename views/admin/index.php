@@ -114,6 +114,13 @@
     }
 
     uploadNewVideo = (thumbnail_url) => {
+        let regex_url = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+
+        if (!regex_url.test(document.getElementById("v_url").value)) {
+            document.getElementById(`form-warning`).innerText = 'Invalid url'
+            return;
+        }
+
         let formData = new FormData();
         formData.append('video_url', document.getElementById("v_url").value);
         formData.append('video_title', document.getElementById("v_title").value);
@@ -140,9 +147,9 @@
                     alert(data.body.errMessage);
                 }
             })
-        // .catch(e => {
-        //     console.log(e)
-        // });
+            .catch(e => {
+                console.log(e)
+            });
     }
 
     onFormSubmit = (event) => {
@@ -195,6 +202,13 @@
     }
 
     updateVideo = (thumbnail_url, video_id) => {
+        let regex_url = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+
+        if (!regex_url.test(document.getElementById(`` + video_id + `_url`).value)) {
+            document.getElementById(video_id + `form_warning`).innerText = 'Invalid url'
+            return;
+        }
+
         let formData = new FormData();
         formData.append('video_id', video_id);
         formData.append('video_url', document.getElementById(`` + video_id + `_url`).value);
