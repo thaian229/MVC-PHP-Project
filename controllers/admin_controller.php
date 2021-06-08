@@ -61,7 +61,21 @@ class AdminController extends BaseController
     {
         $res = array();
 
+        // $regex_url = "/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g";
+        $regex_url = "^(https?|ftp)://[^\s/$.?#].[^\s]*$";
+
         if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
+            // if (isset($_POST['video_url'])) {
+            //     if (!preg_match($regex_url, $_POST['video_url'])) {
+            //         $res["success"] = false;
+            //         $res["body"] = array(
+            //             "errMessage" => "Invalid url"
+            //         );
+            //         echo json_encode($res);
+            //         return;
+            //     }
+            // }
+
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
@@ -131,7 +145,21 @@ class AdminController extends BaseController
     {
         $res = array();
 
+        // $regex_url = "/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g";
+        $regex_url = "^(https?|ftp)://[^\s/$.?#].[^\s]*$";
+
         if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
+            // if (isset($_POST['video_url'])) {
+            //     if (!preg_match($regex_url, $_POST['video_url'])) {
+            //         $res["success"] = false;
+            //         $res["body"] = array(
+            //             "errMessage" => "Invalid url"
+            //         );
+            //         echo json_encode($res);
+            //         return;
+            //     }
+            // }
+
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
