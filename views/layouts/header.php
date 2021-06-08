@@ -68,7 +68,7 @@
                         `
                     })
 
-                    htmlarray += `<a href="index.php?controller=posts&action=search&keyword=` + kbevent.target.value + `"> More </a>`
+                    htmlarray += `<a href="index.php?controller=posts&action=searchVideos&key=` + kbevent.target.value + `&page=1"> More </a>`
 
                     if (data.body.videos.length == 0 || kbevent.target.value == "") {
                         document.getElementById("search-result").style.display = "none"

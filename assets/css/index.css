@@ -178,3 +178,13 @@ body {
     color: rgb(255, 72, 0);
     margin-bottom: 5px;
 }
+
+.sorry-statement {
+    color: rgb(207, 207, 207);
+}
+
+#current-page {
+    color: rgb(207, 207, 207);
+    font-size: 20px;
+    font-weight: bold;
+}
