@@ -27,7 +27,7 @@ class AdminController extends BaseController
     {
         if(isset($_POST['search']))
         {
-            $key = $_POST['search'];
+            $key = strip_tags($_POST['search']);
             $videos = Videos::searchVideosByTitleNoPagination($key);
             $categories = Categories::all();
             $data = array(
@@ -51,7 +51,7 @@ class AdminController extends BaseController
     {
         if(isset($_GET['id']) && $_SESSION['session_user_type'] == 1)
         {
-            $vid = $_GET['id'];
+            $vid = strip_tags($_GET['id']);
             Videos::removeById($vid);
             $this->show();
         }
@@ -61,20 +61,19 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        // $regex_url = "/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g";
-        $regex_url = "^(https?|ftp)://[^\s/$.?#].[^\s]*$";
+        $regex_url = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
 
         if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
-            // if (isset($_POST['video_url'])) {
-            //     if (!preg_match($regex_url, $_POST['video_url'])) {
-            //         $res["success"] = false;
-            //         $res["body"] = array(
-            //             "errMessage" => "Invalid url"
-            //         );
-            //         echo json_encode($res);
-            //         return;
-            //     }
-            // }
+            if (isset($_POST['video_url'])) {
+                if (!preg_match($regex_url, $_POST['video_url'])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid url"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+            }
 
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
@@ -88,15 +87,15 @@ class AdminController extends BaseController
             }
             
             $id = Videos::updateVideo(
-                $_POST['video_id'],
-                $_POST['video_title'],
-                $_POST['video_url'],
+                strip_tags($_POST['video_id']),
+                strip_tags($_POST['video_title']),
+                strip_tags($_POST['video_url']),
                 $thumbnail_url
             );
 
             if (isset($_POST['video_category']))
             {
-                $cat_list_string = $_POST['video_category'];
+                $cat_list_string = strip_tags($_POST['video_category']);
                 $tokens = explode(",", $cat_list_string);
                 $cat_list = [];
                 foreach ($tokens as $t)
@@ -145,20 +144,19 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        // $regex_url = "/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g";
-        $regex_url = "^(https?|ftp)://[^\s/$.?#].[^\s]*$";
+        $regex_url = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
 
         if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
-            // if (isset($_POST['video_url'])) {
-            //     if (!preg_match($regex_url, $_POST['video_url'])) {
-            //         $res["success"] = false;
-            //         $res["body"] = array(
-            //             "errMessage" => "Invalid url"
-            //         );
-            //         echo json_encode($res);
-            //         return;
-            //     }
-            // }
+            if (isset($_POST['video_url'])) {
+                if (!preg_match($regex_url, $_POST['video_url'])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid url"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+            }
 
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
@@ -167,14 +165,14 @@ class AdminController extends BaseController
             }
 
             $id = Videos::uploadVideo(
-                $_POST['video_title'],
-                $_POST['video_url'],
+                strip_tags($_POST['video_title']),
+                strip_tags($_POST['video_url']),
                 $thumbnail_url
             );
 
             if (isset($_POST['video_category']))
             {
-                $cat_list_string = $_POST['video_category'];
+                $cat_list_string = strip_tags($_POST['video_category']);
                 $tokens = explode(",", $cat_list_string);
                 $cat_list = [];
                 foreach ($tokens as $t)
@@ -225,7 +223,7 @@ class AdminController extends BaseController
 
         if (isset($_POST['video_id']))
         {
-            $video_id = $_POST['video_id'];
+            $video_id = strip_tags($_POST['video_id']);
             $v = Videos::find($video_id);
             if (!$v) {
                 $res = array(

@@ -21,7 +21,7 @@ class UsersController extends BaseController
         $pageSize = 8;
 
         if (isset($_GET["page"]) && isset($_SESSION['session_user_id'])) {
-            $page = $_GET["page"];
+            $page = strip_tags($_GET["page"]);
 
             $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
             $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'], $page);
@@ -47,7 +47,7 @@ class UsersController extends BaseController
     {
         $res = array();
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
             $isFav = Videos::isVideoInFavourite($videoId, $_SESSION['session_user_id']);
             if ($isFav >= 0) {
                 $res["success"] = true;
@@ -75,7 +75,7 @@ class UsersController extends BaseController
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
 
             $addedId = Videos::addVideosToFavourite($videoId, $_SESSION['session_user_id']);
 
@@ -105,7 +105,7 @@ class UsersController extends BaseController
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
 
             $addedId = Videos::removeVideosFromFavourite($videoId, $_SESSION['session_user_id']);
 
@@ -144,7 +144,7 @@ class UsersController extends BaseController
 
         if (isset($_SESSION['session_user_id'])) {
             if (isset($_POST['ava_url'])) {
-                $ava_url = $_POST['ava_url'];
+                $ava_url = strip_tags($_POST['ava_url']);
             } else {
                 $ava_url = $_SESSION['session_user_ava_url'];
             }
@@ -158,7 +158,7 @@ class UsersController extends BaseController
                     echo json_encode($res);
                     return;
                 }
-                $email = $_POST['email'];
+                $email = strip_tags($_POST['email']);
             } else {
                 $email = $_SESSION['session_user_email'];
             }
@@ -172,7 +172,7 @@ class UsersController extends BaseController
                     echo json_encode($res);
                     return;
                 }
-                $tel_no = $_POST['tel_no'];
+                $tel_no = strip_tags($_POST['tel_no']);
             } else {
                 $tel_no = $_SESSION['session_user_tel_no'];
             }
