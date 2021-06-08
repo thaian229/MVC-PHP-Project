@@ -60,12 +60,18 @@
 
                 <div class="pagination-container">
                     <button onclick="firstPageHandler()" id="back-to-first">
-                        &lt&lt </button>
+                        <i class="fas fa-angle-double-left"></i>
+                    </button>
                     <button onclick="prevPageHandler()" id="back-to-previous">
-                        &lt </button>
+                        <i class="fas fa-angle-left"></i>
+                    </button>
                     <div id="current-page"></div>
-                    <button onclick="nextPageHandler()" id="go-to-next">&gt</button>
-                    <button onclick="lastPageHandler()" id="go-to-last">&gt&gt</button>
+                    <button onclick="nextPageHandler()" id="go-to-next">
+                        <i class="fas fa-angle-right"></i>
+                    </button>
+                    <button onclick="lastPageHandler()" id="go-to-last">
+                        <i class="fas fa-angle-double-right"></i>
+                    </button>
                 </div>
             </div>
 

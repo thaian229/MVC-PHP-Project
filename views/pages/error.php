@@ -1,3 +1,5 @@
-<?php
-echo 'Có lỗi xảy ra!';
-?>
+<div class="container error" align="center" >
+    <div >
+        <img src="assets/images/error.png"/>
+    </div>
+</div>

@@ -2,6 +2,10 @@
     background-color: #111;
 }
 
+header {
+    z-index: 10000000;
+}
+
 .nav-container {
     flex-basis: 100%;
     display: flex;

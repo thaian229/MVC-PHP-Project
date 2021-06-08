@@ -14,22 +14,21 @@ class PostsController extends BaseController
 
     public function index()
     {
-//        $categories = Categories::all();
-//        $data = array('categories' => $categories);
-//        $this->render('index', $data);
-        header("Location: index.php?controller=posts&action=getPage&page=1");
-    }
-
-    public function categoryList()
-    {
         $categories = Categories::all();
         $data = array('categories' => $categories);
         $this->render('index', $data);
     }
 
+//    public function categoryList()
+//    {
+//        $categories = Categories::all();
+//        $data = array('categories' => $categories);
+//        $this->render('index', $data);
+//    }
+
     public function getPage()
     {
-        if (!isset($_GET['page'])) {
+        if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosWithPagination($_GET['page']);
@@ -40,12 +39,20 @@ class PostsController extends BaseController
 
     public function showPost()
     {
+
+        if (!isset($_GET['id']) or !is_numeric($_GET['id'])) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $post = Videos::find($_GET['id']);
         $comments = Comments::getCommentsInVideo($_GET['id']);
-        $category = Categories::getCategoriesOfVideo($_GET['id']);
-        $same_posts = Videos::browseVideosByCategory($category[0]->catName, 1);
         $posts = Videos::browseVideosWithPagination(1);
-        $data = array('post' => $post, 'comments' => $comments, 'same_posts' => $same_posts, 'posts' => $posts);
+        $category = Categories::getCategoriesOfVideo($_GET['id']);
+        if($category != null) {
+            $same_posts = Videos::browseVideosByCategory($category[0]->catName, 1);
+            $data = array('post' => $post, 'comments' => $comments, 'same_posts' => $same_posts, 'posts' => $posts);
+        }
+        else
+        $data = array('post' => $post, 'comments' => $comments, 'posts' => $posts);
         Videos::increaseView($post->id);
         $this->render('show', $data);
     }
@@ -178,27 +185,30 @@ class PostsController extends BaseController
         echo json_encode($res);
     }
 
-    public function categoriesBar()
-    {
-        $categories = Categories::all();
-        if ($categories != null) {
-            $res["success"] = true;
-            $res["body"] = array(
-                "categories" => $categories,
-            );
-        } else {
-            $res["success"] = false;
-            $res["body"] = array(
-                "errMessage" => "Invalid request"
-            );
-        }
-        echo json_encode($res);
-    }
+//    public function categoriesBar()
+//    {
+//        $categories = Categories::all();
+//        if ($categories != null) {
+//            $res["success"] = true;
+//            $res["body"] = array(
+//                "categories" => $categories,
+//            );
+//        } else {
+//            $res["success"] = false;
+//            $res["body"] = array(
+//                "errMessage" => "Invalid request"
+//            );
+//        }
+//        echo json_encode($res);
+//    }
 
         public
         function getCategory()
         {
             $category = $_GET["category"];
+            if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
+                header("Location: index.php?controller=posts&action=getPage&page=1");
+            }
             $posts = Videos::browseVideosByCategory($category, $_GET['page']);
             $videosCount = Videos::countVideosByCategory($category);
             $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
@@ -209,6 +219,9 @@ class PostsController extends BaseController
         function searchVideos()
         {
             $key = $_GET["key"];
+            if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
+                header("Location: index.php?controller=posts&action=getPage&page=1");
+            }
             $posts = Videos::searchVideosByTitle($key, $_GET['page']);
             $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
             $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
