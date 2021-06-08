@@ -1,0 +1,260 @@
+#hero {
+    height: 610px;
+    background-color: #434052;
+    background-image: url(../../assets/images/landing/car.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 50%;
+}
+
+#hero .container {
+    height: 660px;
+    padding-top: 216px;
+    position: relative;
+}
+
+#hero .container span {
+    color: #ffffff;
+    line-height: 42px;
+    text-transform: uppercase;
+    font-size: 42px;
+    font-weight: normal;
+}
+
+#hero #orange-name {
+    color: darkorange;
+}
+
+#hero .container p {
+    margin-top: 26px;
+    color: #ccd0d7;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+#hero .container div {
+    margin-top: 36px;
+}
+
+#hero .container div,
+#hero .container span,
+#hero .container p {
+    max-width: 585px;
+}
+
+#hero .container div a,
+#action>button {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 40px;
+    height: 44px;
+    padding: 0 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: darkorange;
+    border: 2px solid darkorange;
+    background: none;
+    border-radius: 5px;
+    margin-right: 11px;
+    text-decoration: none;
+}
+
+#hero .container div a:hover,
+#action>button:hover {
+    background-color: darkorange !important;
+    border-color: darkorange !important;
+    color: black !important;
+}
+
+/* team */
+
+#team {
+    padding: 0 0 100px 0;
+    background-color: black;
+}
+
+#team h2 {
+    color: whitesmoke;
+    font-weight: lighter;
+    border-left: 5px solid orange;
+    padding-left: 20px;
+}
+
+#team img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+}
+
+#team-list {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#team-list>div {
+    width: calc((100% - 90px) / 4);
+}
+
+#team-list>div>div {
+    position: relative;
+}
+
+#team .info {
+    height: 74px;
+    background-color: #e1e6ea;
+    padding: 0px 20px;
+}
+
+#team .info h4 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #292f36;
+    text-transform: uppercase;
+    padding-top: 18px;
+}
+
+#team .info p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #a6a9ac;
+    text-transform: uppercase;
+}
+
+#team-list>div:hover .info {
+    background-color: darkorange;
+}
+
+#team-list>div:hover h4,
+#team-list>div:hover p {
+    color: whitesmoke;
+}
+
+#team .mask,
+#team .responsive-mask {
+    display: none;
+}
+
+#team .mask ul {
+    letter-spacing: -3px;
+}
+
+#team .responsive-mask ul {
+    background-color: #626e75;
+}
+
+#team .mask ul li,
+#team .responsive-mask ul li {
+    display: inline-block;
+}
+
+#team .responsive-mask ul {
+    width: 100%;
+}
+
+#team .responsive-mask ul li {
+    width: calc((90% - 4px) / 3);
+}
+
+#team .mask ul li a {
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-indent: -1000000px;
+    background: #3a454d no-repeat center center;
+    background-size: auto 14px;
+}
+
+#team .responsive-mask ul li a {
+    display: block;
+    width: 100%;
+    height: 80px;
+    text-indent: -1000000px;
+    background: #3a454d no-repeat center center;
+}
+
+#team .mask ul li a:hover {
+    background-color: #4e5a62;
+}
+
+#team .mask ul li:nth-child(1) a,
+#team .responsive-mask ul li:nth-child(1) a {
+    background-image: url(../../assets/images/landing/fb.png);
+}
+
+#team-list>div>div:not(.info) {
+    position: relative;
+}
+
+#team-list>div {
+    position: relative;
+}
+
+#team-list>div:hover>div .mask {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#video-cat-list {
+    background-color: black;
+    padding: 50px 0 30px 0;
+}
+
+#video-cat-list .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 0;
+}
+
+#video-cat-list .container h2 {
+    color: whitesmoke;
+    font-weight: lighter;
+    border-left: 5px solid orange;
+    padding-left: 20px;
+}
+
+
+#video-cat-list .container img {
+    width: 100%;
+}
+
+#cat-contents {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px 0 30px 0;
+}
+
+.cat-content {
+    flex-basis: 33%;
+    padding: 20px 30px;
+    position: relative;
+}
+
+
+.cat-content span {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgba(255, 253, 253, 0.938);
+}
+
+.cat-content img {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    overflow: hidden;
+}
