@@ -14,18 +14,17 @@ class PostsController extends BaseController
 
     public function index()
     {
-//        $categories = Categories::all();
-//        $data = array('categories' => $categories);
-//        $this->render('index', $data);
-        header("Location: index.php?controller=posts&action=getPage&page=1");
-    }
-
-    public function categoryList()
-    {
         $categories = Categories::all();
         $data = array('categories' => $categories);
         $this->render('index', $data);
     }
+
+//    public function categoryList()
+//    {
+//        $categories = Categories::all();
+//        $data = array('categories' => $categories);
+//        $this->render('index', $data);
+//    }
 
     public function getPage()
     {
