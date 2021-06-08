@@ -155,9 +155,9 @@
                         console.log(video)
                         htmlString += `
                             <tr>
-                                <td class="td1"><img alt="NOT FOUND" width="200px" src="` + video.thumbnailUrl + `"/></td>
+                                <td class="td1"><img alt="NOT FOUND" src="` + video.thumbnailUrl + `"/></td>
                                 <td class="td2"><a href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
-                                <td class="td3"><button onclick="removeVideoFromFavouriteHandler(this)" id="remove-fav-` + video.id + `">X</button></td>
+                                <td class="td3"><button onclick="removeVideoFromFavouriteHandler(this)" id="remove-fav-` + video.id + `"><i class="fas fa-window-close"></i></button></td>
                             </tr>
                         `
                     })

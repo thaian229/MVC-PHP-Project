@@ -146,11 +146,41 @@
 }
 
 #fav-videos .td1 {
-    text-align: center;
+    width: 260px;
+    /* text-align: center; */
 }
+
+
+#fav-videos .td1 img {
+    width: 230px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    object-fit: cover;
+    /* text-align: center; */
+}
+
 
 #fav-videos .td3 {
     text-align: center;
+}
+
+#fav-videos .td3 .fa-window-close {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding-bottom: 0px;
+    font-weight: normal;
+}
+
+#fav-videos .td3 button {
+    background-color: transparent;
+    border: none;
+}
+
+
+#fav-videos .td3 button:hover .fa-window-close {
+    color: red;
+    font-weight: bold;
 }
 
 .fav-container {
@@ -190,3 +220,5 @@
     flex-basis: 100%;
     justify-content: center;
 }  
+
+
