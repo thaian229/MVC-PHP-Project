@@ -52,6 +52,28 @@
     onFormSubmit = (event) => {
         event.preventDefault();
 
+        let regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,50}$/;
+        let regex_name = /^[a-zA-Z ]+$/;
+        let regex_email = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        let regex_phone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+        if (!regex_password.test(document.getElementById("password").value)) {
+            document.getElementById("form-warning").innerText = 'Password too weak'
+            return;
+        }
+        if (!regex_name.test(document.getElementById("fullname").value)) {
+            document.getElementById("form-warning").innerText = 'Name can only contain letters'
+            return;
+        }
+        if (!regex_email.test(document.getElementById("email").value)) {
+            document.getElementById("form-warning").innerText = 'Invalid email format'
+            return;
+        }
+        if (!regex_phone.test(document.getElementById("phone-number").value)) {
+            document.getElementById("form-warning").innerText = 'Invalid Vietnamese phone number'
+            return;
+        }
+
         let formData = new FormData();
         formData.append('username', document.getElementById("username").value);
         formData.append('password', document.getElementById("password").value);

@@ -27,7 +27,7 @@ class Accounts extends BaseDAO
         return null;
     }
 
-    static function addNewAccount(
+    static function addNewAccount (
         $userName,
         $pass,
         $fullname = null,

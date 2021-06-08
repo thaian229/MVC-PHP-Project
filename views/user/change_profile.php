@@ -87,6 +87,24 @@
 
     updateUserDetails = (ava_url) => {
         let formData = new FormData();
+
+        let regex_name = /^[a-zA-Z ]+$/;
+        let regex_email = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        let regex_phone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+
+        if (!regex_name.test(document.getElementById("fullname").value)) {
+            document.getElementById("form-warning").innerText = 'Name can only contain letters'
+            return;
+        }
+        if (!regex_email.test(document.getElementById("email").value)) {
+            document.getElementById("form-warning").innerText = 'Invalid email format'
+            return;
+        }
+        if (!regex_phone.test(document.getElementById("phone-number").value)) {
+            document.getElementById("form-warning").innerText = 'Invalid Vietnamese phone number'
+            return;
+        }
+
         formData.append('email', document.getElementById("email").value);
         formData.append('tel_no', document.getElementById("phone-number").value);
         formData.append('fullname', document.getElementById("fullname").value);
@@ -162,6 +180,14 @@
         event.preventDefault();
         
         let formData = new FormData();
+
+        let regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,50}$/;
+
+        if (!regex_password.test(document.getElementById("new-password").value)) {
+            document.getElementById("form-warning").innerText = 'New password is too weak'
+            return;
+        }
+
         formData.append('old_password', document.getElementById("old-password").value);
         formData.append('new_password', document.getElementById("new-password").value);
 
