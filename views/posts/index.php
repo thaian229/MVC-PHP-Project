@@ -1,20 +1,37 @@
 <link rel="stylesheet" href="views/posts/index.css">
 
-<div class="container list-category-container">
-    <?php
-    for ($i = 0; $i < count($categories); $i++) {
-        echo '<div class=category-container>';
-        echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
-        echo '<div class="category-more">
+<div class="banner-container">
+    <div class="banner-content container">
+        <span id="page-name">EXPLORE</span>
+        <span id="page-description">Start exploring the world of entertainments</span>
+    </div>
+</div>
+<div class="back-container">
+    <div class="container list-category-container">
+        <?php
+        for ($i = 0; $i < count($categories); $i++) {
+            echo '<div class=category-container>';
+            echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
+            echo '<div class="category-more">
                     <a href="index.php?controller=posts&action=getCategory&category=' . $categories[$i]->catName . '&page=1"
                     style="text-decoration: none;">
                         View more
                     </a>
               </div>';
-        echo '<div class="category-contents" id="' . $categories[$i]->catName . '-videos"></div>';
-        echo '</div>';
-    }
-    ?>
+            echo '<div class="category-contents" id="' . $categories[$i]->catName . '-videos"></div>';
+            echo '</div>';
+        }
+        ?>
+
+    </div>
+
+    <div class="show-all-banner-container container">
+        <span>Want to see more?</span>
+        <a href="index.php?controller=posts&action=getPage&page=1">SHOW ALL VIDEOS</a>
+    </div>
+
+
+
 </div>
 
 <script>

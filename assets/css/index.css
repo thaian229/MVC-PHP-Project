@@ -81,8 +81,8 @@ body {
     text-decoration: none;
     color: white;
     background-color: #222;
-    flex-basis: 25%;
-    max-width: 250px;
+    flex-basis: 23%;
+    /* max-width: 250px; */
     display: flex;
     flex-wrap: wrap;
     position: relative;

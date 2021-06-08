@@ -21,6 +21,9 @@ class PostsController extends BaseController
 
     public function getPage()
     {
+        if(!isset($_GET['page'])) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $posts = Videos::browseVideosWithPagination($_GET['page']);
         $videosCount = Videos::countVideos();
         $data = array('posts' => $posts, 'videosCount' => $videosCount);
