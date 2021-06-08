@@ -38,19 +38,19 @@
 
         <div class="browse-video">
             <div class="admin-search-container">
+                <span>Videos List</span>
                 <form method='POST' action="index.php?controller=admin&action=search">
                     <input type="text" placeholder="Search..." name="search">
                     <button class="fa fa-search" type="submit"></i></button>
                 </form>
             </div>
-
             <div class="video-list" id="admin-video-list">
-                <table>
-                    <?php
-                    if (is_countable($videos)) {
-                        foreach ($videos as $v) {
-                            echo '<tr>';
-                            echo '
+                <?php
+                if (is_countable($videos) && count($videos) > 0) {
+                    echo '<table>';
+                    foreach ($videos as $v) {
+                        echo '<tr>';
+                        echo '
                             <td class="col1">
                                 <img src="' . $v->thumbnailUrl . '">
                             </td>
@@ -58,41 +58,32 @@
                                 <div> ' . $v->title . ' </div>
                             </td>
                             <td>
-                                <button class="update-video-button" id="' . $v->id . '" onClick="onClickChange(this.id)">change</button>
+                                <button class="update-video-button" id="' . $v->id . '" onClick="onClickChange(this.id)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </td>
                             <td>
                                 <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $v->id . '">
-                                    <input type="submit" value="delete">
+                                    <button class="delete-video-button" type="submit">
+                                        <i class="fas fa-window-close"></i>
+                                    </button>
                                 </form>
                             </td>
                         ';
-                            echo '</tr>';
-                            echo '<tr id="c' . $v->id . '"> </tr>';
-                        }
-                    } else {
-                        echo '<tr>';
-                        echo '
-                        <td>
-                            <img src="' . $videos->thumbnailUrl . '" width="100" height="80">
-                        </td>
-                        <td>
-                            <p> ' . $videos->title . ' </p>
-                        </td>
-                        <td>
-                        <button class="update-video-button" id="' . $videos->id . '" onClick="onClickChange(this.id)">change</button>
-                        </td>
-                        <td>
-                            <form class="delete-video" method="post" action="index.php?controller=admin&action=delete&id=' . $videos->id . '">
-                                <input type="submit" value="delete">
-                            </form>
-                        </td>
-                    ';
                         echo '</tr>';
-                        echo '<tr id="c' . $videos->id . '"> </tr>';
+                        echo '<tr id="c' . $v->id . '"> </tr>';
                     }
+                    echo '</table>';
+                } else {
+                    echo '
+                    <div class="no-video-found"> 
+                        <span>No videos found!</span>
+                        <span>Try again or upload a new video</span>
+                    <div>
+                    ';
+                }
 
-                    ?>
-                </table>
+                ?>
             </div>
         </div>
 

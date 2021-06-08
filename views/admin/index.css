@@ -137,7 +137,6 @@
     padding: 0.5rem;
 }
 
-
 .input-box label {
     /* flex-grow: 1; */
     font-size: 16px;
@@ -147,7 +146,6 @@
     padding: 0.5rem;
     color: #757575;
 }
-
 
 .browse-video {
     flex-basis: 55%;
@@ -171,28 +169,43 @@
     background-color: #222;
 }
 
-.video-list table tr{
-    padding: 30px;
-    border-bottom: 2px solid #777;
+.video-list table tr {
+    padding: 50px;
+    height: 40px;
 }
 
+.video-list .no-video-found {
+    width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+.video-list .no-video-found span {
+    flex-basis: 100%;
+    width: 100%;
+}
 
 .update-form {
     flex-basis: 80%;
 }
 
 .update-form img {
-      /* position: absolute; */
-      width: 200px;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      object-fit: cover;
-      border: 2px dashed darkorange;
-      /* border-radius: 50%; */
-      flex-basis: 80%;
-      max-width: 400px;
-      top: 30px;
-      left: 5%;
+    /* position: absolute; */
+    width: 200px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    object-fit: cover;
+    border: 2px dashed darkorange;
+    /* border-radius: 50%; */
+    flex-basis: 80%;
+    max-width: 400px;
+    top: 30px;
+    left: 5%;
 }
 
 .update-form img:hover {
@@ -225,7 +238,6 @@
     border: 1px solid black;
 }
 
-
 .update-form h4 {
     flex-basis: 80%;
     margin: 0 auto;
@@ -254,11 +266,75 @@
     width: 90px;
     aspect-ratio: 16/9;
     overflow: hidden;
-      object-fit: cover;
+    object-fit: cover;
 }
 
-.col2 div{
+.col2 div {
     color: whitesmoke;
+    font-size: 14px;
     padding: 5px;
     text-overflow: ellipsis;
+}
+
+.update-video-button,
+.delete-video-button {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+}
+
+.update-video-button .fa-edit {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding-bottom: 5px;
+    font-weight: lighter;
+}
+
+.update-video-button:hover .fa-edit {
+    color: orange;
+    font-weight: bold;
+}
+
+.delete-video-button .fa-window-close {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding-bottom: 4px;
+    font-weight: normal;
+}
+
+.delete-video-button:hover .fa-window-close {
+    color: red;
+    font-weight: bold;
+}
+
+.admin-search-container {
+    padding: 5px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-basis: 100%;
+}
+
+.admin-search-container span {
+    font-size: 30px;
+    color: antiquewhite;
+}
+
+.admin-search-container form input {
+    border: none;
+    background-color: transparent;
+    color: #a0a0a0;
+    font-size: 16px;
+}
+
+.admin-search-container form button {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 24px;
+    color: antiquewhite;
+    cursor: pointer;
 }
