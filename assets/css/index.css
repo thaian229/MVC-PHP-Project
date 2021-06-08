@@ -75,6 +75,7 @@ body {
     margin: auto 0;
     max-width: 160px;
     flex-basis: 100%;
+    margin-top: 50px;
 }
 
 .video-card {
@@ -94,7 +95,9 @@ body {
     width: 100%;
     aspect-ratio: 16/9;
     flex-basis: 100%;
+    object-fit: cover;
 }
+
 .video-card .video-card-title {
     flex-basis: 100%;
     padding: 10px 20px;

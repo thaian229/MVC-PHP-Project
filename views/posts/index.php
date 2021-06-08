@@ -52,8 +52,8 @@
                     var videosByCategory = document.getElementById(data.body.category + '-videos')
                     data.body.videos.forEach((video) => {
                         videosByCategory.innerHTML += `
-                            <div id="video-` + video.id + `-card" class="video-card">
-                                <div class="video-card-overlay" id="video-` + video.id + `-card-overlay"></div>
+                            <div id="video-` + video.id + `-card-` + data.body.category + `" class="video-card">
+                                <div class="video-card-overlay" id="video-` + video.id + `-card-overlay-` + data.body.category + `" onclick="onVideoClicked(this)"></div>
                                 <img  class="video-card-thumbnail" src="` + video.thumbnailUrl + `"/>
                                 <div class="video-card-title">` + video.title + ` </div>
                                 <div class="video-card-info">
@@ -75,11 +75,9 @@
                                     </div>
                                 </div>
                             </div>
-                        <div>
-                        `
+                        `;
 
-                        let card = document.getElementById(`video-` + video.id + `-card-overlay`)
-                        card.addEventListener("click", onVideoClicked)
+                        // document.getElementById(`video-` + video.id + `-card-overlay-` + data.body.category).addEventListener("click", onVideoClicked)
                     })
                 }
             })
@@ -88,9 +86,9 @@
             });
     }
 
-    onVideoClicked = (event) => {
-        console.log(event)
-        let vId = event.target.id.split("-")[1]
+    onVideoClicked = (target) => {
+        console.log(target)
+        let vId = target.id.split("-")[1]
         window.location.href = `index.php?controller=posts&action=showPost&id=` + vId
     }
 </script>
