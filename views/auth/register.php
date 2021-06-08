@@ -79,7 +79,7 @@
         formData.append('password', document.getElementById("password").value);
         formData.append('full_name', document.getElementById("fullname").value);
         formData.append('email', document.getElementById("email").value);
-        formData.append('phone_number', document.getElementById("phone-number").value);
+        formData.append('phone_number', '84' + document.getElementById("phone-number").value);
 
         fetch('index.php?controller=auth&action=verifyRegister', {
                 body: formData,

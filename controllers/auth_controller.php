@@ -58,8 +58,8 @@ class AuthController extends BaseController
             isset($_POST["username"])
             && isset($_POST["password"])
         ) {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+            $username = strip_tags($_POST["username"]);
+            $password = strip_tags($_POST["password"]);
 
             $account = Accounts::findAccountByUserName($username);
 
@@ -154,11 +154,11 @@ class AuthController extends BaseController
                 return;
             }
 
-            $username = $_POST["username"];
+            $username = strip_tags($_POST["username"]);
             $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $email = $_POST["email"];
-            $phoneNumber = $_POST["phone_number"];
-            $fullname = $_POST["full_name"];
+            $email = strip_tags($_POST["email"]);
+            $phoneNumber = strip_tags($_POST["phone_number"]);
+            $fullname = strip_tags($_POST["full_name"]);
 
             $account = Accounts::addNewAccount($username, $password, $fullname, email: $email, tel_no: $phoneNumber);
 
@@ -207,9 +207,9 @@ class AuthController extends BaseController
             // compare old_password
             $id = $_SESSION['session_user_id'];
             $acc = Accounts::find($id);
-            if (password_verify($_POST["old_password"], $acc->password)) {
+            if (password_verify(strip_tags($_POST["old_password"]), $acc->password)) {
                 // correct old password
-                $password = password_hash($_POST["new_password"], PASSWORD_DEFAULT);
+                $password = password_hash(strip_tags($_POST["new_password"]), PASSWORD_DEFAULT);
                 if (Accounts::updateAccountPassword($id, $password) > 0) {
                     // Success
                     $res["success"] = true;
