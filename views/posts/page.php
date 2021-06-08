@@ -51,7 +51,7 @@
             <script>
                 const onVideoClicked = (target) => {
                     vId = target.id.split('-')[1]
-                    window.location.href = `index.php?controller=posts&action=showPost&id="`.vId
+                    window.location.href = `index.php?controller=posts&action=showPost&id=` + vId
                 }
             </script>
             <?php
