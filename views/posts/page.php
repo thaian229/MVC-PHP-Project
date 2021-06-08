@@ -83,34 +83,6 @@
                         </div>
                     </div>
                     ';
-
-                    // echo '<div class="video-card">';
-                    // echo '<div class="video-card-overlay" id="video-` + video.id + `-card-overlay"></div>'
-                    // echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                    //         <div class="thumbnail">
-                    //             <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
-                    //         </div>
-                    //     </a>';
-                    // echo '</div>';
-                    // echo '<div>';
-                    // echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                    //         <div class="title">
-                    //             <p ><strong>' . $posts[$i]->title . '</strong></p>
-                    //         </div>
-                    //     </a>';
-                    // echo '</div>';
-                    // echo '<div>
-                    //   <div><i class="fas fa-eye"></i></div>';
-                    // echo '<div><strong>' . $posts[$i]->views . '</strong></div>';
-                    // echo '</div>';
-                    // echo '<div>
-                    //   <div><i class="fas fa-thumbs-up"></i></div>';
-                    // echo '<div><strong>' . $posts[$i]->upvotes . '</strong></div>';
-                    // echo '</div>';
-                    // echo '<div>
-                    //   <div><i class="fas fa-thumbs-down"></i></div>';
-                    // echo '<div><strong>' . $posts[$i]->downvotes . '</strong></div>';
-                    // echo '</div>';
                 }
             }
             ?>
