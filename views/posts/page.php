@@ -115,7 +115,7 @@
             }
             ?>
         </div>
-        <div class="pagination-container">
+        <div class="pagination-container" style="display: none;">
             <button onclick="firstPageHandler()" id="back-to-first">
                 &lt&lt </button>
             <button onclick="prevPageHandler()" id="back-to-previous">
@@ -129,14 +129,15 @@
 
 <script>
     var getPageUrl = window.location.href.slice(0, -1)
+
     var pageId = window.location.href.split("&page=")[1]
 
     const totalVideos = document.getElementById("count").innerText
-
+    console.log(totalVideos)
     const totalPages = Math.ceil(totalVideos / 8)
 
     if (totalVideos > 0) {
-        document.getElementsByTagName("pagination-container")[0].removeAttribute("style");
+        document.getElementsByClassName("pagination-container")[0].removeAttribute("style");
     }
 
     document.getElementById("current-page").innerText = pageId

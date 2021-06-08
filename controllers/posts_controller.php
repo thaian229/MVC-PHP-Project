@@ -14,6 +14,14 @@ class PostsController extends BaseController
 
     public function index()
     {
+//        $categories = Categories::all();
+//        $data = array('categories' => $categories);
+//        $this->render('index', $data);
+        header("Location: index.php?controller=posts&action=getPage&page=1");
+    }
+
+    public function categoryList()
+    {
         $categories = Categories::all();
         $data = array('categories' => $categories);
         $this->render('index', $data);
@@ -21,7 +29,7 @@ class PostsController extends BaseController
 
     public function getPage()
     {
-        if(!isset($_GET['page'])) {
+        if (!isset($_GET['page'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosWithPagination($_GET['page']);
@@ -113,8 +121,7 @@ class PostsController extends BaseController
                 "acc_name" => $acc_name,
                 "avatar_url" => $avatar_url
             );
-        }
-        else {
+        } else {
             $res["success"] = false;
         }
         echo json_encode($res);
@@ -171,21 +178,40 @@ class PostsController extends BaseController
         echo json_encode($res);
     }
 
-    public function getCategory()
+    public function categoriesBar()
     {
-        $category = $_GET["category"];
-        $posts = Videos::browseVideosByCategory($category, $_GET['page']);
-        $videosCount = Videos::countVideosByCategory($category);
-        $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
-        $this->render('page', $data);
+        $categories = Categories::all();
+        if ($categories != null) {
+            $res["success"] = true;
+            $res["body"] = array(
+                "categories" => $categories,
+            );
+        } else {
+            $res["success"] = false;
+            $res["body"] = array(
+                "errMessage" => "Invalid request"
+            );
+        }
+        echo json_encode($res);
     }
 
-    public function searchVideos()
-    {
-        $key = $_GET["key"];
-        $posts = Videos::searchVideosByTitle($key, $_GET['page']);
-        $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
-        $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
-        $this->render('page', $data);
+        public
+        function getCategory()
+        {
+            $category = $_GET["category"];
+            $posts = Videos::browseVideosByCategory($category, $_GET['page']);
+            $videosCount = Videos::countVideosByCategory($category);
+            $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
+            $this->render('page', $data);
+        }
+
+        public
+        function searchVideos()
+        {
+            $key = $_GET["key"];
+            $posts = Videos::searchVideosByTitle($key, $_GET['page']);
+            $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
+            $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
+            $this->render('page', $data);
+        }
     }
-}
