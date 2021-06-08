@@ -167,15 +167,20 @@ class Videos extends BaseDAO
         $tableName = 'videos';
         $startPagination = ($page - 1)  * 8;
         $list = [];
+        $key = '%' . $key . '%';
         
         self::requireModel('Video');
 
         $db = DB::getInstance();
-        $req = $db->query(
-            'SELECT * FROM ' . $tableName .
-            ' WHERE title LIKE \'%' . $key . '%\'' .
-            ' LIMIT ' . $startPagination . ', 8'
+
+
+        $req = $db->prepare(
+            'SELECT * FROM videos WHERE title LIKE :keyword LIMIT ' . $startPagination . ', 8'
         );
+        $req->execute(array(
+            'keyword' => $key
+            // 'startPage' => $startPagination
+        ));
         
         foreach ($req->fetchAll() as $item)
         {
@@ -193,10 +198,15 @@ class Videos extends BaseDAO
         self::requireModel('Video');
 
         $db = DB::getInstance();
-        $req = $db->query(
-            'SELECT * FROM ' . $tableName .
-            ' WHERE title LIKE \'%' . $key . '%\''
+
+        $req = $db->prepare(
+            'SELECT * FROM videos WHERE title LIKE :keyword'
         );
+        $req->execute(array(
+            'keyword' => $key
+            // 'startPage' => $startPagination
+        ));
+        
         
         foreach ($req->fetchAll() as $item)
         {
