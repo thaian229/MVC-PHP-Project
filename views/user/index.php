@@ -183,17 +183,25 @@
                     if (page >= totalPage) {
                         document.getElementById("go-to-last").setAttribute("disabled", "disabled");
                         document.getElementById("go-to-next").setAttribute("disabled", "disabled");
+                        document.getElementById("go-to-last").style.color = "gray";
+                        document.getElementById("go-to-next").style.color = "gray";
                     } else {
                         document.getElementById("go-to-last").removeAttribute("disabled")
                         document.getElementById("go-to-next").removeAttribute("disabled")
+                        document.getElementById("go-to-last").style.color = "orange";
+                        document.getElementById("go-to-next").style.color = "orange";
                     }
 
                     if (page <= 1) {
                         document.getElementById("back-to-first").setAttribute("disabled", "disabled");
                         document.getElementById("back-to-previous").setAttribute("disabled", "disabled");
+                        document.getElementById("back-to-first").style.color = "gray";
+                        document.getElementById("back-to-previous").style.color = "gray";
                     } else {
                         document.getElementById("back-to-first").removeAttribute("disabled")
                         document.getElementById("back-to-previous").removeAttribute("disabled")
+                        document.getElementById("back-to-first").style.color = "orange";
+                        document.getElementById("back-to-previous").style.color = "orange";
                     }
 
                 } else {
