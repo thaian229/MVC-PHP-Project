@@ -85,9 +85,9 @@ class Videos extends BaseDAO
     {
         $db = DB::getInstance();
 
-        $category = '\%' + $category + '\%';
+        $category = '%' . $category . '%';
 
-        $req = $db->prepare('
+        $req = $db->prepare("
             SELECT COUNT(*) as `videos_count`
             FROM videos as v 
             INNER JOIN videos_categories as vc 
@@ -95,14 +95,13 @@ class Videos extends BaseDAO
             INNER JOIN categories as c 
             ON vc.cat_id = c.id 
             WHERE c.name LIKE :category
-        ');
+        ");
 
-        $req->execute(array(
-            'category' => $category,
-            'page' => $category,
+        $status = $req->execute(array(
+            'category' => $category
         ));
 
-        if (!$req)
+        if (!$status)
         {
             // Notify ercountror
             return 0;
@@ -168,15 +167,20 @@ class Videos extends BaseDAO
         $tableName = 'videos';
         $startPagination = ($page - 1)  * 8;
         $list = [];
+        $key = '%' . $key . '%';
         
         self::requireModel('Video');
 
         $db = DB::getInstance();
-        $req = $db->query(
-            'SELECT * FROM ' . $tableName .
-            ' WHERE title LIKE \'%' . $key . '%\'' .
-            ' LIMIT ' . $startPagination . ', 8'
+
+
+        $req = $db->prepare(
+            'SELECT * FROM videos WHERE title LIKE :keyword LIMIT ' . $startPagination . ', 8'
         );
+        $req->execute(array(
+            'keyword' => $key
+            // 'startPage' => $startPagination
+        ));
         
         foreach ($req->fetchAll() as $item)
         {
@@ -194,10 +198,15 @@ class Videos extends BaseDAO
         self::requireModel('Video');
 
         $db = DB::getInstance();
-        $req = $db->query(
-            'SELECT * FROM ' . $tableName .
-            ' WHERE title LIKE \'%' . $key . '%\''
+
+        $req = $db->prepare(
+            'SELECT * FROM videos WHERE title LIKE :keyword'
         );
+        $req->execute(array(
+            'keyword' => $key
+            // 'startPage' => $startPagination
+        ));
+        
         
         foreach ($req->fetchAll() as $item)
         {

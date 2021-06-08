@@ -1,0 +1,142 @@
+@keyframes slideOutFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+
+.register-container {
+    /* transition: transform 0.3s ease-out; */
+    display: flex;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    max-width: 1000px;
+}
+
+.back-container {
+    background-color: black;
+    min-height: 100vh;
+}
+
+.form-register {
+    animation: 1s ease-out 0s 1 slideOutFromLeft;
+    transition: transform 0.3s ease-out;
+    /* border: 1px black solid; */
+    background-color: white;
+    /* max-width: 200px; */
+    display: flex;
+    flex-basis: 50%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 0 10px 10px 0px;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.form-register button:hover {
+    cursor: hand;
+}
+
+.form-register h4 {
+    flex-basis: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-warning {
+    height: 30px;
+}
+
+.form-register button {
+    flex-basis: 80%;
+    margin: 20 auto;
+    height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff8303;
+    border:  none;
+    border-radius: 3px;
+}
+
+.form-register #register-title {
+    position: absolute;
+    top: 100px;
+    left: 10%;
+    flex-basis: 100%;
+    /* color: white; */
+}
+
+.form-register a {
+    text-decoration: none;
+}
+
+.register-preview {
+    transition: transform 0.3s ease-out;
+    flex-basis: 50%;
+    padding: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.register-preview img {
+    overflow: hidden;
+    object-fit: cover;
+    height: 700px;
+    width: 100%;
+    border-radius: 10px 0 0 10px;
+}
+
+.form-register .input-box:focus-within {
+    border: 2px dashed #ff8303;
+}
+.form-register .input-box {
+    display: flex;
+    align-items: center;
+    flex-basis: 80%;
+    margin: 10px 0;
+    background: rgb(245, 245, 245);
+    border: 1px dashed #a0a0a0;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.form-register .input-box .prefix {
+    /* font-weight: 300; */
+    font-size: 14px;
+    color: #AAAAAA;
+    width: 30px;
+    text-align: center;
+}
+
+.form-register .input-box input {
+    flex-grow: 1;
+    font-size: 16px;
+    background: rgb(245, 245, 245);
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+}
+
+.form-register .input-box input[type=number] {
+    /* -moz-appearance: textfield; */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-register .input-box input[type=number]::-webkit-outer-spin-button,
+.form-register .input-box input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-register .input-box input[type=number] {
+    -moz-appearance: textfield;
+}

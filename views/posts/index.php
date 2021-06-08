@@ -1,94 +1,94 @@
-<script>
-    function previousPage() {
-        window.location.href = window.location.href + "&action=getPage&page=2"
-    };
-</script>
-<div align="center">
-    <br/><br/>
-    <table>
-        <tr>
-        <?php
-            for($i = 0; $i < 4; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                    <td class="thumbnail_item" style="
-                            border: 1px solid black;
-                        " 
-                        align="center">
-                        <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                            <div class="thumbnail">
-                                <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
-                            </div>
-                        </a>
-                    </td>';
-                }
-            }
-        ?>
-        </tr>
-        <tr>
-        <?php
-            for($i = 0; $i < 4; $i++) {
-                if(!empty($posts[$i])) {
-                    echo'
-                    <td class="title_item" style="
-                        width: 15vw;
-                        border: 1px solid black">
-                        <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                            <div class="title">
-                                <p align="left"><strong style="color: #222222">' . $posts[$i]->title . '</strong></p>
-                            </div>
-                        </a>
-                    </td>';
-                }
-            }
-        ?>
-    </table>
-    <br/><br/>
-    <table align="center">
-        <tr>
-            <?php
-                for($i = 4; $i < 8; $i++) {
-                    if(!empty($posts[$i])) {
-                        echo'
-                        <td class="thumbnail_item" style="
-                                border: 1px solid black;
-                            " 
-                            align="center">
-                            <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                                <div class="thumbnail">
-                                    <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
-                                </div>
-                            </a>
-                        </td>';
-                    }
-                    else continue;
-                }
-            ?>
-        </tr>
-        <tr>
-            <?php
-                for($i = 4; $i < 8; $i++) {
-                    if(!empty($posts[$i])) {
-                        echo'
-                        <td class="title_item" style="
-                            width: 15vw;
-                            border: 1px solid black">
-                            <a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
-                                <div class="title">
-                                    <p align="left"><strong style="color: #222222">' . $posts[$i]->title . '</strong></p>
-                                </div>
-                            </a>
-                        </td>';
-                    }
-                }
-            ?>
-    </table>
-    <br/><br/><br/><br/>
-    <div>
-        <?php
-        if ($i == 8)
-            echo '<button class="button button2" onclick="previousPage();">Previous Page</button>';
-        ?>
+<link rel="stylesheet" href="views/posts/index.css">
+
+<div class="banner-container">
+    <div class="banner-content container">
+        <span id="page-name">EXPLORE</span>
+        <span id="page-description">Start exploring the world of entertainments</span>
     </div>
-    <br/><br/><br/><br/>
 </div>
+<div class="back-container">
+    <div class="container list-category-container">
+        <?php
+        for ($i = 0; $i < count($categories); $i++) {
+            echo '<div class=category-container>';
+            echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
+            echo '<div class="category-more">
+                    <a href="index.php?controller=posts&action=getCategory&category=' . $categories[$i]->catName . '&page=1"
+                    style="text-decoration: none;">
+                        View more
+                    </a>
+              </div>';
+            echo '<div class="category-contents" id="' . $categories[$i]->catName . '-videos"></div>';
+            echo '</div>';
+        }
+        ?>
+
+    </div>
+
+    <div class="show-all-banner-container container">
+        <span>Want to see more?</span>
+        <a href="index.php?controller=posts&action=getPage&page=1">SHOW ALL VIDEOS</a>
+    </div>
+
+
+
+</div>
+
+<script>
+    var categories = document.getElementsByClassName('category-name')
+    for (i = 0; i < categories.length; i++) {
+        var categoryName = categories[i].innerText.toLowerCase()
+        let formData = new FormData();
+        formData.append('category', categoryName);
+        formData.append('page', 1);
+        fetch('index.php?controller=posts&action=videosByCategory', {
+                method: "post",
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success == true) {
+                    console.log(data.body.category)
+                    var videosByCategory = document.getElementById(data.body.category + '-videos')
+                    data.body.videos.forEach((video) => {
+                        videosByCategory.innerHTML += `
+                            <div id="video-` + video.id + `-card-` + data.body.category + `" class="video-card">
+                                <div class="video-card-overlay" id="video-` + video.id + `-card-overlay-` + data.body.category + `" onclick="onVideoClicked(this)"></div>
+                                <img  class="video-card-thumbnail" src="` + video.thumbnailUrl + `"/>
+                                <div class="video-card-title">` + video.title + ` </div>
+                                <div class="video-card-info">
+                                    <div class="video-card-views">
+                                        <i class="fas fa-eye"></i>
+                                        <span>` + video.views + `</span>
+                                    </div>
+
+                                    <div class="video-card-liking">
+                                        <div class="video-card-like">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <div>` + video.upvotes + `</div>
+                                        </div>
+
+                                        <div class="video-card-dislike">
+                                            <i class="fas fa-thumbs-down"></i>
+                                            <div>` + video.downvotes + `</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        // document.getElementById(`video-` + video.id + `-card-overlay-` + data.body.category).addEventListener("click", onVideoClicked)
+                    })
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+    onVideoClicked = (target) => {
+        console.log(target)
+        let vId = target.id.split("-")[1]
+        window.location.href = `index.php?controller=posts&action=showPost&id=` + vId
+    }
+</script>

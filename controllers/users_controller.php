@@ -21,10 +21,10 @@ class UsersController extends BaseController
         $pageSize = 8;
 
         if (isset($_GET["page"]) && isset($_SESSION['session_user_id'])) {
-            $page = $_GET["page"];
+            $page = strip_tags($_GET["page"]);
 
-           $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
-           $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'],$page);
+            $videosCount  = Videos::countVideosByFavourite($_SESSION['session_user_id']);
+            $resultList = Videos::browseFavouriteVideos($_SESSION['session_user_id'], $page);
 
             // $videosCount = Videos::countVideos();
             // $resultList = Videos::browseVideosWithPagination($page);
@@ -34,7 +34,6 @@ class UsersController extends BaseController
                 "videos" => $resultList,
                 "totalPage" => ceil($videosCount / $pageSize)
             );
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -48,7 +47,7 @@ class UsersController extends BaseController
     {
         $res = array();
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
             $isFav = Videos::isVideoInFavourite($videoId, $_SESSION['session_user_id']);
             if ($isFav >= 0) {
                 $res["success"] = true;
@@ -76,7 +75,7 @@ class UsersController extends BaseController
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
 
             $addedId = Videos::addVideosToFavourite($videoId, $_SESSION['session_user_id']);
 
@@ -91,7 +90,6 @@ class UsersController extends BaseController
                     "errMessage" => "Add failed"
                 );
             }
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -107,7 +105,7 @@ class UsersController extends BaseController
 
         if (isset($_POST["video_id"]) && isset($_SESSION['session_user_id'])) {
 
-            $videoId = $_POST["video_id"];
+            $videoId = strip_tags($_POST["video_id"]);
 
             $addedId = Videos::removeVideosFromFavourite($videoId, $_SESSION['session_user_id']);
 
@@ -122,7 +120,6 @@ class UsersController extends BaseController
                     "errMessage" => "Remove failed"
                 );
             }
-
         } else {
             $res["success"] = false;
             $res["body"] = array(
@@ -141,28 +138,65 @@ class UsersController extends BaseController
     {
         $res = array();
 
+        $regex_name = "/^[a-zA-Z ]+$/";
+        $regex_email = "/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i";
+        $regex_phone = "/(84|0[3|5|7|8|9])+([0-9]{8})\b/";
+
         if (isset($_SESSION['session_user_id'])) {
             if (isset($_POST['ava_url'])) {
-                $ava_url = $_POST['ava_url'];
+                $ava_url = strip_tags($_POST['ava_url']);
             } else {
                 $ava_url = $_SESSION['session_user_ava_url'];
             }
 
             if (isset($_POST['email']) || strcmp($_POST['email'], "") != 0) {
-                $email = $_POST['email'];
+                if (!preg_match($regex_email, $_POST["email"])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid email"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+                $email = strip_tags($_POST['email']);
             } else {
                 $email = $_SESSION['session_user_email'];
             }
 
             if (isset($_POST['tel_no']) || strcmp($_POST['tel_no'], "") != 0) {
-                $tel_no = $_POST['tel_no'];
+                if (!preg_match($regex_phone, $_POST["tel_no"])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid phone number"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+                $tel_no = strip_tags($_POST['tel_no']);
             } else {
                 $tel_no = $_SESSION['session_user_tel_no'];
             }
 
+            if (isset($_POST['fullname']) || strcmp($_POST['fullname'], "") != 0) {
+                if (!preg_match($regex_name, $_POST["fullname"])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid name"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+                $fullname = $_POST['fullname'];
+            } else {
+                $fullname = $_SESSION['session_user_fullname'];
+            }
+
+            // TODO: thieu password va fullname
+
             $id = Accounts::updateAccountInfo(
                 $_SESSION['session_user_id'],
                 $_SESSION['session_username'],
+                $fullname,
                 $ava_url,
                 $_SESSION['session_user_type'],
                 $tel_no,
@@ -180,6 +214,7 @@ class UsersController extends BaseController
                 $_SESSION['session_user_ava_url'] = $ava_url;
                 $_SESSION['session_user_email'] = $email;
                 $_SESSION['session_user_tel_no'] = $tel_no;
+                $_SESSION['session_user_fullname'] = $fullname;
                 $res = array(
                     "success" => true,
                     "body" => array(

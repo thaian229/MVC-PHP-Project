@@ -3,10 +3,10 @@ ob_start();
 session_start();
 
 $json_post_controllers_actions = array(
-    'auth' => ['verifyRegister', 'verifyLogin'],
+    'auth' => ['verifyRegister', 'verifyLogin', 'changePassword'],
     'users' => ['updateProfile', 'addFavouriteVideo', 'removeFavouriteVideo', 'isFavouriteVideo'],
     'images' => ['uploadAvatar', 'uploadThumbnail'],
-    'posts' => ['quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo'],
+    'posts' => ['quickSearch', 'sendComment', 'increaseView', 'voteVideo', 'getVotedTypeVideo', 'videosByCategory'],
     'admin' => ['upload', 'update', 'getVideoInfo', 'getCategoryInfo']
 );
 
@@ -15,7 +15,7 @@ $auth_access_controllers = array(
 );
 
 $admin_access_controllers = array(
-    'admin' => ['show', 'upload', 'delete', 'update', 'search']
+    'admin' => ['index', 'show', 'upload', 'delete', 'update', 'search']
 );
 
 if (

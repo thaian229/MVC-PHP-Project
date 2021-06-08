@@ -1,10 +1,33 @@
 .topnav {
-    /*overflow: hidden;*/
-    background-color: #333;
+    background-color: #111;
 }
 
-.topnav a {
-    float: left;
+header {
+    z-index: 10000000;
+}
+
+.nav-container {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.nav-container .left-nav-container {
+    display: flex;
+    flex-flow: row;
+    flex-basis: 50%;
+    align-items: center;
+}
+
+.nav-container .right-nav-container {
+    display: flex;
+    flex-flow: row-reverse;
+    flex-basis: 50%;
+    align-items: center;
+}
+
+/* .topnav a {
     display: block;
     color: white;
     text-align: center;
@@ -21,17 +44,38 @@
 .topnav a.home {
     background-color: #2196F3;
     color: white;
-}
+} */
 
-.topnav input[type=text] {
+.left-nav-container input[type=text] {
     padding: 6px;
+    margin: 10px 0 10px 20px;
     border: none;
-    margin-top: 8px;
-    margin-left: 16px;
+    border-bottom: 1px #333 solid;
+    background-color: #111;
+    color: #aaaaaa;
     font-size: 17px;
-    border-radius: 8px;
 }
 
+.left-nav-container .search-input-box {
+    display: flex;
+    align-items: center;
+    flex-basis: 80%;
+    margin: 10px 0;
+    background: rgb(245, 245, 245);
+    border: 1px dashed #a0a0a0;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+}
+
+.left-nav-container .input-box .prefix {
+    font-size: 14px;
+    color: #aaaaaa;
+    width: 30px;
+    text-align: center;
+}
+
+
+/* 
 .topnav a.login{
     float: right;
 }
@@ -51,14 +95,50 @@
 
 .topnav a.profile{
     float: right;
+} */
+
+.search-container button{
+    padding: 8px;
+    background: #111;
+    color: #aaaaaa;
+    cursor: pointer;
+    border: none;
 }
 
-.topnav button{
-    padding: 8px;
-    background: #2196F3;
-    color: white;
-    border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
-    cursor: pointer;
-    border-radius: 8px;
+.nav-container a {
+    text-decoration: none;
+}
+
+.nav-container a:visited {
+    color: inherit;
+}
+
+.nav-container #user-avatar {
+    height: 30px;
+    width: 30px;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.left-nav-container .dropdown-content {
+    color: black;
+}
+
+.right-nav-container a.profile {
+    padding: 10px;
+}
+
+.right-nav-container a {
+    margin-left: 20px;
+}
+
+.right-nav-container a:hover {
+    color: darkorange;
+}
+
+
+.web-name {
+    font-size: 24px;
+    font-weight: 100;
 }

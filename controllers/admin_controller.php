@@ -13,7 +13,7 @@ class AdminController extends BaseController
     }
 
     public function show()
-    {
+    {   
         $videos = Videos::all();
         $categories = Categories::all();
         $data = array(
@@ -27,7 +27,7 @@ class AdminController extends BaseController
     {
         if(isset($_POST['search']))
         {
-            $key = $_POST['search'];
+            $key = strip_tags($_POST['search']);
             $videos = Videos::searchVideosByTitleNoPagination($key);
             $categories = Categories::all();
             $data = array(
@@ -51,7 +51,7 @@ class AdminController extends BaseController
     {
         if(isset($_GET['id']) && $_SESSION['session_user_type'] == 1)
         {
-            $vid = $_GET['id'];
+            $vid = strip_tags($_GET['id']);
             Videos::removeById($vid);
             $this->show();
         }
@@ -61,23 +61,41 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        if (isset($_SESSION['session_user_id'])) {
+        $regex_url = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
+
+        if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
+            if (isset($_POST['video_url'])) {
+                if (!preg_match($regex_url, $_POST['video_url'])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid url"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+            }
+
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
-                $thumbnail_url = null;
+                $v = Videos::find($_POST['video_id']);
+                if ($v) {
+                    $thumbnail_url = $v->thumbnailUrl;
+                } else {
+                    $thumbnail_url = null;
+                }
             }
-
+            
             $id = Videos::updateVideo(
-                $_POST['video_id'],
-                $_POST['video_title'],
-                $_POST['video_url'],
+                strip_tags($_POST['video_id']),
+                strip_tags($_POST['video_title']),
+                strip_tags($_POST['video_url']),
                 $thumbnail_url
             );
 
             if (isset($_POST['video_category']))
             {
-                $cat_list_string = $_POST['video_category'];
+                $cat_list_string = strip_tags($_POST['video_category']);
                 $tokens = explode(",", $cat_list_string);
                 $cat_list = [];
                 foreach ($tokens as $t)
@@ -126,22 +144,35 @@ class AdminController extends BaseController
     {
         $res = array();
 
-        if (isset($_SESSION['session_user_id'])) {
+        $regex_url = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";
+
+        if (isset($_SESSION['session_user_id']) && $_SESSION['session_user_type'] == 1) {
+            if (isset($_POST['video_url'])) {
+                if (!preg_match($regex_url, $_POST['video_url'])) {
+                    $res["success"] = false;
+                    $res["body"] = array(
+                        "errMessage" => "Invalid url"
+                    );
+                    echo json_encode($res);
+                    return;
+                }
+            }
+
             if (isset($_POST['thumbnail_url'])) {
                 $thumbnail_url = $_POST['thumbnail_url'];
             } else {
-                $thumbnail_url = null;
+                $thumbnail_url = 'assets/images/video-default.jpeg';
             }
 
             $id = Videos::uploadVideo(
-                $_POST['video_title'],
-                $_POST['video_url'],
+                strip_tags($_POST['video_title']),
+                strip_tags($_POST['video_url']),
                 $thumbnail_url
             );
 
             if (isset($_POST['video_category']))
             {
-                $cat_list_string = $_POST['video_category'];
+                $cat_list_string = strip_tags($_POST['video_category']);
                 $tokens = explode(",", $cat_list_string);
                 $cat_list = [];
                 foreach ($tokens as $t)
@@ -192,7 +223,7 @@ class AdminController extends BaseController
 
         if (isset($_POST['video_id']))
         {
-            $video_id = $_POST['video_id'];
+            $video_id = strip_tags($_POST['video_id']);
             $v = Videos::find($video_id);
             if (!$v) {
                 $res = array(
@@ -257,53 +288,65 @@ class AdminController extends BaseController
 
     public function test()
     {
-        Votes::syncVote();
+        // Votes::syncVote();
 
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('current vote types: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('current vote types: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 1);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit upvote again to unvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 1);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit upvote again to unvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::voteVideo(4, 9, 0);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Hit downvote again to unvote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::voteVideo(4, 9, 0);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Hit downvote again to unvote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
 
-        Votes::removeVoteVideo(4, 9);
-        $vote_type = Votes::getVotedTypeVideo(4, 9);
-        $video = Videos::find(9);
-        echo ('Remove vote: ' . '<br>');
-        echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+        // Votes::removeVoteVideo(4, 9);
+        // $vote_type = Votes::getVotedTypeVideo(4, 9);
+        // $video = Videos::find(9);
+        // echo ('Remove vote: ' . '<br>');
+        // echo ('vote: ' . $vote_type . ' up: ' . $video->upvotes . ' down: ' . $video->downvotes . '<br><br>');
+
+        $count = Videos::countVideosByCategory('food');
+        echo ('food: ' . $count . '<br><br>');
+
+        $count = Videos::countVideosByCategory('tech');
+        echo ('tech: ' . $count . '<br><br>');
+
+        $count = Videos::countVideosByCategory('sport');
+        echo ('sport: ' . $count . '<br><br>');
+
+        $cnt = Videos::countVideosByFavourite(8);
+        echo ('8 fav: ' . $cnt . '<br><br>');
     }
 }
