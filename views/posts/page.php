@@ -87,7 +87,7 @@
             }
             ?>
         </div>
-        <div class="pagination-container">
+        <div class="pagination-container" style="display: none;">
             <button onclick="firstPageHandler()" id="back-to-first">
                 <i class="fas fa-angle-double-left"></i>
             </button>

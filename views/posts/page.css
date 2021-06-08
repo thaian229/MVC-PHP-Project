@@ -4,6 +4,13 @@
     padding: 50px 0;
 }
 
+
+.sorry-statement {
+    color: rgb(207, 207, 207);
+}
+
+
+
 .page-container {
     display: flex;
     flex-wrap: wrap;
