@@ -25,6 +25,9 @@ class PostsController extends BaseController
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosWithPagination($_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = Videos::countVideos();
         $data = array('posts' => $posts, 'videosCount' => $videosCount);
         $this->render('page', $data);
@@ -37,6 +40,9 @@ class PostsController extends BaseController
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $post = Videos::find($_GET['id']);
+        if($post == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $comments = Comments::getCommentsInVideo($_GET['id']);
         $posts = Videos::browseVideosWithPagination(1);
         $category = Categories::getCategoriesOfVideo($_GET['id']);
@@ -182,6 +188,9 @@ class PostsController extends BaseController
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosByCategory($category, $_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = Videos::countVideosByCategory($category);
         $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
         $this->render('page', $data);
@@ -194,6 +203,9 @@ class PostsController extends BaseController
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::searchVideosByTitle($key, $_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
         $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
         $this->render('page', $data);

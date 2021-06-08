@@ -151,7 +151,7 @@ class Videos extends BaseDAO
         $req = null;
         $req = $db->query(
             'SELECT * FROM ' . $tableName . 
-            ' LIMIT ' . $startPagination . ', 8'
+            ' ORDER BY ID DESC LIMIT ' . $startPagination . ', 8'
         );
         
         foreach ($req->fetchAll() as $item)
@@ -231,7 +231,7 @@ class Videos extends BaseDAO
             ON v.id = vc.video_id 
             INNER JOIN categories as c 
             ON vc.cat_id = c.id 
-            WHERE c.name LIKE \'%' . $category . '%\' LIMIT ' . $startPagination . ', 8'
+            WHERE c.name LIKE \'%' . $category . '%\' ORDER BY ID DESC LIMIT ' . $startPagination . ', 8'
         );
 
         foreach ($req->fetchAll() as $item)
