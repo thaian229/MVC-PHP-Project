@@ -21,10 +21,13 @@ class PostsController extends BaseController
 
     public function getPage()
     {
-        if (!isset($_GET['page']) or !is_numeric($_GET['page']) or $_GET['page'] == 0) {
+        if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosWithPagination($_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = Videos::countVideos();
         $data = array('posts' => $posts, 'videosCount' => $videosCount);
         $this->render('page', $data);
@@ -33,10 +36,13 @@ class PostsController extends BaseController
     public function showPost()
     {
 
-        if (!isset($_GET['id']) or !is_numeric($_GET['id']) or $_GET['page'] == 0) {
+        if (!isset($_GET['id']) or !is_numeric($_GET['id'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $post = Videos::find($_GET['id']);
+        if($post == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $comments = Comments::getCommentsInVideo($_GET['id']);
         $posts = Videos::browseVideosWithPagination(1);
         $category = Categories::getCategoriesOfVideo($_GET['id']);
@@ -178,10 +184,13 @@ class PostsController extends BaseController
     public function getCategory()
     {
         $category = strip_tags($_GET["category"]);
-        if (!isset($_GET['page']) or !is_numeric($_GET['page']) or $_GET['page'] == 0) {
+        if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::browseVideosByCategory($category, $_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = Videos::countVideosByCategory($category);
         $data = array('posts' => $posts, 'videosCount' => $videosCount, 'category' => $category);
         $this->render('page', $data);
@@ -190,10 +199,13 @@ class PostsController extends BaseController
     public function searchVideos()
     {
         $key = strip_tags($_GET["key"]);
-        if (!isset($_GET['page']) or !is_numeric($_GET['page']) or $_GET['page'] == 0) {
+        if (!isset($_GET['page']) or !is_numeric($_GET['page'])) {
             header("Location: index.php?controller=posts&action=getPage&page=1");
         }
         $posts = Videos::searchVideosByTitle($key, $_GET['page']);
+        if($posts == null) {
+            header("Location: index.php?controller=posts&action=getPage&page=1");
+        }
         $videosCount = count(Videos::searchVideosByTitleNoPagination($key));
         $data = array('posts' => $posts, 'videosCount' => $videosCount, 'key' => $key);
         $this->render('page', $data);
