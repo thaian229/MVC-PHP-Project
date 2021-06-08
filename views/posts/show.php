@@ -46,20 +46,110 @@
         <div class="show_column comments_part">
             <div id="comments">
                 <?php
-                for ($i = 0; $i < count($comments); $i++) {
-                    if (!empty($comments[$i]))
-                        echo '<p>' . $comments[$i]->content . '</p>';
+                if(!empty($comments)) {
+                    for ($i = 0; $i < count($comments); $i++) {
+                        if (!empty($comments[$i])) {
+                            echo '<div>';
+                            echo '<span><img height="32" width="32" src="' . $comments[$i]->ava_url . '"/></span>';
+                            echo '<span>' . $comments[$i]->username . '</span>';
+                            echo '<span>' . $comments[$i]->content . '</span>';
+                            echo '</div>';
+                        }
+                    }
                 }
                 ?>
             </div>
             <?php
                 if(!empty($_SESSION['session_user_id'])) {
+                    echo '<div>';
                     echo '<form>';
+                    echo '<span><img height="32" width="32" src="' . $_SESSION['session_user_ava_url'] . '"/></span>';
                     echo '<input type="text" id="comment-input" placeholder="Write a comment"/>';
                     echo '<input type="button" id="comment-submit" value="Send Comment" onclick="sendComment()"/>';
                     echo '</form>';
+                    echo '</div>';
                 }
             ?>
+        </div>
+    </div>
+    <div>
+        <div>
+            <div>
+                <span><h2>You may like!</h2></span>
+            </div>
+            <div>
+                <?php
+                for($i = 0; $i < 4; $i++) {
+                    if(!empty($same_posts[$i])) {
+                        echo '<div>';
+                        echo '<a href="index.php?controller=posts&action=showPost&id=' . $same_posts[$i]->id . '" style="text-decoration: none;">
+                            <div class="thumbnail">
+                                <img src="' . $same_posts[$i]->thumbnailUrl . '" width="240" height="180">
+                            </div>
+                        </a>';
+                        echo '</div>';
+                        echo '<div>';
+                        echo '<a href="index.php?controller=posts&action=showPost&id=' . $same_posts[$i]->id . '" style="text-decoration: none;">
+                            <div class="title">
+                                <p ><strong>' . $same_posts[$i]->title . '</strong></p>
+                            </div>
+                        </a>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-eye"></i></div>';
+                        echo '<div><strong>' . $same_posts[$i]->views . '</strong></div>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-thumbs-up"></i></div>';
+                        echo '<div><strong>' . $same_posts[$i]->upvotes . '</strong></div>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-thumbs-down"></i></div>';
+                        echo '<div><strong>' . $same_posts[$i]->downvotes . '</strong></div>';
+                        echo '</div>';
+                    }
+                }
+                ?>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span><h2>Explore more...</h2></span>
+            </div>
+            <div>
+                <?php
+                for($i = 0; $i < 4; $i++) {
+                    if(!empty($posts[$i])) {
+                        echo '<div>';
+                        echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
+                            <div class="thumbnail">
+                                <img src="' . $posts[$i]->thumbnailUrl . '" width="240" height="180">
+                            </div>
+                        </a>';
+                        echo '</div>';
+                        echo '<div>';
+                        echo '<a href="index.php?controller=posts&action=showPost&id=' . $posts[$i]->id . '" style="text-decoration: none;">
+                            <div class="title">
+                                <p ><strong>' . $posts[$i]->title . '</strong></p>
+                            </div>
+                        </a>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-eye"></i></div>';
+                        echo '<div><strong>' . $posts[$i]->views . '</strong></div>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-thumbs-up"></i></div>';
+                        echo '<div><strong>' . $posts[$i]->upvotes . '</strong></div>';
+                        echo '</div>';
+                        echo '<div>
+                      <div><i class="fas fa-thumbs-down"></i></div>';
+                        echo '<div><strong>' . $posts[$i]->downvotes . '</strong></div>';
+                        echo '</div>';
+                    }
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>
@@ -248,7 +338,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === true) {
-                        addNewCommentLine(content);
+                        addNewCommentLine(content, data.body.acc_name, data.body.avatar_url);
                     } else {
                         document.getElementById("form-warning").innerText = data.body.errMessage;
                     }
@@ -258,10 +348,15 @@
                 });
         }
     }
-    addNewCommentLine = (content) => {
+    addNewCommentLine = (content, accName, avatarUrl) => {
         document.getElementById("comment-input").value = "";
         var commentContainer = document.getElementById("comments");
-        commentContainer.innerHTML += '<p>' + content + '</p>'
+        var userAvatar = document.getElementById('user-avatar').src
+        commentContainer.innerHTML += `<div>
+                                            <span><img height="32" width="32" src="` + userAvatar + `"/></span>
+                                            <span>` + accName + `</span>
+                                            <span>` + content + `</span>
+                                       </div>`
     };
 
     getIsFavVideo()

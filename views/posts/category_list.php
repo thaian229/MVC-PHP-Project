@@ -3,6 +3,12 @@
     for ($i = 0; $i < count($categories); $i++) {
         echo '<div>';
         echo '<div class="category-name"><h2>' . ucfirst($categories[$i]->catName) . '</h2></div>';
+        echo '<div>
+                    <a href="index.php?controller=posts&action=getCategory&category=' . $categories[$i]->catName . '&page=1"
+                    style="text-decoration: none;">
+                        View more...
+                    </a>
+              </div>';
         echo '<div id="' . $categories[$i]->catName . '-videos"></div>';
         echo '</div>';
     }
