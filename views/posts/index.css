@@ -1,0 +1,31 @@
+.list-category-container {
+    display: flex;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.category-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.category-container .category-name {
+    flex-basis: 50%;
+}
+
+
+.category-container .category-more {
+    flex-basis: 50%;
+    text-align: end;
+}
+
+.category-container .category-contents {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
