@@ -34,7 +34,7 @@
     <div class="container page-container">
         <div id="count" style="display: none;"><?php echo $videosCount; ?></div>
         <br /><br />
-        <div>
+        <div class="sorry-statement">
             <h2>
                 <?php
                 if ($videosCount == 0) {
