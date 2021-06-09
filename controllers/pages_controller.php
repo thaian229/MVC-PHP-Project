@@ -10,8 +10,7 @@ class PagesController extends BaseController
 
     public function home()
     {
-        $data = array(
-        );
+        $data = array();
         $this->render('home', $data);
     }
 

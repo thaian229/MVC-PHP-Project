@@ -95,6 +95,7 @@
             .then(data => {
                 console.log(data)
                 if (data.success === true) {
+                    alert("Successfully registered")
                     window.location.href = "index.php?controller=auth"
                 } else {
                     document.getElementById("form-warning").innerText = data.body.errMessage;

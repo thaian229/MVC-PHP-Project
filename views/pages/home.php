@@ -57,7 +57,7 @@
         <div id="team-list">
             <div>
                 <div>
-                    <img src="assets/images/landing/mhoang_ava.jpg" alt="">
+                    <img src="assets/images/landing/an_ava.jpg" alt="">
                     <div class="mask">
                         <ul>
                             <li><a href="https://www.facebook.com/thaian229">Facebook</a></li>
@@ -95,7 +95,7 @@
             </div>
             <div>
                 <div>
-                    <img src="assets/images/landing/mhoang_ava.jpg" alt="">
+                    <img src="assets/images/landing/tuhoang_ava.jpg" alt="">
                     <div class="mask">
                         <ul>
                             <li><a href="https://www.facebook.com/buituhoang">Facebook</a></li>
