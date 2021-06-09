@@ -37,8 +37,7 @@ if (
 if (
     array_key_exists($controller, $admin_access_controllers)
     && in_array($action, $admin_access_controllers[$controller])
-    && !isset($_SESSION['session_username'])
-    && !($_SESSION['session_user_type'] == 1)
+    && (!isset($_SESSION['session_username']) || !($_SESSION['session_user_type'] == 1))
 ) {
     header("Location: index.php?controller=pages&action=unauthorized");
 }
