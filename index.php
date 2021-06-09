@@ -11,8 +11,8 @@ if (isset($_GET['controller'])) {
         $action = 'index';
     }
 } else {
-    $controller = 'pages';
-    $action = 'home';
+    $controller = 'posts';
+    $action = 'index';
 }
 
 require_once('filter.php');

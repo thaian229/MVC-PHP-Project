@@ -24,7 +24,7 @@
 
             <div class="input-box">
                 <i class="fas fa-unlock-alt prefix"></i>
-                <input type="password" name="cpassword" placeholder="confirm password" required>
+                <input type="password" id="cpassword" name="cpassword" placeholder="confirm password" required>
             </div>
 
             <div class="input-box">
@@ -71,6 +71,12 @@
         }
         if (!regex_phone.test(document.getElementById("phone-number").value)) {
             document.getElementById("form-warning").innerText = 'Invalid Vietnamese phone number'
+            return;
+        }
+
+        if (document.getElementById("cpassword").value.localeCompare(document.getElementById("password").value) != 0)
+        {
+            document.getElementById("form-warning").innerText = 'Confirm password does not matches'
             return;
         }
 

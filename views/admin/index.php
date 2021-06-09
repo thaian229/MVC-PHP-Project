@@ -176,7 +176,7 @@
 
 
     loadImage = (event, video_id) => {
-        var image = document.getElementById(`` + video_id + `_preview_img`);
+        var image = document.getElementById(video_id + `_preview_img`);
         image.src = URL.createObjectURL(event.target.files[0]);
     };
 
@@ -287,8 +287,8 @@
                                 <td class="update-form-container">
                                     <form method="POST" role="form" class="update-form">
                                         <input type="text" name="id" value="` + video_id + `" style="display: none;"> 
-                                        <input type="file" accept="image/*" name="thumbnail" id="` + video_id + `_thumbnail" onchange="loadImage(event, ` + video_id + `)" style="display: none;">
-                                        <label for="v_thumbnail" id="change-thumbnail" style="cursor: pointer;"><img id="` + video_id + `_preview_img" alt="Choose thumbnail" src="` + data.body.video_thumbnailUrl + `"/></label>
+                                        <input type="file" accept="image/*" name="` + video_id + `thumbnail" id="` + video_id + `_thumbnail" onchange="loadImage(event, ` + video_id + `)" style="display: none;">
+                                        <label for="` + video_id + `_thumbnail" id="` + video_id + `-change-thumbnail" style="cursor: pointer;"><img id="` + video_id + `_preview_img" alt="Choose thumbnail" src="` + data.body.video_thumbnailUrl + `"/></label>
                                         <div class="input-box">
                                             <input type="text" id="` + video_id + `_url" name="url" value="` + data.body.video_url + `" required>
                                         </div>
