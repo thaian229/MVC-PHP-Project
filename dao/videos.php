@@ -194,6 +194,8 @@ class Videos extends BaseDAO
     {
         $tableName = 'videos';
         $list = [];
+
+        $key = '%' . $key . '%';
         
         self::requireModel('Video');
 
