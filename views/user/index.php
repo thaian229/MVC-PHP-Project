@@ -155,9 +155,9 @@
                         console.log(video)
                         htmlString += `
                             <tr>
-                                <td class="td1"><img alt="NOT FOUND" width="200px" src="` + video.thumbnailUrl + `"/></td>
+                                <td class="td1"><img alt="NOT FOUND" src="` + video.thumbnailUrl + `"/></td>
                                 <td class="td2"><a href="index.php?controller=posts&action=showPost&id=` + video.id + `">` + video.title + `</a></td>
-                                <td class="td3"><button onclick="removeVideoFromFavouriteHandler(this)" id="remove-fav-` + video.id + `">X</button></td>
+                                <td class="td3"><button onclick="removeVideoFromFavouriteHandler(this)" id="remove-fav-` + video.id + `"><i class="fas fa-window-close"></i></button></td>
                             </tr>
                         `
                     })
@@ -183,17 +183,25 @@
                     if (page >= totalPage) {
                         document.getElementById("go-to-last").setAttribute("disabled", "disabled");
                         document.getElementById("go-to-next").setAttribute("disabled", "disabled");
+                        document.getElementById("go-to-last").style.color = "gray";
+                        document.getElementById("go-to-next").style.color = "gray";
                     } else {
                         document.getElementById("go-to-last").removeAttribute("disabled")
                         document.getElementById("go-to-next").removeAttribute("disabled")
+                        document.getElementById("go-to-last").style.color = "orange";
+                        document.getElementById("go-to-next").style.color = "orange";
                     }
 
                     if (page <= 1) {
                         document.getElementById("back-to-first").setAttribute("disabled", "disabled");
                         document.getElementById("back-to-previous").setAttribute("disabled", "disabled");
+                        document.getElementById("back-to-first").style.color = "gray";
+                        document.getElementById("back-to-previous").style.color = "gray";
                     } else {
                         document.getElementById("back-to-first").removeAttribute("disabled")
                         document.getElementById("back-to-previous").removeAttribute("disabled")
+                        document.getElementById("back-to-first").style.color = "orange";
+                        document.getElementById("back-to-previous").style.color = "orange";
                     }
 
                 } else {

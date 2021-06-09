@@ -80,6 +80,14 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const onVideoClicked = (target) => {
+                vId = target.id.split('-')[1]
+                window.location.href = `index.php?controller=posts&action=showPost&id=` + vId
+            }
+        </script>
+        
         <div class="similar-section">
             <div class="similar-title">
                 <h2>You may also like</h2>
@@ -89,8 +97,8 @@
                 for ($i = 0; $i < 4; $i++) {
                     if (!empty($same_posts[$i])) {
                         echo '
-                                <div id="video-' . $same_posts[$i]->id . '-card"class="video-card">
-                                <div class="video-card-overlay" id="video-' . $same_posts[$i]->id . '-card-overlay"  onclick="onVideoClicked(this)"></div>
+                                <div id="video-' . $same_posts[$i]->id . '-card-similar" class="video-card">
+                                <div class="video-card-overlay" id="video-' . $same_posts[$i]->id . '-card-overlay-similar"  onclick="onVideoClicked(this)"></div>
                                 <img  class="video-card-thumbnail" src="' . $same_posts[$i]->thumbnailUrl . '"/>
                                 <div class="video-card-title">' . $same_posts[$i]->title . '</div>
                                 <div class="video-card-info">
@@ -127,8 +135,8 @@
                 for ($i = 0; $i < 4; $i++) {
                     if (!empty($posts[$i])) {
                         echo '
-                        <div id="video-' . $posts[$i]->id . '-card"class="video-card">
-                        <div class="video-card-overlay" id="video-' . $posts[$i]->id . '-card-overlay"  onclick="onVideoClicked(this)"></div>
+                        <div id="video-' . $posts[$i]->id . '-card-explore" class="video-card">
+                        <div class="video-card-overlay" id="video-' . $posts[$i]->id . '-card-overlay-explore"  onclick="onVideoClicked(this)"></div>
                         <img  class="video-card-thumbnail" src="' . $posts[$i]->thumbnailUrl . '"/>
                         <div class="video-card-title">' . $posts[$i]->title . '</div>
                         <div class="video-card-info">
