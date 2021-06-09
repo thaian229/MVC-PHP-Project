@@ -210,7 +210,7 @@
                     document.getElementById("cpassword").value = ""
                     alert("password changed");
                 } else {
-                    document.getElementById("form-warning").innerText = data.body.errMessage;
+                    document.getElementById("form-warning-password").innerText = data.body.errMessage;
                 }
             })
             .catch(e => {
