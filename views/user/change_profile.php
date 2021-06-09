@@ -184,7 +184,13 @@
         let regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,50}$/;
 
         if (!regex_password.test(document.getElementById("new-password").value)) {
-            document.getElementById("form-warning").innerText = 'New password is too weak'
+            document.getElementById("form-warning-password").innerText = 'New password is too weak'
+            return;
+        }
+
+        if (document.getElementById("cpassword").value.localeCompare(document.getElementById("new-password").value) != 0)
+        {
+            document.getElementById("form-warning-password").innerText = 'Confirm password does not matches'
             return;
         }
 
